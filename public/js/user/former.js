@@ -278,9 +278,9 @@ const loginApp = new Vue({
             const processor = ()=>{
                 var userState = loginApp.checkEmailExists();
                 if(userState){
-                    cEnter(sendData.em, sendData.ps)
+                    cEnter(sendData.em, sendData.ps);
                 }else{
-                    loginApp.errorMsg.email = "User already exists"
+                    loginApp.errorMsg.email = "Incorrect email or password"
                 }
             }
             processor();
@@ -348,7 +348,8 @@ const accRecovery = new Vue({
             nouser:false,
             invalidemail:false,
         },
-        errorMsg:""
+        errorMsg:"",
+        formReady:false
     },
     methods:{
         processForm:()=>{
@@ -363,9 +364,11 @@ const accRecovery = new Vue({
             var rF = regex.test(email);
             if(email.length > 0){
                 if(!rF){
+                    accRecovery.formReady = false
                     return false
                 }
                 else{
+                    accRecovery.formReady = true
                    return true
                 }
             }else{
@@ -374,6 +377,9 @@ const accRecovery = new Vue({
         },
     }
 })
+
+
+
 
 const setInvalid = (id)=>{
     var target = document.getElementById(id);

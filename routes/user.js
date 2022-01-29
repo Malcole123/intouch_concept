@@ -26,10 +26,14 @@ router.get('/register', (req,res)=>{
 router.get('/recover', (req,res)=>{
     res.render('./account/recovery/verifyidentity')
 })
+router.get('/recover/confirm', (req,res)=>{
+    res.render('./account/recovery/confirmidentity')
+})
 
 router.get('/identity/verify', (req, res)=>{
     res.render('./account/authentication/verifyemail')
 })
+
 
 router.post('/auth/signup', async (req,res)=>{
     var data = await fetchers.fetchsignAuth(req.body);
