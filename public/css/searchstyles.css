@@ -1,0 +1,336 @@
+nav{
+    z-index:99;
+    background:#333;
+}
+nav img{
+    width:130px;
+}
+nav svg{
+    width:20px;
+}
+.search-header .search-field{
+    width:80%;
+    margin:0 auto
+}
+.search-header nav{
+    box-shadow: 2px 2px 10px 2px rgba(0,0,0,0.1);
+}
+.brand-banner{
+    width:100%;
+    background:#fff;
+    padding:20px 30px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom:0.3px solid #ddd
+}
+.brand-banner .light-btn{
+    padding:12px 20px;
+    border:1px solid var(--secc-dark);
+    background:#fff;
+    color:var(--secc-dark);
+    text-decoration: none;
+}
+.brand-banner .dark-btn{
+  padding:12px 20px;
+  border:1px solid var(--secc-dark);
+  background:var(--secc-dark);
+  color:#fff;
+  text-decoration: none;
+}
+.search-page-body{
+    height:fit-content;
+    background:rgba(247, 247, 247, 0.76);
+    width:100%;
+    padding:70px 0;
+}
+.filter-search-card{
+    width:80%;
+    height:450px;
+    border:1px solid #ddd;
+    margin:0 auto;
+    padding:10px 0;
+    border-radius:5px;
+    text-align: center;
+}
+.filter-search-card span{
+    margin:10px auto;
+    width:100%;
+    font-weight:600;
+    color:#333;
+}
+.filter-search-card .accordion-body{
+    width:100%;
+}
+.filter-search-card .accordion-body > *{
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border-bottom:1px solid #ddd;    
+}
+.filter-search-card .accordion-body > * span{
+    color:#333;
+    font-weight:400;
+}
+.results-indicator{
+    font-size:1.4rem;
+}
+.results-indicator > :nth-child(even){
+    font-weight: 600;
+    color:var(--secc-dark)
+}
+.job-display{
+    padding:40px 0;
+    width:98%;
+    margin:0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap:28px;
+}
+.job-card{
+    padding:8px 12px;
+    position:relative;
+    display:grid;
+    grid-template-columns: 1fr 6fr;
+    background:#fff;
+    border:0.5px solid #ddd;
+    width:100%;
+    height:fit-content;
+    gap:10px;
+    cursor:pointer;
+    transition:0.4s ease-in-out;
+    z-index:0;
+}
+.job-card:hover{
+    border:2px solid var(--secc-dark)
+}
+
+.inline-ad-space{
+    background:#ddd;
+    width:100%;
+    height:150px;
+}
+.job-card p{
+    display:none;
+    transition:0.4s ease-in-out
+}
+.job-rel-info{
+    display:flex;
+    align-items: center;
+    gap:15px;
+    margin:8px 0;
+    color:var(--secc-dark)
+}
+.job-rel-info i{
+    font-size:0.8rem;
+    margin-right:8px;
+}
+.job-card .fa-chevron-double-right{
+    color:var(--secc-dark);
+    position:absolute;
+    right:10px;
+    bottom:5px;
+    font-size:1.1rem;
+}
+.new-listing-ind{
+    position:absolute;
+    top:0;
+    right:0;
+    background:var(--secc-dark);
+    color:#fff;
+    padding:4px 8px;
+    border-radius:10px;
+    transform: translate(3%,-60%);
+}
+.filter-toggle{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:var(--secc-dark);
+    padding:18px 20px;
+    border-radius: 50%;
+    color:#fff;
+    z-index:99;
+    display:none;
+    cursor: pointer;
+}
+.scroll-top-action{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:var(--secc-dark);
+    color:#fff;
+    border-radius:50%;
+    z-index:99;
+    padding:18px 22px;
+    font-size:1.3rem;
+    display:none;
+    cursor:pointer;
+}
+.get-updates-card{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border:0.2px solid #ddd;
+    border-radius: 5px;
+}
+.get-updates-card img{
+    width:70%;
+    margin:0 auto;
+}
+.get-updates-card h2{
+    width:80%;
+    margin:10px auto;
+    font-size:1.3rem;
+    color:var(--secc-dark);
+    text-align: center;
+}
+.get-updates-card button{
+    margin:20px auto;
+    width:40%;
+    padding:6px 0;
+    background:var(--secc-dark);
+    color:#fff;
+    border:none;
+    outline:none;
+    border-radius:5px;
+}
+.vertical-ad-space{
+    position:sticky;
+    top:100px;
+    width:100%;
+    height:400px;
+    background:#ddd;
+    margin:40px auto;
+}
+.vertical-ad-space-large-ad{
+    position:sticky;
+    top:100px;
+    width:100%;
+    height:650px;
+    background:#ddd;
+    margin:40px auto;
+}
+.mod-offer-owner{
+    display:flex;
+    gap:30px;
+    margin:20px 0;
+}
+.mod-offer-owner img{
+    width:140px;
+    border:0.5px solid #ddd
+}
+.mod-offer-owner-content h2{
+    color:var(--secc-dark);
+    font-weight: 600;
+}
+.mod-offer-owner-content h2::after{
+    content:"";
+    display:block;
+    width:100%;
+    height:3px;
+    border-radius:10px;
+    background:var(--secc-dark);
+    margin:8px 0;
+}
+.mod-offer-contact-data > *{
+    margin:10px 0;
+    color:var(--prim-dark)
+}
+.no-results-disp{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+.no-results-disp img{
+    width:50%;
+}
+.no-results-disp button{
+    border:none;
+    outline:none;
+    padding:5px 12px;
+    background:var(--prim-dark);
+    color:#fff;
+}
+.modal-body::-webkit-scrollbar{
+    width:8px;
+}
+.modal-body::-webkit-scrollbar-track{
+  background:#ddd
+}
+.modal-body::-webkit-scrollbar-thumb{
+  background:var(--secc-dark);
+  border-radius:10px;
+}
+@media(max-width:1020px){
+    .search-header .search-field{
+        width:95%
+    }
+    .search-header .search-field button{
+        display:none;
+    }
+    .search-page-body{
+        padding:20px 0;
+    }
+    .filter-search-card{
+        position:fixed;
+        height:100vh;
+        width:100vw;
+        background:#fff;
+        bottom:-100vh;
+        transition:0.4s ease-in-out;
+    }
+    .view-filters{
+        bottom:0;
+        height:100vh;
+        left:0;
+        z-index:99
+    }
+    .filter-toggle{
+        display:block;
+    }
+    .scroll-top-action{
+        position:fixed;
+        bottom:-5px;
+        right:50%;
+        transform: translateX(50%);
+        background:var(--secc-dark);
+        color:#fff;
+        border-radius:10px 10px 0 0;
+        z-index:99;
+        padding:10px 20px;
+        font-size:1.3rem;
+        display:none;
+    }
+    .vertical-ad-space-large-ad{
+        display:none;
+    }
+    .mod-offer-owner{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .mod-offer-owner-content h2{
+      text-align: center;
+    }
+    .mod-offer-owner-content h2::after{
+        content:"";
+        display:block;
+        width:100%;
+        height:3px;
+        border-radius:10px;
+        background:var(--secc-dark);
+        margin:8px 0;
+    }
+    .mod-offer-contact-data > *{
+        margin:10px 0;
+        color:var(--prim-dark)
+    }
+
+}

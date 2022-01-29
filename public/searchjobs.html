@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/searchstyles.css" />
+
+    <!----Font Awesome CDN-->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!----Boot-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="js/script.js" defer></script>
+    <script async src="//jsfiddle.net/user2314737/h3k1amhp/embed/" defer></script>
+    <script type="module" src="js/searchscripts.js" defer></script>
+    <script src="js/search-auto.js" defer></script>
+
+    <title>Job | Search</title>
+  </head>
+  <body>
+    <section class="search-header">
+      <div class="brand-banner">
+        <div class="brand-logo">
+          <a href="index.html"><img src="images/logoDark.svg" alt="Intouch logo. Click to go home"></a>
+        </div>
+        <div class="brand-user-btn">
+          <a class="dark-btn" href="#">Log In</a>
+          <a class="light-btn" href="#">Sign up</a>
+        </div>
+      </div>
+      <nav>
+        <div class="search-field">
+          <div class="search-input">
+            <input
+            type="text"
+            id="career-search"
+            name="careerSearch"
+            placeholder="Search jobs near you" autocomplete="off"
+          />
+          <div class="career-search-auto-complete">
+
+          </div>
+          </div>
+          <select id="where-select">
+            <option value="" disabled selected hidden>Where ?</option>
+          </select>
+          <button type="button" id="searchJobsBtn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </nav>
+    </section>
+    <section class="search-page-body">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-3">
+              <div class="filter-search-card">
+                <span>Filter</span>
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Location
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="loc-type">
+                          <span>Kingston</span>
+                          <input type="radio">
+                        </div>
+                        <div class="loc-type">
+                          <span>St. Andrew</span>
+                          <input type="radio">
+                        </div>
+                        <div class="loc-type">
+                          <span>Clarendon</span>
+                          <input type="radio">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Employment type
+                      </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="emp-type">
+                          <span>Full time</span>
+                          <input type="radio">
+                        </div>
+                        <div class="emp-type">
+                          <span>Part time</span>
+                          <input type="radio">
+                        </div>
+                        <div class="emp-type">
+                          <span>Seasonal</span>
+                          <input type="radio">
+                        </div>
+                        <div class="emp-type">
+                          <span>Contract</span>
+                          <input type="radio">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Salary
+                      </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="sal-type">
+                          <span>Disclosed</span>
+                          <input type="radio">
+                        </div>
+                        <div class="sal-type">
+                          <span>Undisclosed</span>
+                          <input type="radio">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="results-indicator">
+                <span id="result-number">24</span>
+                <span id="result-job">Web developer</span>
+                <span>jobs in</span>
+                <span id="result-scope">Jamaica</span>
+              </div>
+              <div class="job-display">
+                
+              
+              </div>
+              <div aria-label="..." class="d-flex justify-content-center align-items-center">
+                <ul class="pagination">
+                  <li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item active" aria-current="page">
+                    <span class="page-link">2</span>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">&raquo;</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-3">
+                <div class="get-updates-card">
+                    <img src="images/getupdatesill.svg" alt="Get updates from ">
+                    <h2>Get updates on new jobs in this category</h2>
+                    <button type="button" class="dark-btn"><i class="fas fa-bell"></i></button>
+                </div>
+                <div class="vertical-ad-space"></div>
+            </div>
+          </div>
+      </div>
+    </section>
+    <div class="filter-toggle">
+      <i class="fas fa-sliders-h"></i>
+    </div>
+    <section class="footer">
+
+    </section>
+    <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Senior Web Developer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mod-offer-owner">
+          <img src="/public/images/singertest.png" alt="Singer">
+          <div class="mod-offer-owner-content">
+            <h2>Singer Jamaica</h2>
+            <div class="mod-offer-contact-data">
+              <div class="mod-contact-email">
+                <i class = "fas fa-envelope"></i>
+                <span>spam@example.com</span>
+              </div>
+              <div class="mod-contact-phone">
+                <i class="fas fa-phone"></i>
+                <span>+1(876)555-5678</span>
+              </div>
+              <div class="mod-contact-location">
+                <i class="fas fa-location-arrow"></i>
+                <span>7 Imaginary Way, Wonderland Blvd, Neverland</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mod-offer-body">
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  ABOUT COMPANY
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                  <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  ABOUT POSITION
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                  <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                  QUALIFICATIONS FOR POSITION
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                  <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                  COMPENSATION
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingFOur">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                  APPLICATION PROCESS
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">SAVE</button>
+        <button type="button" class="btn btn-primary">APPLY</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  </html>

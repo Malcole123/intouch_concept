@@ -1,0 +1,599 @@
+:root{
+    --prim-dark:#3F3D56;
+    --secc-dark:#3E3BE8;
+}
+
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Roboto', sans-serif;
+    user-select: none;
+    box-sizing: border-box;
+}
+html{
+    overflow-x: hidden;
+}
+.horizontal-ad-space{
+    background:#333;
+    width:100%;
+    height:0px;
+    position: fixed;
+    z-index:99;
+    transition: 0.7s ease-in-out;
+}
+.show-space{
+    height:120px
+}
+.horizontal-top{
+    top:0
+}
+.horizontal-bottom{
+    bottom:0
+}
+
+.home-header{
+    height:100vh;
+    left:0;
+    right:0;
+    background:url('/images/home/heroBack.png');
+    background-position: center;
+    background-size:cover;
+    background-repeat: no-repeat;
+    transition: 0.1s ease-in-out;
+}
+
+nav{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:12px 15px;
+    position:sticky;
+    top:0;
+    left:0;
+    right:0;
+    transition:0.3s ease-in-out
+}
+.scroll-nav{
+    position:fixed;
+    background:#fff;
+    z-index:99;
+    border-bottom:1px solid #ddd
+}
+nav img{
+    width:120px;
+}
+
+
+.nav-links ul{
+    list-style-type:none;
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+    gap:25px;
+}
+.nav-links ul li a{
+    font-size:1.1rem;
+    text-decoration:none;
+    color:var(--prim-dark)
+}
+.nav-link-hver::after{
+    content:"";
+    display: block;
+    width:0%;
+    height:2px;
+    background:var(--prim-dark);
+    margin:0 auto;
+    transition: 0.4s ease-in-out;
+}
+.nav-link-hver:hover::after{
+    width:100%;
+}
+
+/* Dropdown button */
+.comp-dropbtn, .country-dropdown{
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: var(--prim-dark);
+    background-color: transparent;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+  }
+  .country-dropdown button{
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      gap:5px;
+  }
+  .country-dropdown img{
+      width:25px;
+  }
+  .comp-dropbtn i {
+    color: var(--prim-dark);
+  }
+  /* Dropdown content (hidden by default) */
+  .comp-dropdown-content, .country-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color:#fff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    margin:1px 0;
+    transition: 0.4s ease-in-out;
+  }
+  .country-dropdown-content ul{
+      display:flex;
+      flex-direction: column;
+  }
+  .country-dropdown ul li{
+      display:flex;
+      align-items:center;
+      width:90%;
+      margin:0 auto;
+      gap:10px;
+  }
+
+  .comp-dropdown-content a {
+    float: none;
+    color:var(--prim-dark);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .comp-dropdown-content a:hover {
+    background-color:var(--prim-dark);
+    color:#fff;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .company-dropdown:hover .comp-dropdown-content, .country-dropdown:hover .country-dropdown-content {
+    display: block;
+  }
+  .nav-links .light-btn{
+      padding:12px 20px;
+      border:1px solid var(--secc-dark);
+      background:#fff;
+      color:var(--secc-dark)
+  }
+  .nav-links .dark-btn{
+    padding:12px 20px;
+    border:1px solid var(--secc-dark);
+    background:var(--secc-dark);
+    color:#fff;
+  }
+  .menu-toggle {
+    color: var(--prim-dark);
+    margin-right: 0px;
+    cursor: pointer;
+    display:none;
+  }
+  #menu-top,
+  #menu-btm {
+    display: block;
+    width: 45px;
+    height: 3px;
+    background: var(--prim-dark);
+    transform-origin: center;
+    transition: 0.4s ease-in-out;
+  }
+  #menu-txt {
+    transition: 0.4s ease-in-out;
+  }
+  .open-text {
+    opacity: 0;
+  }
+  .open-top {
+    transform: rotate(42deg) translateY(14px);
+    width: 30px;
+  }
+  .open-bottom {
+    transform: rotate(-42deg) translate(2px, -14px);
+    width: 30px;
+  }
+
+  .head-content{
+   width:90%;
+   margin:70px auto;
+   display:flex;
+   justify-content: space-between;
+   align-items: center;
+  }
+  .head-text h1{
+      font-size:3.5rem;
+      color:var(--prim-dark);
+  }
+  .head-text span{
+      color:inherit
+  }
+  .head-text p{
+      font-size:1.5rem;
+      margin:25px 0;
+  }
+  .search-field{
+      border-radius:10px;
+      width:100%;
+      height:50px;
+      border:0.5px solid var(--prim-dark);
+      background:#fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index:0;
+  }
+  .search-input{
+      width:100%;
+      height:100%;
+      position:relative;
+      border-radius:10px 0px 0px 10px;
+  }
+  .career-search-auto-complete{
+      position:absolute;
+      max-height:240px;
+      width:100%;
+      background:#fff;
+      box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+      display:none;
+      overflow-y: scroll;
+      transition: 0.3s ease-in-out;
+  }
+  .career-search-auto-complete::-webkit-scrollbar{
+      width:5px;
+  }
+  .career-search-auto-complete::-webkit-scrollbar-track{
+    background:#ddd
+  }
+  .career-search-auto-complete::-webkit-scrollbar-thumb{
+    background:var(--secc-dark)
+  }
+  .career-search-auto-complete > *, .search-field select option {
+      display:flex;
+      justify-content: space-between;
+      font-size:1rem;
+      color:#333;
+      padding:12px 10px;
+      border-bottom:0.5px solid #ddd;
+  }
+  .career-search-auto-complete > *:hover,  .search-field select option:hover{
+    color:#fff;
+    background:var(--secc-dark)
+}
+  .search-field input{
+      height:100%;
+      width:100%;
+      border:none;
+      outline:none;
+      font-size:1.1rem;
+      font-weight:500;
+      padding-left:45px;
+      background:#fff url('/images/magnifier.png');
+      background-size:1em;
+      background-repeat: no-repeat;
+      background-position: top 14px left 5px;
+      border-radius:10px 0px 0px 10px;
+  }
+  .search-field select{
+      border:none;
+      outline:none;
+      width:35%;
+      height:100%;
+      padding-left:45px;
+      font-size:1.1rem;
+      font-weight:500;
+      border-left:0.5px solid var(--prim-dark);
+      background:#ffff url('/images/locationPin.png');
+      background-repeat: no-repeat;
+      background-size:1.1em;
+      background-position: top 14px left 5px;
+  }
+  .search-field button{
+      height:100%;
+      width:15%;
+      font-size:1.1rem;
+      background:var(--secc-dark);
+      border:2px solid var(--secc-dark);
+      outline: none;
+      color:#fff;
+      cursor:pointer;
+      border-radius:0px 10px 10px 0px;
+  }
+  .search-field button:hover{
+      background:var(--secc-dark)
+  }
+  .home-about{
+      min-height:100vh;
+      width:100vw;
+      padding-top:100px;
+      position:relative;
+  }
+  .about-top-sep {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.about-top-sep svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 89px;
+}
+
+.about-top-sep .shape-fill {
+    fill: #3F3D56;
+}
+.about-key-points{
+    width:80%;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height:300px;
+    height:fit-content;
+}
+.about-key-points > * {
+    width:90%;
+    height:100%;
+    margin:0 auto;
+    background:#fff;
+    text-align: center;
+    padding:10px 5px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.about-key-points > *::after{
+    content:"";
+    display:block;
+    height:3px;
+    border-radius:10px;
+    margin-top:15px;
+    background:var(--prim-dark)
+}
+.about-key-points h3{
+    font-size:1.4rem;
+    color:var(--prim-dark);
+    margin:18px 0;
+}
+.about-resume-builder{
+    width:60%;
+    margin:40px auto;
+    display:flex;
+    align-items: center;
+    gap:20px;
+}
+.about-resume-builder-intro-text h3{
+    font-size:2.5rem;
+    color:var(--prim-dark);
+    margin-bottom:20px;
+}
+.about-resume-builder-intro-text p{
+    font-size:1.5rem;
+    color:var(--prim-dark);
+    margin-bottom:20px;
+}
+.about-resume-builder-intro-text a{
+    font-size:1.2rem;
+    background:#fff;
+    border:2px solid var(--prim-dark);
+    padding:8px 14px;
+    color:var(--prim-dark);
+    margin-bottom:20px;
+    text-decoration: none;
+}
+.home-job-near-you{
+    min-height:100vh;
+    width:100vw;
+    background:#fff url('/images/home/homejobsnearback.svg');
+    background-position: bottom -2px left 0;
+    background-size:100vw;
+    background-repeat:no-repeat;
+    padding:70px 0;
+}
+.home-job-near-you h2{
+    text-align: center;
+    font-size:2.5rem;
+    color:var(--prim-dark);
+    position:absolute;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:70%;
+    margin:0 auto;
+}
+.home-job-near-you::before{
+    content:"";
+    display:block;
+    width:10%;
+    height:4px;
+    background:var(--secc-dark);
+    position: absolute;
+    left:0;
+
+}
+.home-job-near-you::after{
+    content:"";
+    display:block;
+    width:10%;
+    height:4px;
+    background:var(--secc-dark);
+    position:absolute;
+    right:0;
+}
+.home-jobs-display{
+    width:90%;
+    margin:0 auto
+}
+.footer{
+    height:50vh;
+    left:0;
+    right:0;
+    background:var(--prim-dark)
+}
+
+
+  @media(max-width:1020px) {
+      .home-header{
+          min-height: 100vh;
+          height:fit-content;
+      }
+      nav{
+          background:#fff;
+          top:0;
+      }
+      .nav-links{
+          position:fixed;
+          width:100vw;
+          height:100vh;
+          background:#fff;
+          right:-100vw;
+          top:0;
+          padding:70px 0;
+          transition: 0.5s ease-in-out;
+      }
+      .nav-links ul{
+          display:flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap:40px;
+      }
+      .open-menu{
+          right:0;
+          z-index:97;
+      }
+      .menu-toggle{
+          display:block;
+          z-index:99;
+      }
+      .comp-dropdown-content{
+          background:#333;
+          box-shadow: none;
+          left:0px;
+          right:0px;
+      }
+      .comp-dropdown-content a{
+          text-align: center;
+          color:#fff
+      }
+      .head-content{
+          margin:30px auto;
+          flex-direction: column;
+          justify-content: center;
+          gap:25px;
+      }
+      .head-text{
+            font-size:2.5rem;
+            text-align: center;
+      }
+      .head-text h1{
+          font-size:2.8rem;
+          text-align: left;
+          margin:10px auto;
+      }
+      .head-text p{
+          font-size:1.2rem;
+          margin:25px auto;
+      }
+      .head-ill{
+          width:100%;
+          display:flex;
+          justify-content:center;
+      }
+      .head-ill img{
+          width:60%;
+          margin:0 auto
+      }
+      .search-field{
+        width:100%;
+        min-height: 50px;
+        height:fit-content;
+        display:grid;
+        grid-template-columns: 1fr;
+        background:#fff;
+        border-radius:10px;
+    }
+    .search-field input{
+        height:50px;
+        width:100%;
+        background:transparent url('/images/magnifier.png');
+        background-repeat: no-repeat;
+        background-size:1.2rem;
+        background-position:top 14px left 5px;
+        z-index:0;
+    }
+    .search-field select{
+        display:none;
+        border:none;
+        outline:none;
+        padding-left: 45px;
+        width:100%;
+        height:50px;
+        border-left:none;
+        border-top:1px solid var(--prim-dark);
+        background:#ffff url('/images/locationPin.png');
+        background-size:1.4rem;
+        background-position:top 14px left 4px;
+        background-repeat: no-repeat;
+    }
+    .search-field select option{
+        padding-left:45px;
+    }
+    .search-field button{
+        height:50px;
+        width:100%;
+        font-size:1.1rem;
+        background:var(--secc-dark);
+        border:2px solid var(--secc-dark);
+        outline: none;
+        border:none;
+        color:#fff;
+        cursor:pointer;
+        border-radius: 0px 0px 10px 10px;
+    }
+    .home-about{
+        height: fit-content;
+        padding:80px 0;
+    }
+    .about-resume-builder{
+        width:90%;
+        margin:10px auto;
+    }
+    .about-resume-builder-intro-ill{
+        width:50%;
+        margin:0 auto;
+    }
+    .about-resume-builder-intro-ill svg{
+        width:100%;
+        margin:0 auto;
+    }
+    .about-resume-builder-intro-text h3{
+        font-size:2rem;
+    }
+    .about-resume-builder-intro-text p{
+        font-size:1rem;
+    }
+    .about-key-points{
+        width:90%;
+        margin:0 auto;
+        grid-template-columns: 1fr;
+        gap:30px;
+    }
+    .about-key-points > * {
+        width:90%;
+        height:fit-content;
+        background:#fff;
+        padding:30px 5px;
+    }
+    .about-key-points h3{
+        font-size:1.2rem;
+        color:var(--secc-dark);
+        margin:18px 0;
+    }
+    
+ 
+
+  }
