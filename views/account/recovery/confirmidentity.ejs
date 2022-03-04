@@ -28,47 +28,47 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-6">
-                    <h1>Enter verification code</h1>
+                    <h1>Recover your account</h1>
                     <img src="/images/verifyill.svg" alt="Recover">
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <div class="sign-up-form">
                       <p class="mb-4">Please enter the verification code sent to test or click the link in your email to continue</p>
-                        <form class="needs-validation" id="verify-form" method="POST" @submit.prevent="processForm" novalidate>
+                        <form class="needs-validation" id="verify-form" method="POST" @submit.prevent="" novalidate>
                               <div class="row g-2 mt-4">
                                 <div class="col">
                                   <div class="form-floating">
-                                    <input type="text" class="form-control text-danger text-center fs-2" id="verify1" maxlength="1"placeholder="*" v-model.trim="" @blur=""  @keyup="">
+                                    <input type="text" class="form-control text-success text-center fs-2" id="verify0" maxlength="1" placeholder="*" v-model="one" @keyup="auto">
                                     <label for="verify1"></label>
                                   </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-floating">
-                                      <input type="text" class="form-control text-danger text-center fs-2" id="verify2" maxlength="1" placeholder="*" v-model.trim="" @blur=""  @keyup="">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify1" maxlength="1" placeholder="*" v-model="two" @keyup="auto">
                                       <label for="verify2"></label>
                                     </div>
                                   </div>
                                   <div class="col">
                                     <div class="form-floating">
-                                      <input type="text" class="form-control text-danger text-center fs-2" id="verify3" maxlength="1" placeholder="*" v-model.trim="" @blur=""  @keyup="">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify2" maxlength="1" placeholder="*" v-model="three" @keyup="auto">
                                       <label for="verify3"></label>
                                     </div>
                                   </div>
                                   <div class="col">
                                     <div class="form-floating">
-                                      <input type="text" class="form-control text-danger text-center fs-2" id="verify4" maxlength="1" placeholder="*" v-model.trim="" @blur=""  @keyup="">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify3" maxlength="1" placeholder="*" v-model="four" @keyup="auto">
                                       <label for="verify4"></label>
                                     </div>
                                   </div>
                                   <div class="col">
                                     <div class="form-floating">
-                                      <input type="text" class="form-control text-danger text-center fs-2" id="verify5" maxlength="1" placeholder="*" v-model.trim="email" @blur="checkValidEmail"  @keyup="checkValidEmail">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify4" maxlength="1" placeholder="*" v-model="five">
                                       <label for="verify5"></label>
                                     </div>
                                   </div>
                               </div>
                                 <div class="col-sm-12 col-md-9 col-lg-3 mb-2 mt-4">
-                                    <button class="sendLoginBtn ready-send" type="submit" v-show="formReady">
+                                    <button class="sendLoginBtn ready-send" type="submit">
                                         Next..
                                     </button>
                                 </div>                                      

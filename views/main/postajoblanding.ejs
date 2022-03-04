@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/main/pajlanding.css" />
+    <!----Font Awesome CDN-->
+    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="/js/script.js" defer></script>
+    <script src="/js/setSearch.js" defer></script>
+    <title>Job | Home</title>
+  </head>
+  <body>
+    <section class="home-header">
+      <%- include('../components/regular_nav.ejs')%>
+      <div class="head-content">
+        <div class="head-text">
+          <h1>
+            Hello <span>Talent,</span><br />
+            Meet <span>Opportunity.</span>
+          </h1>
+          <p>
+            Connecting talented and motivated people with interested employers
+          </p>
+          <div class="search-field">
+            <div class="search-input">
+              <input
+              type="text"
+              id="career-search"
+              name="careerSearch"
+              placeholder="Search jobs near you"
+            />
+            <div class="career-search-auto-complete">
+
+            </div>
+            </div>
+            <select id="where-select">
+              <option value="" disabled selected hidden>Where ?</option>
+            </select>
+            <button type="button" id="searchJobsBtn">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+   
+        
+    </section>
+    <section class="home-about">
+      <h2>START YOUR NEXT CAREER</h2>
+      <div class="about-key-points">
+        <div class="key-point-card">
+          <h3>FREQUENT UPDATES</h3>
+          <p>
+            Save time and speed up your job search by letting our advanced AI
+            search through our database so you only see jobs relevant to you
+          </p>
+        </div>
+        <div class="key-point-card">
+          <h3>DIVERSE NETWORK</h3>
+          <p>Find your dream job using just a few key phrases</p>
+        </div>
+        <div class="key-point-card">
+          <img
+            src="../images/home/easyapplication.svg"
+            alt="Curated results"
+          />
+          <h3>EASY APPLICATION</h3>
+          <p>
+            Don't see what you're looking for? New jobs are added every day.
+            Sign up to get updates on new job listings that interest you
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="home-job-near-you">
+      <h2>Jobs in Jamaica near you</h2>
+      <div class="home-jobs-display">
+        <div class="home-job-card">
+
+        </div>
+      </div>
+    </section>
+    <section class="footer">
+
+    </section>
+    <%- include( '../components/cookie-disclaimer.ejs' ) %>
+
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</html>

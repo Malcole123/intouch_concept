@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>InTouch | Employer listings manage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="Manage your listings from this detailed dashboard">
+    <meta name="msapplication-tap-highlight" content="no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous" defer></script>
+    <script src="/js/dashboard/main.js" defer></script>
+    <script src="/js/dashboard/formbuilder.js" defer></script>
+    <link href="/css/dashboard/main.css" rel="stylesheet">
+    <link href="/css/dashboard/listings.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div class="app-header header-shadow">
+            <div class="app-header__logo">
+                <div class="logo-src"></div>
+                <div class="header__pane ml-auto">
+                    <div>
+                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                <span>
+                    <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="pe-7s-more fs-3"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>    <div class="app-header__content">
+                <div class="app-header-left">
+                    <div class="search-wrapper">
+                        <div class="input-holder">
+                            <input type="text" class="search-input" placeholder="Type to search">
+                            <button class="search-icon"><span></span></button>
+                        </div>
+                        <button class="close"></button>
+                    </div>       
+                </div>
+                <div class="app-header-right">
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="btn-group">
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                            <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
+                                            <i class="pe-7s-user ml-2 fs-2"></i>
+                                        </a>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                            <button type="button" tabindex="0" class="dropdown-item">User Account</button>
+                                            <button type="button" tabindex="0" class="dropdown-item">Settings</button>
+                                            <h6 tabindex="-1" class="dropdown-header">Header</h6>
+                                            <button type="button" tabindex="0" class="dropdown-item">Actions</button>
+                                            <div tabindex="-1" class="dropdown-divider"></div>
+                                            <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="widget-content-left  ml-3 header-user-info">
+                                    <div class="widget-heading">
+                                        <%= userDetails.fname %>
+                                    </div>
+                                    <div class="widget-subheading">
+                                        <%= userDetails.email %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>            
+        <div class="app-main">
+                <div class="app-sidebar sidebar-shadow">
+                    <div class="app-header__logo">
+                        <div class="logo-src"></div>
+                        <div class="header__pane ml-auto">
+                            <div>
+                                <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-header__mobile-menu">
+                        <div>
+                            <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="app-header__menu">
+                        <span>
+                            <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                                <span class="btn-icon-wrapper">
+                                    <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                </span>
+                            </button>
+                        </span>
+                    </div>    <div class="scrollbar-sidebar">
+                        <div class="app-sidebar__inner">
+                            <ul class="vertical-nav-menu">
+                                <li class="app-sidebar__heading">Main</li>
+                                <li>
+                                    <a href="/dashboard/home">
+                                        <i class="metismenu-icon pe-7s-rocket"></i>
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/listings" class="mm-active">
+                                        <i class="metismenu-icon pe-7s-display2"></i>
+                                        Job Listings
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/applications">
+                                        <i class="metismenu-icon pe-7s-file"></i>
+                                        Applications
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/analytics">
+                                        <i class="metismenu-icon pe-7s-graph1"></i>
+                                        Analytics
+                                    </a>
+                                </li>
+                                <li class="app-sidebar__heading">Tools</li>
+                                <li>
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-news-paper"></i>
+                                        Campaign
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/dashboard/campaign/email">
+                                                <i class="metismenu-icon pe-7s-mail-open"></i>
+                                                Email Campaign
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/campaign/sms">
+                                                <i class="metismenu-icon pe-7s-phone"></i>
+                                                Sms Campaign
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <li class="app-sidebar__heading">Settings</li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-config"></i>
+                                            Manage Profile
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a href="/dashboard/campaign/email">
+                                                    <i class="metismenu-icon pe-7s-mail-open"></i>
+                                                    Manage Business
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/dashboard/campaign/sms">
+                                                    <i class="metismenu-icon pe-7s-phone"></i>
+                                                    Manage Team
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/dashboard/campaign/sms">
+                                                    <i class="metismenu-icon pe-7s-phone"></i>
+                                                    Manage Team
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="/dashboard/analytics">
+                                            <i class="metismenu-icon pe-7s-credit"></i>
+                                            Billing
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/dashboard/analytics">
+                                            <i class="metismenu-icon pe-7s-headphones"></i>
+                                            Support
+                                        </a>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>    <div class="app-main__outer">
+                    <div class="app-main__inner">
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="pe-7s-plus icon-gradient bg-mean-fruit">
+                                        </i>
+                                    </div>
+                                    <div>Post a job listing
+                                        <div class="page-title-subheading">Find that ideal team member. Post a new listing
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page-title-actions">
+                                    <button type="button" class="btn-shadow mr-3 btn btn-dark" id="init__Create" data-company="<%= JSON.stringify(company)%>">
+                                        <i class="pe-7s-plus"></i>&nbsp Create a listing
+                                    </button>        
+                                </div>    
+                            </div>
+                        </div>            
+                        <div class="app-page-body">
+                            <h5>Active Listings</h5>
+                            <div class="row mt-2">
+                                <% active_list.forEach(function(item,index){ %>
+                                    <div class="col-sm-12 col-md-6 col-lg-4">
+                                        <div style="min-height:170px" class="mb-3 card card-body text-center"
+                                        >
+                                        <input type="hidden" value="<%= JSON.stringify(item) %>"> <!--item id-->
+                                        <h5 class="card-title text-center"><%= item.title %></h5>
+                                        <p class="text-center desc_para"><%=item.description %> </p>
+                                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="editListing.setEditState(event)">Edit</button>
+                                        </div>
+                                    </div>
+                                <% }) %>   
+                            </div>
+                            <h5>Pending Listings</h5>
+                            <div class="row mt-2">
+                                <% pending_list.forEach(function(item,index){ %>
+                                    <div class="col-sm-12 col-md-6 col-lg-4">
+                                        <div style="min-height:170px" class="mb-3 card card-body text-center"
+                                        >
+                                        <h5 class="card-title text-center"><%= item.title %></h5>
+                                        <p class="text-center desc_para"> <%=item.description %> </p>
+                                        <button class="btn btn-dark">Under Review</button>
+                                        </div>
+                                    </div>
+                                <% }) %> 
+                                <%  if(pending_list.length === 0 ){ %>
+                                    <span style="font-weight:600;">No listings currently pending</span>
+                                <% } %>
+                            </div>
+                        </div>
+                   
+
+                    </div>
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="app-footer-right">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+        </div>
+    </div>
+  <section class="createListingArea" id="createListingArea">
+        <div class="__step__indicator">
+            <span :class="step.one ||current_step === 1 ? '__create__active__step' : '__inactive__step'" @click="jumptoStep(1)">1</span>
+            <span :class="step.two || current_step === 2? '__create__active__step' : '__inactive__step'" @click="jumptoStep(2)">2</span>
+            <span :class="step.three || current_step === 3? '__create__active__step' : '__inactive__step'" @click="jumptoStep(3)">3</span>
+            <span :class="step.four || current_step === 4? '__create__active__step' : '__inactive__step'" @click="jumptoStep(4)">4</span>
+            <span :class="step.success || current_step === 5? '__create__active__step' : '__inactive__step'" @click="jumptoStep(5)"><i class="pe-7s-check"></i></span>
+            <i class="pe-7s-close" id="init__Create__Close" style="margin-left:auto;background:transparent;color:#fff;font-size:4rem;padding:0"></i>
+        </div>
+        <div class="createListingAreaBody">
+            <div class="create__step__card" v-if="current_step === 1">
+                <div class="form-floating mt-3">
+                    <input type="text" class="form-control" name="addorEdit" id="createTitleInput" placeholder="----" autocomplete="off" v-model="listing_data.title">
+                    <label for="createTitleInput">Title:</label>
+                        <div class="invalid-feedback">
+                        </div>
+                </div>
+                <div class="form-floating mt-3">
+                    <textarea class="form-control" name="addorEdit" id="createPositionInput" placeholder="----" autocomplete="off" v-model="listing_data.position_summary" style="resize:none;height:120px;padding-top:18px"></textarea>
+                    <label for="createPositionInput">Position summary:</label>
+                    <small class="mt-1 mb-1">{{ 300 - listing_data.position_summary.length }} / 300 Characters remanining</small>
+                        <div class="invalid-feedback">
+                        </div>
+                </div>
+                <div class="form-floating mt-3">
+                    <input type="text" class="form-control" name="addorEdit" id="createDepartmentInput" placeholder="----" autocomplete="off" v-model="listing_data.department">
+                    <label for="createDepartmentInput">Department:</label>
+                        <div class="invalid-feedback">
+                        </div>
+                </div>
+                <div class="form-floating mt-3">
+                    <select class="form-select" id="employmentTypeSelect" aria-label="Select employment type" v-model="listing_data.job_type">
+                      <option selected value="full-time">Full Time</option>
+                      <option value="part-time">Part Time</option>
+                      <option value="contract">Contract</option>
+                      <option value="seasonal">Seasonal</option>
+                    </select>
+                    <label for="employmentTypeSelect">Employment type:</label>
+                </div>
+                <div class="form-floating mt-3">
+                    <select class="form-select" id="jobLocationSelect" aria-label="Select job location" v-model="listing_data.employment_location">
+                    <% company.office_locations.forEach((location)=>{%>
+                        <option value="<%=location %>"> <%= location %> </option>
+                    <% }) %>
+                      <option value="remote">Remote</option>
+                    </select>
+                    <label for="jobLocationSelect">Job location:</label>
+                </div> 
+                <div class="__control__buttons" style="width:100%;display:flex;justify-content:center;align-items:flex-end;">
+                    <button type="button" class="btn mt-4" style="margin:0 auto;padding:12px 18px;background:green;color:#fff" @click="checkStep(1)">Next</button>             
+                </div>
+            </div>
+            <div class="create__step__card" v-if="current_step === 2" style="overflow-y:scroll">
+                <div class="__list__display">
+                    <h6 style="position:absolute;top:4px;left:4px">Add responsibilities</h6>
+                    <div class="__items__list__indicator">
+                        <span v-for="(res,index) in listing_data.responsibilities" :key="res.id" :class="index === 6 ? '__max__add' : '' " :data-index-pos="index" @click="focus('r',index)">{{index+1}}</span>
+                    </div>
+                    <div class="__item__index__display">
+                        <div class="__index__card" v-if="listing_data.responsibilities.length > 0">
+                            <p style="color:rgb(90,90,90)">{{most_recent.r.content}}</p>
+                            <div class="__index__controls">
+                                <i class="pe-7s-pen" @click=""></i>
+                                <i class="pe-7s-junk" @click="remove('r',most_recent.r.id)"></i>
+                            </div>
+                        </div>              
+                    </div>
+                    <div class="mt-2 __item__add__sect" v-if="listing_data.responsibilities.length < 7">
+                        <form @submit.prevent="createEntry('r')">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="addResponsibility" id="addResponsibilityInput" placeholder="----" autocomplete="off" v-model="inputs.r">
+                                <label for="addResponsibilityInput">Add Job Responsibility:</label>
+                                    <div class="invalid-feedback">
+                                    </div>
+                                    <small>{{130 - inputs.r.length }} / 130 characters remaining</small>
+                            </div>
+                            <button type="submit" class="btn btn-dark">Add </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="mt-3 __list__display" >
+                    <h6 style="position:absolute;top:4px;left:4px">Add desired qualifications</h6>
+                    <div class="__items__list__indicator">
+                        <span v-for="(qual,index) in listing_data.qualifications" :key="qual.id" :class="index=== 6 ? '__max__add' : '' " :data-index-pos="index" @click="focus('q',index)">{{index+1}}</span>
+                    </div>
+                    <div class="__item__index__display">
+                        <div class="__index__card" v-if="listing_data.qualifications.length > 0">
+                            <p style="color:rgb(90,90,90)">{{most_recent.d_q.content}}</p>
+                            <div class="__index__controls">
+                                <i class="pe-7s-pen" @click="edit('q',most_recent.d_q.id)"></i>
+                                <i class="pe-7s-junk" @click="remove('q',most_recent.d_q.id)"></i>
+                            </div>
+                        </div>              
+                    </div>
+                    <div class="mt-2 __item__add__sect" v-if="listing_data.qualifications.length < 7">
+                        <form @submit.prevent="createEntry('q')">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="addQualification" id="addQualificationInput" placeholder="----" autocomplete="off" v-model="inputs.d_q">
+                                <label for="addQualificationInput">Add desired qualification:</label>
+                                    <div class="invalid-feedback">
+                                    </div>
+                                    <small>{{130 - inputs.d_q.length }} / 130 characters remaining</small>
+                            </div>
+                            <button type="submit" class="btn btn-dark">Add</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="mt-3 __list__display" >
+                    <h6 style="position:absolute;top:4px;left:4px">Add benefits</h6>
+                    <div class="__items__list__indicator">
+                        <span v-for="(ben,index) in listing_data.benefits" :key="ben.id" :class="index=== 6 ? '__max__add' : '' " :data-index-pos="index" @click="focus('b',index)">{{index+1}}</span>
+                    </div>
+                    <div class="__item__index__display">
+                        <div class="__index__card" v-if="listing_data.qualifications.length > 0">
+                            <p style="color:rgb(90,90,90)">{{most_recent.b.content}}</p>
+                            <div class="__index__controls">
+                                <i class="pe-7s-pen" @click="edit('b',most_recent.b.id)"></i>
+                                <i class="pe-7s-junk" @click="remove('b',most_recent.b.id)"></i>
+                            </div>
+                        </div>              
+                    </div>
+                    <div class="mt-2 __item__add__sect" v-if="listing_data.benefits.length < 7">
+                        <form @submit.prevent="createEntry('b')">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="addeBenefit" id="addBenefitInput" placeholder="----" autocomplete="off" v-model="inputs.b">
+                                <label for="addBenefitInput">Add benefit:</label>
+                                    <div class="invalid-feedback">
+                                    </div>
+                                    <small>{{130 - inputs.d_q.length }} / 130 characters remaining</small>
+                            </div>
+                            <button type="submit" class="btn btn-dark">Add</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="__control__buttons" style="width:100%;display:flex;justify-content:center;align-items:flex-end;">
+                    <button type="button" class="btn mt-4" style="margin:0 auto;padding:12px 18px;background:green;color:#fff" @click="checkStep(2)">Next</button>             
+                </div>
+            </div>
+            <div class="create__step__card" v-if="current_step === 3" style="overflow-y: scroll;">
+                <h5>Pre-screening test</h5>
+                <div class="form-check form-switch mt-3 ms-auto" style="width:80%;display:flex;justify-content:center;flex-direction:column;gap:20px;justify-content:center;margin:0 auto">         
+                    <input class="form-check-input" type="checkbox" role="switch" id="setIncludeAppTest" v-model="inputs.include_test">
+                    <label class="form-check-label" for="setIncludeAppTest">
+                        Include pre-screening test?
+                    </label>      
+                </div>
+                <div class="mt-3 __list__display" v-if="inputs.include_test">
+                    <h6 style="position:absolute;top:4px;left:4px">Add question</h6>
+                    <div class="__items__list__indicator">
+                        <span v-for="(app,index) in listing_data.application_data.question_data" :key="app.id" :class="index=== 6 ? '__max__add' : '' " :data-index-pos="index" @click="focus('a_q',index)">{{index+1}}</span>
+                    </div>
+                    <div class="__item__index__display">
+                        <div class="__index__card" v-if="listing_data.application_data.question_data.length > 0">
+                            <p style="color:rgb(90,90,90)">{{most_recent.a_q.content.question}}</p>
+                            <ul v-if="most_recent.a_q.content.question_type === 'multiple'">
+                                <li v-for="(option,index) in most_recent.a_q.content.answer_option">
+                                    {{most_recent.a_q.content.answer_option[index]}}
+                                </li>
+                            </ul>
+                            <div class="__index__controls">
+                                <i class="pe-7s-junk" @click="remove('a_q',most_recent.a_q.id)"></i>
+                            </div>
+                        </div>              
+                    </div>
+                    <div class="mt-2 __item__add__sect" v-if="listing_data.application_data.question_data.length < 7">
+                        <form @submit.prevent="createEntry('a_q')">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="question" id="addQuestionInput" placeholder="----" autocomplete="off" v-model="inputs.question_temp.question">
+                                <label for="addBenefitInput">Add question:</label>
+                                    <div class="invalid-feedback">
+                                    </div>
+                                    <small>{{130 - inputs.a_q.length }} / 130 characters remaining</small>
+                            </div>
+                            <div class="form-floating mt-2 mb-2">
+                                <select class="form-select" id="questionTypeSelect" aria-label="Question type select" v-model="inputs.question_temp.question_type">
+                                  <option value="single">Single answer</option>
+                                  <option value="multiple">Multiple choice</option>
+                                </select>
+                                <label for="floatingSelect">Question type</label>
+                            </div>
+                              <div class="__create__mult__question" v-if="inputs.question_temp.question_type === 'multiple'">
+                                <span>Set multiple choice options</span>
+                                <div class="input-group mt-2 mb-2" v-for="(answer,index) in inputs.question_temp.option_count">
+                                    <input type="text" class="form-control" :id="`answerOptionInput`+index" placeholder="Question's option" aria-label="Question's option" aria-describedby="Remove question" @blur="createSubEntry('a_q',index)" v-model="most_recent.a_q.content.answer_option[index]">
+                                    <button class="btn btn-outline-secondary" type="button" id="'button-addon'+index" @click="removeSubEntry('a_o',index)">Remove</button>
+                                </div>
+                                <button type="button"class="mt-1 mb-2" style="padding:8px 10px;background:#333;color:#fff;border:none;margin-left:auto" @click="createSubEntry('n_o')">Add new option</button>
+                              </div>
+                            <button type="submit" class="btn btn-success">Add question</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="__control__buttons" style="width:100%;display:flex;justify-content:center;align-items:flex-end;" v-if="listing_data.application_data.question_data.length > 0 || !inputs.include_test">
+                    <button type="button" class="btn mt-4" style="margin:0 auto;padding:12px 18px;background:green;color:#fff" @click="checkStep(3)">Next</button>             
+                </div>
+            </div> 
+            <div class="create__step__card" v-if="current_step === 4" style="overflow-y: scroll;">
+                <h5 class="mb-4">Final touches</h5>
+                <span class="mb-2">Automatically prevent submissions after this date</span>
+                <div class="form-floating">
+                    <input type="date" class="form-control" id="applicationDeadlineInput" placeholder="dd/mm/yyyy" value="dd/mm/yyyy" @blur="checkDate">
+                    <label for="floatingInputInvalid">Applcation deadline</label>
+                </div>    
+                <div class="__control__buttons" style="width:100%;display:flex;justify-content:center;align-items:flex-end;">
+                    <button type="button" class="btn mt-4" style="margin:0 auto;padding:12px 18px;background:green;color:#fff" @click="checkStep(4)">Confirm</button>             
+                </div>
+            </div>
+            <div class="d-flex justify-content-center flex-column align-items-center p-5 create__step__card" v-if="current_step === 5">
+                <h6 class="text-center ms-auto mb-3">Your listing has been submitted for review. We will contact you when it is active or if any changes have to be made</h6>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_uu0x8lqv.json"  background="transparent"  speed="1"  style="width: 150px; height: 150px;"autoplay></lottie-player>
+                <button type="button" class="btn btn-primary mt-3" id="closeSuccess" @click="done">Great !</button>
+            </div>           
+        </div>
+  </section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

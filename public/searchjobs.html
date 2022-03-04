@@ -20,32 +20,25 @@
     />
     <!----Boot-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="js/script.js" defer></script>
-    <script async src="//jsfiddle.net/user2314737/h3k1amhp/embed/" defer></script>
-    <script type="module" src="js/searchscripts.js" defer></script>
-    <script src="js/search-auto.js" defer></script>
+    <script src="/js/script.js" defer></script>
+    <!--<script async src="//jsfiddle.net/user2314737/h3k1amhp/embed/" defer></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
+  <script type="module" src="js/searchscripts.js" defer></script>
+    <script src="/js/search-auto.js" defer></script>
 
     <title>Job | Search</title>
   </head>
   <body>
     <section class="search-header">
-      <div class="brand-banner">
-        <div class="brand-logo">
-          <a href="index.html"><img src="images/logoDark.svg" alt="Intouch logo. Click to go home"></a>
-        </div>
-        <div class="brand-user-btn">
-          <a class="dark-btn" href="#">Log In</a>
-          <a class="light-btn" href="#">Sign up</a>
-        </div>
-      </div>
-      <nav>
+      <nav class="search-nav">
+        <a id="search-page-nav-logo" href="/main/home"><img src="../images/logo.svg" alt="Intouch logo. Click to go home"></a>
         <div class="search-field">
           <div class="search-input">
             <input
             type="text"
             id="career-search"
             name="careerSearch"
-            placeholder="Search jobs near you" autocomplete="off"
+            placeholder="Search..." autocomplete="off"
           />
           <div class="career-search-auto-complete">
 
@@ -58,7 +51,15 @@
             <i class="fas fa-search"></i>
           </button>
         </div>
+        <div class="menu-toggle-search" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+          <span id="menu-top"></span>
+          <span id="menu-txt">MENU</span>
+          <span id="menu-btm"></span>
+        </div>
       </nav>
+      <div class="search-quick">
+        
+      </div>
     </section>
     <section class="search-page-body">
       <div class="container-fluid">
@@ -141,34 +142,65 @@
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6">
               <div class="results-indicator">
-                <span id="result-number">24</span>
-                <span id="result-job">Web developer</span>
-                <span>jobs in</span>
-                <span id="result-scope">Jamaica</span>
+                <span>jobs found in</span>
+                <span id="search-result-scope"></span>
               </div>
               <div class="job-display">
-                
-              
+          
               </div>
-              <div aria-label="..." class="d-flex justify-content-center align-items-center">
-                <ul class="pagination">
-                  <li class="page-item disabled">
-                    <span class="page-link">&laquo;</span>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">&raquo;</a>
-                  </li>
-                </ul>
+              <div class="d-flex justify-content-center">
+                <div class="d-grid w-100 g-2 h-100" id="loadingResultsProgress">
+                  <div class="job-card-loader mb-3">
+                    <div class="image-loader"></div>
+                    <div class="jc-loader">
+                      <span class="long-content-loader"></span>
+                      <div class="short-loaders">
+                        <span class="short-content-loader"></span>
+                        <span class="short-content-loader"></span>
+                      </div>
+                      <span class="short-content-loader"></span>
+                    </div>
+                  </div>
+                  <div class="job-card-loader mb-3">
+                    <div class="image-loader"></div>
+                    <div class="jc-loader">
+                      <span class="long-content-loader"></span>
+                      <div class="short-loaders">
+                        <span class="short-content-loader"></span>
+                        <span class="short-content-loader"></span>
+                      </div>
+                      <span class="short-content-loader"></span>
+                    </div>
+                  </div>
+                  <div class="job-card-loader mb-3">
+                    <div class="image-loader"></div>
+                    <div class="jc-loader">
+                      <span class="long-content-loader"></span>
+                      <div class="short-loaders">
+                        <span class="short-content-loader"></span>
+                        <span class="short-content-loader"></span>
+                      </div>
+                      <span class="short-content-loader"></span>
+                    </div>
+                  </div>
+                  <div class="job-card-loader">
+                    <div class="image-loader"></div>
+                    <div class="jc-loader">
+                      <span class="long-content-loader"></span>
+                      <div class="short-loaders">
+                        <span class="short-content-loader"></span>
+                        <span class="short-content-loader"></span>
+                      </div>
+                      <span class="short-content-loader"></span>
+                    </div>
+                  </div>
+                
+                </div>
               </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-3">
                 <div class="get-updates-card">
-                    <img src="images/getupdatesill.svg" alt="Get updates from ">
+                    <img src="../images/getupdatesill.svg" alt="Get updates from ">
                     <h2>Get updates on new jobs in this category</h2>
                     <button type="button" class="dark-btn"><i class="fas fa-bell"></i></button>
                 </div>
@@ -180,6 +212,9 @@
     <div class="filter-toggle">
       <i class="fas fa-sliders-h"></i>
     </div>
+    <div class="scroll-top-action">
+      <i class="fas fa-chevron-up"></i>
+    </div>
     <section class="footer">
 
     </section>
@@ -188,26 +223,26 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Senior Web Developer</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">{{aboutPosition.title}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="mod-offer-owner">
-          <img src="/public/images/singertest.png" alt="Singer">
+          <img id="mod-offer-owner-image"src="../images/imageplaceholder.png" alt="Placeholder image" v-bind:src="companyLogo" v-bind:alt="companyName ">
           <div class="mod-offer-owner-content">
-            <h2>Singer Jamaica</h2>
+            <h2 id="mod-offer-owner">{{companyName}}</h2>
             <div class="mod-offer-contact-data">
               <div class="mod-contact-email">
                 <i class = "fas fa-envelope"></i>
-                <span>spam@example.com</span>
+                <span id="mod-offer-owner-email">{{companyContact.email}}</span>
               </div>
               <div class="mod-contact-phone">
                 <i class="fas fa-phone"></i>
-                <span>+1(876)555-5678</span>
+                <span id="mod-offer-owner-phone">{{companyContact.phone}}</span>
               </div>
               <div class="mod-contact-location">
-                <i class="fas fa-location-arrow"></i>
-                <span>7 Imaginary Way, Wonderland Blvd, Neverland</span>
+                <i class="fas fa-map-pin"></i>
+                <span id="mod-offer-owner-address">{{companyContact.address}}</span>
               </div>
             </div>
           </div>
@@ -222,7 +257,7 @@
               </h2>
               <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
-                  <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  <p>{{aboutCompany}}</p>
                 </div>
               </div>
             </div>
@@ -234,7 +269,14 @@
               </h2>
               <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
-                  <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  <div class="sub-data">
+                    <strong>Responsibilites</strong>
+                    <ul id="jobEdQualificationst">
+                      <li v-for="resp in aboutPosition.responsibilities" :key="resp">
+                        {{ resp }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -246,7 +288,30 @@
               </h2>
               <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
-                  <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  <div class="sub-data">
+                    <strong>Education</strong>
+                    <ul id="jobEdQualificationst">
+                      <li v-for="edQual in require.education" :key="edQual">
+                        {{ edQual }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="sub-data">
+                    <strong>Skills</strong>
+                    <ul id="jobSkills">
+                      <li v-for="skill in require.skills" :key="skill">
+                        {{ skill }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="sub-data">
+                    <strong>Ideal Qualities</strong>
+                    <ul id="idealQual">
+                      <li v-for="qual in require.ideal" :key="qual">
+                        {{ qual }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -284,6 +349,16 @@
     </div>
   </div>
 
+</div>
+<!--Off Can-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    ...
+  </div>
 </div>
   </body>
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>

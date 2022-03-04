@@ -11,7 +11,12 @@ const fetchers = require('../../fetchers');
 const cookie = require('cookie');
 const csessions = require('client-sessions');
 const sessions = require('express-session');
+const urlHandler = require('../../urlHandlers');
+
 const router = express.Router();
+
+
+
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -46,7 +51,7 @@ const idbyAuth = async (req, token)=>{
 router.get('/login', async (req,res)=>{
     var loggedIn = await checkForLogin(req);
     if(!loggedIn){
-        res.render('./account/authentication/login')
+        res.render('./account/authentication/user_auth/login')
     }else{
         res.redirect('../main/home')
     }
@@ -55,7 +60,7 @@ router.get('/login', async (req,res)=>{
 router.get('/register', async (req,res)=>{
     var loggedIn = await checkForLogin(req);
     if(!loggedIn){
-        res.render('./account/authentication/register')
+        res.render('./account/authentication/user_auth/register')
     }else{
         res.redirect('../main/home')
     }
@@ -81,7 +86,7 @@ router.get('/recover/confirm', async (req,res)=>{
 router.get('/identity/verify', async (req, res)=>{
     var loggedIn = await checkForLogin(req);
     if(!loggedIn){
-        res.render('./account/authentication/verifyemail')
+        res.render('./account/authentication/user_auth/verifyemail')
     }else{
         res.redirect('../main/home')
     }
@@ -96,23 +101,37 @@ router.post('/auth/signup', async (req,res, next)=>{
     }else{
         res.send(data)   
     }
-    next(console.log('sent'))
 })
 
 router.post('/auth/login', async (req,res)=>{
     var session = req.session;
     var data = await fetchers.fetchloginAuth(req.body);
+    var red_path = urlHandler.definePath(req.body.sendTo);
     if(data.completed){
-        session.userID = data.authToken
-        res.send(data);
+        session.userID = data.data.authToken;
+        session.myID = data.data.id;
+        session.userEmail = data.data.email;
+        session.userType = data.data.role;
+        session.userFNAdata = data.data.first_name;
+        session.userLNAdata = data.data.last_name;
+        session.companyID = data.data.verified_companies_id;
+        session.fav_comp = data.data.following_companies;
+        session.fav_jobs = data.data.favourite_jobs;  
+        session.my_alerts = data.data.job_alerts  
+        res.send({
+            completed:true,
+            redPath:red_path
+        })
     }else{
-        res.send(data)
+        res.send({
+            completed:false,
+            redPath:`/user/auth/login?sendTo=${req.body.sendTo}`
+        })
     }
 })
 
 router.post('/auth/me', async(req,res)=>{
     var session = req.session;
-
 })
 
 

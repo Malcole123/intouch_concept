@@ -9,11 +9,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@anvilco/anvil": "^2.9.2",
+    "@restpack/client": "^2.0.0",
+    "@splidejs/splide": "^3.6.12",
     "axios": "^0.25.0",
     "client-sessions": "^0.8.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^14.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
-    "nodemon": "^2.0.15"
+    "express-session": "^1.17.2",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "vue": "^2.6.14"
   }
 }

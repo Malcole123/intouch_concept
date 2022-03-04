@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!----Font Awesome CDN-->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/resume/editorstyles.css">
+    <script src="https://unpkg.com/vue@2"></script>
+    <script type="module"src="/js/resume/builderconfig.js" defer></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="jquery.zoomooz.min.js"></script>
+    <title>Resume| Builder</title>
+  </head>
+  <body>
+    <section class="header">
+      <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/main/home"><img src="/images/logo.svg" alt="Go to home"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active text-dark fs-3" aria-current="page" href="/main/home">HOME</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-dark fs-3" aria-current="page" href="/main/seejobs?q=&country=&sub_division=">BROWSE JOBS</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-dark fs-3" href="#">POST A JOB</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-dark fs-3" href="/resume/create/templates">RESUME BUILDER</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-dark fs-3" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    COMPANY
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </li>
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+      </nav>
+    </section>
+    <section class="editor-body">
+      <div class="content-editor">
+        <div class="container">
+            <div class="edit-name">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="editnameInput" placeholder="May Sue" v-model="userName.input" @keyup="nameCheck" maxlength="24">
+                <label for="floatingInput">Name</label>
+              </div>
+            </div>
+            <div class="edit-about">
+              <div class="form-floating">
+                <textarea id="aboutInput"class="form-control" placeholder="Edit your bio here" id="floatingTextarea2" style="height: 180px" v-model="userBio.input" @keyup="aboutCheck" maxlength="165" cols="4" wrap="hard" ></textarea>
+                <label for="floatingTextarea2">About Me</label>
+              </div>
+              <small>{{userBio.remaining}} out of 165 characters remaining</small>
+            </div>
+            <div class="row mt-3">
+              <h6>Contact information</h6>
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="editEmailInput" placeholder="Your email" v-model="contact.email" @blur="emailCheck" maxlength="24">
+                  <label for="floatingInput">Email</label>
+                  <div class="invalid-feedback">
+                    Don't miss that email. Please check to ensure your email is correct.
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="editPhoneInput" placeholder="Your phone number" v-model="contact.phone" @keyup="phoneCheck" @blur="phoneCheck"maxlength="24">
+                  <label for="floatingInput">Phone number</label>
+                  <div class="invalid-feedback">
+                    Don't miss that call. Please check to ensure your phone number is correct.
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="editAddressInput" placeholder="Your address" v-model="contact.address">
+                  <label for="floatingInput">Address</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2 d-sm-flex flex-sm-grid g-4">
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="edit-skills">
+                  <div class="skills-preview"v-if="skills.userSkills">
+                      <h6>Your skills</h6>
+                      <div class="skills-preview-display">
+                        <div class="skills-preview-card edit" v-for="skill in skills.userSkills" :key="skill">
+                          <span>{{skill}}</span>
+                          <i class="fas fa-minus" @click="skillRemove"></i>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="skills-add" v-if="skills.maxAdd === false">
+                    <form v-on:submit.prevent="skillAdd">
+                      <input type="text" class="form-control mt-2 mb-2" id="addSkillsInput" placeholder="Add your skills" v-model="skills.input" autocomplete="off">
+                      <div class="invalid-feedback">
+                        Can't add an empty field
+                      </div>
+                      <button class="btn btn-primary" type="submit" @click="skillAdd">Add ({{skills.userSkills.length}}/4)</button>  
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="edit-interests">
+                  <div class="interests-preview">
+                    <h6>Your interests or hobbies</h6>
+                    <div class="interest-preview-card edit" v-for="interest in interests.userInterests" :key="interest.id">
+                      <span>{{interest}}</span>
+                      <i class="fas fa-minus" @click="interestRemove"></i>
+                    </div>
+                  </div>
+                  <div class="interest-add" v-if="interests.maxAdd === false">
+                    <form v-on:submit.prevent="interestAdd">
+                      <input type="text" class="form-control mt-2 mb-2" id="addInterestInput" placeholder="Add your interests" v-model="interests.input">
+                      <button class="btn btn-primary" type="submit" @click="interestAdd">Add ({{interests.userInterests.length}}/{{interests.maxInterest}})</button>  
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 d-sm-flex flex-sm-grid g-4">
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="edit-education">
+                  <div class="education-preview">
+                    <h6>Education</h6>
+                    <div class="education-preview-card" v-for="school in education.entered" :key="school.id">
+                      <div class="d-flex justify-content-between w-100">
+                        <span>{{school.school}}</span>
+                        <span class="badge rounded-pill bg-danger">{{school.start}} - {{school.end}}</span>
+                      </div>
+                     <div style="padding:2px 0"class="d-flex justify-content-between w-100">
+                      <p>{{school.certification}}</p>
+                      <input type="hidden" :value="school.position">
+                      <i style="color:#f44336;font-size:0.9rem"class="fas fa-minus" @click="educationRemove"></i>
+                     </div>
+                    </div>
+                  </div>
+                <form v-on:submit.prevent="educationAdd">
+                  <div class="education-add" v-if="education.entered.length < education.maxAdd">
+                    <div class="row mt-2">
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control" id="editStartInput" placeholder="Start date" v-model="education.template.start">
+                          <label for="floatingInput">Start</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control" id="editEndInput" placeholder="End date" v-model="education.template.end">
+                          <label for="floatingInput">End</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editInstitution" placeholder="Institution" v-model="education.template.school">
+                        <label for="floatingInput">Institution</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editCertification" placeholder="Certification" v-model="education.template.certification">
+                        <label for="floatingInput">Certification</label>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add ({{education.entered.length}}/{{education.maxAdd}})</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="edit-employment">
+                  <div class="employment-preview">
+                    <h6>Previous Employment</h6>
+                    <div class="edit-employment-card" v-for="employ in employment.entered" :key="employ.id">
+                      <div class="d-flex justify-content-between w-100">
+                        <span>{{employ.company}}</span>
+                        <span class="badge rounded-pill bg-danger">{{employ.start}} - {{employ.end}}</span>
+                      </div>
+                     <div style="padding:2px 0"class="d-flex justify-content-between w-100">
+                      <p>{{employ.title}}</p>
+                      <input type="hidden" :value="employ.position">
+                      <i style="color:#f44336;font-size:0.9rem"class="fas fa-minus" @click="jobRemove"></i>
+                     </div>
+                    </div>
+                  </div>
+                <form v-on:submit.prevent="jobAdd">
+                  <div class="employment-add" v-if="employment.entered.length < education.maxAdd">
+                    <div class="row mt-2">
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control" id="jobStartInput" placeholder="Start date" v-model="employment.template.start">
+                          <label for="floatingInput">Start</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control" id="jobEndInput" placeholder="End date" v-model="employment.template.end">
+                          <label for="floatingInput">End</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="jobPlaceInput" placeholder="Company" v-model="employment.template.company">
+                        <label for="floatingInput">Company</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="jobTitleInput" placeholder="Title" v-model="employment.template.title">
+                        <label for="floatingInput">Position</label>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add Job History ({{employment.entered.length}}/{{employment.maxAdd}})</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <h6 class="mb-3">Add your references</h6>
+              <div class="col-12">
+                <div class="d-flex w-100 justify-content-between mb-3 border-bottom border-1 border-dark ref-card" v-for="ref in references.entered" :key="ref.id">
+                  <div class="ref-name-title">
+                    <h6 class="fs-6">{{ref.name}}</h6>
+                    <span>{{ref.title}}</span>
+                  </div>
+                  <div class="ref-contact">
+                    <span class="badge rounded-pill bg-dark"><i class="fas fa-envelope"></i>&nbsp &nbsp{{ref.contact.email}}</span>
+                    <span class="badge rounded-pill bg-dark"><i class="fas fa-phone-alt"></i>&nbsp &nbsp{{ref.contact.phone}}</span>
+                  </div>
+                  <input type="hidden" :value="ref.position">
+                  <i class="fas fa-minus" @click="refRemove"></i>
+                </div>
+              </div>
+              <div class="col-12" v-if="references.entered.length < references.maxEnter">
+                <form v-on:submit.prevent="refAdd">
+                  <div class="col-12">
+                    <div class="form-floating mt-3" >
+                      <input type="text" class="form-control" id="editRefName" placeholder="Name" v-model="references.template.name">
+                      <label for="floatingInput">Reference name:</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="editRefComp" placeholder="Company" v-model="references.template.company">
+                        <label for="floatingInput">Company:</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="editRefTitle" placeholder="Title" v-model="references.template.title">
+                        <label for="floatingInput">Title:</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-floating mt-3">
+                        <input type="email" class="form-control" id="editRefEmail" placeholder="Email" v-model="references.template.contact.email">
+                        <label for="floatingInput">Email:</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="editRefPhone" placeholder="Phone" v-model="references.template.contact.phone">
+                        <label for="floatingInput">Phone:</label>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-3">Add reference</button>
+                </form>
+              </div>
+            </div>
+            <div class="row mt-3 d-sm-flex flex-sm-grid g-4">
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="edit-language">
+                  <div class="language-preview">
+                    <h6>Spoken languages</h6>
+                    <div class="skills-preview-card edit" v-for="language in languages.userLanguages" :key="language.id">
+                      <span>{{language}}</span>
+                      <i class="fas fa-minus" @click="langRemove"></i>
+                    </div>
+                  </div>
+                <form v-on:submit.prevent="langAdd">
+                  <div class="form-floating mb-3" v-if="languages.maxAdd === false">
+                    <input type="text" class="form-control" id="editCharityInput" placeholder="English" v-model="languages.input">
+                    <label for="floatingInput">Add language</label>
+                    <button class="btn btn-primary mt-3 mb-4" type="submit">Add language</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="edit-comService">
+                  <div class="comService-preview">
+                    <h6>Charities</h6>
+                    <div class="skills-preview-card edit" v-for="charity in charities.userCharity" :key="charity.id">
+                      <span>{{ charity }}</span>
+                      <i class="fas fa-minus" @click="serviceRemove"></i>
+                    </div>
+                  </div>
+                <form v-on:submit.prevent="serviceAdd">
+                  <div class="form-floating mb-3" v-if="charities.maxAdd===false">
+                    <input type="text" class="form-control" id="editCharityInput" placeholder="Service" v-model="charities.input">
+                    <label for="floatingInput">Add Comm. Service</label>
+                    <button class="btn btn-primary mt-3 mb-4" type="submit">Add service</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+              <button class="btn btn-dark" type="submit" @click="print">PRINT</button>
+            </div>
+        </div>
+      </div>
+      <div class="content-display">
+        <div class="zoom-control">
+          <%-include( templatePath ) -%>
+        </div>
+      </div>
+    </section>
+    <div class="show-resume">
+      <i class="fas fa-file"></i>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script> function main(){
+    $(window).on('scroll', ()=>{
+        var currPos = $(window).scrollTop();
+        if(currPos > 10 ){
+            $('nav').addClass('scroll-nav');
+        }else{
+            $('nav').removeClass('scroll-nav')
+        }
+        if(currPos < 100){
+            $('.horizontal-ad-space').addClass('show-space');
+            $('.scroll-top-action').hide()
+        }else{
+            $('.horizontal-ad-space').removeClass('show-space');
+            $('.scroll-top-action').show()
+        }
+    }).on('resize', ()=>{
+        var windowSize = $(window).width()
+        var maxSize = 1020;
+    }).on('load', ()=>{
+    })
+    $('.scroll-top-action').on('click', ()=>{
+        $(window).scrollTop(0)
+    })
+
+    var resumeShow = $('.show-resume');
+
+    resumeShow.on('click',()=>{
+      $('.content-display').toggleClass('resdisplay-tog');
+    })
+}
+$(document).ready(main) 
+</script>
+</html>

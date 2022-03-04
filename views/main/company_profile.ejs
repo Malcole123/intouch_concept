@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/searchstyles.css" />
+    <link rel="stylesheet" href="/css/main/profile.css" />
+    <!----Font Awesome CDN-->
+    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!----Boot-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!--<script async src="//jsfiddle.net/user2314737/h3k1amhp/embed/" defer></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
+    <script type="module" src="/js/setSearch.js" defer></script>
+    <script type="module" src="/js/searchscripts.js" defer></script>
+    <script type="module" src="/js/main/profile.js" defer></script>
+
+
+    <title>inTouch | Search</title>
+  </head>
+  <body>
+    <section class="profile__header">
+      <%-include( '../components/search_nav' ) -%>
+    </section>
+    <section class="company__profile__main">
+        <div class="container h-100">
+          <div class="mb-3 company__intro">
+              <img class="__intro__banner" src="/images/test/test__banner.jfif" alt="">
+              <div class="__company__identity">
+                <img class="__intro__profile" src="<%= c_Data.company_logo.url %>" alt="">
+                <div>
+                  <h4 style="text-transform: capitalize;"><%= c_Data.name %></h4>
+                  <p><%= c_Data.overview %></p>
+                  <small style="text-transform:capitalize;"><%= c_Data.headquarter %> - <%= c_Data.industry %></small>
+                </div>
+                <div class="__intro__buttons">
+                  <% if( loggedIn && c_Data.users_following.includes(user.id)){ %>
+                    <button type="button" class="btn btn-succcess">Following &nbsp<i class="fas fa-check"></i></button>  
+                  <% }else if(loggedIn && !c_Data.users_following.includes(user.id)){ %>
+                    <button type="button" class="btn btn-dark">Follow &nbsp<i class="fas fa-plus"></i></button>  
+                  <% }else if(!loggedIn){%>
+                    <a href="/user/login?sendTo=home" style="text-decoration:none;" class="btn btn-dark">Follow &nbsp<i class="fas fa-plus"></i></a>
+                  <% } %>
+                  <button type="button" class="btn btn-dark">Visit &nbsp<i class="fas fa-globe"></i></button>
+                  <button type="button" class="btn btn-primary">Share &nbsp<i class="fas fa-share"></i></button>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-8">
+              <div class="company__profile__nav">
+                <div class="__scroll__company__info" style="width:50%">
+                  <img class="__scroll__profile_pic" src="/images/test/test__profile.jfif" alt="">
+                  <div class="d-sm-none d-md-none d-lg-flex align-items-center" style="gap:8px;">
+                    <strong class="__hide__mobile" style="text-transform: capitalize;"><%=c_Data.name %></strong>
+                    <button type="button" class="__hide__mobile" style="padding:6px 10px;background:#333;color:#fff;outline:none;border:none;border-radius:5px">Follow &nbsp<i class="fas fa-plus"></i></button>
+                  </div>
+                </div>
+                <ul class="__profile__nav__links">
+                  <li class="__p__nav_link __active">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    <a href="#about__">About</a>
+                  </li>
+                  <li class="__p__nav_link" data-link-to="jobs">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <a href="#jobs__">Jobs</a>
+                  </li>
+                  <li class="__p__nav_link" data-link-to="media__">
+                    <i class="fa-solid fa-images"></i>
+                    <a href="#media__">Media</a>
+                  </li>
+                  <li class="__p__nav_link" data-link-to="locations">
+                    <i class="fa-solid fa-map-pin"></i>
+                    <a href="#locations">Locations</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="__about__company __card" id="about__">
+                    <h5>About Company</h5>
+                    <p class="mt-2 mb-3"><%= c_Data.about_company %></p>
+                    <strong class="mt-2 mb-2">Mission Statement</strong>
+                    <p class="mt-2 mb-3"><%= c_Data.mission_statement %></p>
+                    <strong class="mb-2">Company size</strong>
+                    <p><%= c_Data.company_size %></p>
+                </div>
+              </div>
+            </div>
+            <div class="d-sm-none d-md-none d-lg-block col-sm-12 col-md-12 col-lg-4">
+              <div class="ad__space" style="background:#333;width:100%;height:100%">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-12 col-sm-12 mt-3">
+              <div class="__jobs__company __card" id="jobs__">
+                  <h5>Open positions</h5>
+                  <div class="row mt-3 __carousel__outer" id="positionsCarousel">
+                      <div class="__carousel__inner">
+                        <% l_Data.forEach((listing)=>{ %>
+                          <div class="col-6">
+                            <div class="card">
+                              <div class="card-body" style="position:relative">
+                                <h5 class="card-title"><%= listing.title %></h5>
+                                <p class="card-text"><%= listing.short_summary %></p>
+                                <a :href="j_u_create('<%=listing.title %>','<%=listing.id%>', '<%=listing.loc_country %>', '<%=listing.loc_sub_division %>')" class="btn btn-primary">See details</a>
+                                <div class="badge bg-dark" style="text-transform:capitalize;position:absolute;top:0px;right:0px"><%= listing.type.replace('-',' ')%></div>
+                              </div>
+                            </div>
+                          </div>            
+                        <% }) %>                 
+                      </div>
+                  </div>
+                  <div class="__carousel__indicators">
+                      <i class="fa-solid fa-chevron-left" id="leftScrollPosComp"></i>
+                      <i class="fa-solid fa-chevron-right" id="rightScrollPosComp"></i>
+                  </div>              
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-12 col-sm-12 mt-3">
+              <div class="__gallery__company __card" id="media__">
+                  <h5>Gallery</h5>
+                  <div class="row mt-3 __carousel__outer" id="galleryCarousel">
+                    <div class="__carousel__inner">
+                      <% c_Data.company_images.forEach((image)=>{ %>
+                        <div class="col-6 col-md-4 col-lg-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <img style="width:100%" src="<%= image.url %>" alt="<%= c_Data.name %> image">
+                            </div>
+                          </div>
+                        </div>                
+                      <% })%>
+                   
+                    </div>
+                </div>
+                <div class="__carousel__indicators">
+                    <i class="fa-solid fa-chevron-left" id="leftScrollGallComp"></i>
+                    <i class="fa-solid fa-chevron-right" id="rightScrollGallComp"></i>
+                </div> 
+              </div>
+            </div>
+          </div>
+          </div>
+        
+    </section>
+    <div class="focus___overlay"></div>
+
+<section class="footer">
+</section>
+<div class="notif__display">
+  <div class="notif__body">
+    <div class="d-flex justify-content-between align-items-center pb-2 mb-3 " style="gap:10px">
+      <h3>Notifications</h3>
+      <span style="height:2px;flex:1;background:#ddd;border-radius:10x;"></span>
+      <i style="cursor:pointer;" class="fas fa-times fs-3 text-dark _alert"></i>
+    </div>  
+    <div class="__notif__holder">
+        <div v-for="notif in notif.display" :key="notif.id" style="height:130px;width:100;display:flex;align-items:center;gap:10px;position:relative" v-bind:class="notif.noticed ? '__notif__card' : '__notif__card __unread_notif'">
+          <div class="new__notif__ind" v-if="!notif.noticed" style="width:10px;height:10px;border-radius:50%;background:#f44336"></div>
+          <div class="___notif_content d-flex " style="flex:1;gap:12px;align-items:flex-start;">
+              <img src="../images/imageplaceholder.png" alt="Placeholder image" style="width:55px">
+              <div>
+                <p>{{notif.body}}</p>
+                <a v-if="notif.application_notif" :href="notif.direct_user_to">See next steps</a>
+                <a v-if="notif.job_alert_notif" :href="notif.direct_user_to">See Jobs</a>
+                <a v-if="notif.change_in_job_notif" :href="notif.direct_user_to">View</a>
+              </div>
+          </div>
+          <div class="__notif__remove">
+            <i class="fas fa-trash fs-6"></i>
+          </div>
+          <span style="position:relative;bottom:5px;right:3px;color:rgba(94, 93, 93, 0.452);font-size:0.7rem">{{setRelative(notif.created_at)}}</span>
+        </div>
+    </div>  
+  </div>   
+  </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  </html>

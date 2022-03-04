@@ -1,11 +1,25 @@
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config()
 }
+const sessionKey = process.env.SESSION_SECRET
 
-const userRouter = require('./routes/user.js');
+const userRouter = require('./routes/user/auth.js');
+const userEditRouter = require('./routes/user/edit.js');
+const port = process.env.PORT || 3000
+
+const employerRouter = require('./routes/client_user/account/auth.js')
 const mainRouter = require('./routes/main.js');
+const resumeRouter = require('./routes/resumeBuild/router.js');
+const onBoardingRouter = require('./routes/user_onboarding.js');
+const dashboardRouter = require('./routes/client_user/dashboard/dash_pages.js');
+const analyticRouter = require('./routes/analytics/analytics.js');
+const userAlertRouter = require('./routes/alerts/user.js');
 
-const fetchers = require('./fetchers.js')
+const fetchers = require('./fetchers.js');
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
+
+
 const fs = require('fs')
 const http = require('http')
 const express = require('express');
@@ -14,33 +28,39 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 
-app.use(express.json())
-app.use(express.urlencoded({extended:false}))
-app.use('/user', userRouter)
+
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+app.use(sessions({
+    secret: sessionKey,
+    saveUninitialized:false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    resave: false 
+}));
+
+
+app.use('/user', userRouter);
+app.use('/me', userEditRouter);
 app.use('/main',mainRouter);
-
-
-app.post('/alljobs', async (req,res)=>{
-    try{
-        var data = req.body;
-        var response = await fetchers.fetchJobsCall(data.title_query, data.country, data.sub_division);
-        app.get('/seejobs', (req,res, data)=>{
-            res.render('searchpage')
-        })        
-        res.send(response);
-    }catch(e){
-        console.log(e)
-    }
-})
+app.use('/resume',resumeRouter);
+app.use('/employer',employerRouter);
+app.use('/onboarding',onBoardingRouter);
+app.use('/dashboard',dashboardRouter);
+app.use('/analytics',analyticRouter);
+app.use('/alerts',userAlertRouter);
 
 
 
 
 
+
+app.get('*', function(req, res){
+    res.status(404).send('body')
+});
 
 
 console.log('port')
-app.listen(3000);
+app.listen(port);
 
 
 

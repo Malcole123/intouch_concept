@@ -1,0 +1,89 @@
+    <div class="resume-template" style="font-family:'Roboto',sans-serif;width:815px;height:1026px;margin:0 auto">
+        <div style="width:100%;height:fit-content;background:#353434;color:#fff;padding:0;"
+        class="template-header">
+            <h1 style="border-bottom: 2px solid #fff;max-width:80%;margin:0 auto;text-align: center;padding:8px 0" class="prim-head-text white-text">
+                {{userName.input}}
+            </h1>
+            <div class="contact-me" style="display:grid;grid-template-columns: 1fr 1fr 1fr;gap:2px;width:95%; margin:8px auto;">
+                <span style="font-size:0.7em;color:#fff;text-align: center;"><i class="fas fa-envelope"></i>&nbsp {{contact.email}}</span>
+                <span style="font-size:0.7em; color:#fff;text-align: center;"><i class="fas fa-phone"></i>&nbsp {{contact.phone}}</span>
+                <span style="font-size:0.7em;color:#fff;text-align: center;"><i class="fas fa-map-pin"></i>&nbsp{{contact.address}}</span>
+            </div>
+            <div class="temp-header-details" style="width:100%;display:grid;grid-template-columns:1fr 1fr;background:#353434">
+                <div class="template-about" style="width:100%;padding-bottom:10px">
+                    <h6 style="font-size:1em;padding-left:5px;margin-bottom:10px;">About</h6>
+                    <p style="font-size:0.72em;width:95%;margin:0 auto">{{userBio.input}}</p>
+                </div>
+                <div class="template-skills" style="background:#413F3F;width:100%;padding-bottom:10px">
+                    <h6 style="font-size:1em;color:#353434;background:#E6E6E6;height:fit-content;width:100%;padding-left:4px;margin-bottom:10px">Skills</h6>
+                    <ul>
+                        <li class="white-text p-text" v-for="skill in skills.userSkills" :key="skill">
+                            {{ skill }}
+                          </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="width:100%;height:65%;padding:8px 6px" class="template-body">
+            <div class="employment" style="height: 22%;width:100%;width:95%;margin:0 auto">
+                <h5 style="padding:2px 5px; color:#333; background:#fff;border-radius:0px;width:fit-content;font-size:1em">Employment history</h5>
+                <div class="employment-display" style="display:grid;grid-template-columns:1fr 1fr 1fr; gap:5px">
+                    <div class="employment-card" v-for="empSet in employment.entered" :key="empSet.id">
+                        <span style="color:#333; font-size:1em;">{{empSet.start}} - {{empSet.end}}</span>
+                        <h5 style="font-size:1.15em;">{{empSet.title}}</h5>
+                        <p style="font-size:1.2em">{{empSet.company}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="education" style="height:22%;width:95%;margin:0 auto">
+                <h5 style="padding:2px 5px; color:#333; background:#fff;border-radius:0px;width:fit-content;font-size:1em">Education</h5>
+                <div class="education-display" style="display:grid;grid-template-columns: 1fr 1fr 1fr;gap:5px">
+                    <div class="education-card" style="width:100%" v-for="eduSet in education.entered" :key="eduSet.id">
+                        <span style="color:#333; font-size:1em;">{{eduSet.start}} - {{eduSet.end}}</span>
+                        <h5 style="font-size:1.1em;">{{eduSet.certification}}</h5>
+                        <p style="font-size:1.2em">{{eduSet.school}}</p>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="references" style="height:22%; width:95%;margin:0 auto">
+                <h5 class="secc-head-text" style="padding:2px 5px; color:#333; background:#fff;border-radius:0px;width:fit-content;font-size:1em">References</h5>
+                <div class="referneces-display" style="display:grid;grid-template-columns: 1fr 1fr 1fr;gap:5px">
+                    <div class="reference-card" style="width:100%" v-for="refSet in references.entered" :key="refSet.id">
+                        <h5 style="font-size:1.1em;">{{refSet.name}}</h5>
+                        <li style="font-size:1em">{{refSet.title}}</li>
+                        <li style="font-size:0.9em">{{refSet.contact.email}}</li>
+                        <li style="font-size:0.9em">{{refSet.contact.phone}}</li>
+                    </div>
+                </div>
+            </div>
+    
+            <div style="width:100%;height:25%;background:#353434;color:#fff;position:absolute;bottom:0;left:0;display:grid;grid-template-columns:1fr 1fr 1fr;">
+                <div style="height:100%;width:100%;border-right:0.5px solid #fff" class="interest">
+                    <h6 style="color:#fff;background:#413F3F;padding:4px 0; text-align: center;">Interest & Hobbies</h6>
+                    <ul>
+                        <li style="font-size:0.9em; color:#fff" v-for="interest in interests.userInterests" :key="interest">
+                            {{ interest }}
+                          </li>
+                    </ul>
+                </div>
+                <div style="height:100%;width:100%;border-right:0.5px solid #fff" class="languages">
+                    <h6 style="color:#fff;background:#413F3F;padding:4px 0; text-align: center;">Languages</h6>
+                    <ul>
+                        <li style="font-size:0.9em;color:#fff" v-for="language in languages.userLanguages" :key="language">
+                            {{ language }}
+                          </li>
+
+                    </ul>
+                </div>
+                <div style="height:100%" class="community-service">
+                    <h6 style="color:#fff;background:#413F3F;padding:4px 0;text-align: center;font-size:1.1em;">Community Service</h6>
+                    <ul>
+                        <li style="color:#fff;font-size:0.9em;" v-for="charity in charities.userCharity" :key="charity">
+                            {{ charity }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

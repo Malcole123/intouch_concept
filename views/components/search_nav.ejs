@@ -1,0 +1,75 @@
+<nav class="search-nav navbar-light">
+    <a id="search-page-nav-logo" href="/main/home"><img src="/images/logo.svg" alt="Intouch logo. Click to go home"></a>
+    <div class="search-field">
+      <div class="search-input">
+        <input
+        type="text"
+        id="career-search"
+        name="careerSearch"
+        placeholder="Search..." autocomplete="off"
+      />
+      <div class="career-search-auto-complete">
+
+      </div>
+      </div>
+      <select id="where-select">
+        <option value="" disabled selected hidden>Where ?</option>
+      </select>
+      <button type="button" id="searchJobsBtn">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <div class="search-nav-links">
+        <div class="single-menu" id="nav-search_button">
+          <a href="#"><i class="text-dark fas fa-search"></i></a>
+          <span class="single-text" >Search</span>
+        </div>
+        <div class="single-menu">
+          <a href="/main/home"><i class="text-dark fas fa-home"></i></a>
+          <span class="single-text" >Home</span>
+        </div>
+        <div class="single-menu">
+          <a href="/resume/create/landing"><i class="text-dark fa-solid fa-file-lines"></i></a>
+          <span class="single-text">CV Builder</span>
+        </div>
+        <div class="search-dropdown-menu _alert">
+          <div class="single-menu">
+            <div class="active_nav__indicator"></div>
+            <a href="#"><i class="text-dark fa-solid fa-bell"></i></a>
+            <span class="single-text">Alerts</span>
+          </div>
+        </div>
+        <div class="search-dropdown-menu _me">
+          <div class="single-menu">
+            <a href="#"><i class="text-dark fa-solid fa-user"></i></a>
+            <span class="single-text" >Profile</span>
+          </div>
+          <div class="menu-options__display _me" id="nav_me">
+            <% if(loggedIn){ %>
+              <span class="w-100 text-center text-dark"><%= user.fname %>&nbsp <%=user.lname%></span>
+              <a href="#" class="btn btn-dark w-100 mt-2 mb-2">View Profile</a>
+              <div style="padding:2px 0">
+              <a style="text-decoration:none;color:#333" href="#">Settings</a>
+              </div>
+              <div style="padding:2px 0;">
+                <a style="text-decoration:none;color:#333" href="#">Manage</a>
+              </div>
+              <div style="padding:5px 0;border-top:0.5px solid #ddd" class="mt-3">
+                <a style="text-decoration:none;color:#333" href="#">Sign Out</a>
+                </div>
+            <% }else{ %>
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <span clas="ms-auto text-center">Nothing to see here</span>
+                <a href="/user/login?sendTo=search" class="btn btn-dark mt-1">Log In</a>
+                <a href="/user/register" class="btn btn-dark mt-2">Sign Up</a>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="single-menu">
+          <a href="/main/postajob/landing"><i class="text-dark fa-solid fa-briefcase"></i></a>
+          <span class="single-text">Post a job</span>
+        </div>
+
+    </div>
+  </nav>

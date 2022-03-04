@@ -1,0 +1,231 @@
+html{
+    scroll-padding-top:240px;
+}
+
+.profile__header{
+    background:#fff
+}
+.profile__header .search-field{
+    width:40%;
+    margin-right:auto;
+}
+
+.company__profile__main{
+    width:100%;
+    height:300vh;
+    background:rgb(245,245,245);
+    padding:30px 0;
+}
+
+.company__intro{
+    min-height:360px;
+    height:fit-content;
+    width:100%;
+    background:#fff;
+    border-radius:10px;
+    position:relative;
+}
+
+.__intro__banner{
+    position:absolute;
+   top:0;
+   width:100%;
+   height:auto;
+   border-bottom:0.5px solid #ddd
+}
+.__company__identity{
+    display:flex;
+    gap:20px;
+    position:absolute;
+    bottom:8px;
+    left:1%;
+    right:1%;
+}
+.__intro__profile{
+    width:70px;
+    height:70px;
+    bottom:0px;
+    background:#fff;
+    border:0.5px solid #ddd;
+    border-radius:10px;
+    transform:translateY(-50%);
+}
+.__company__identity p{
+    width:80%;
+    color:rgb(112, 112, 112);
+}
+.__intro__buttons{
+    display:flex;
+    margin-left:auto;
+    gap:5px;
+    align-items:flex-end;
+    justify-content: center;
+    width:fit-content;
+}
+.company__profile__nav{
+    height:62px;
+    background:#fff;
+    position:sticky;
+    display:flex;
+    top:70px;
+    left:25%;
+    right:25%;
+    padding:0 20px;
+    border-radius:10px;
+    transition:0.2s ease-in-out;
+}
+
+.__profile__nav__links{
+    display:flex;
+    align-items:end;
+    justify-content: center;
+    width:100%;
+    height:100%;
+    list-style-type:none;
+}
+.__p__nav_link{
+    text-align: center;
+    width:85px;
+    cursor: pointer;
+}
+.__p__nav_link > *{
+    display:block;
+    text-align: center;
+}
+.__p__nav_link a{
+    text-decoration:none;
+    color:rgb(90, 89, 89);
+    font-size:1.05rem;
+}
+.__p__nav_link i{
+    text-decoration:none;
+    color:rgb(90, 89, 89);
+    font-size:1.05rem;
+    text-align:center;
+}
+
+.__p__nav_link .__active{
+    color:var(--secc-dark)
+}
+.__active a, .__active i{
+    color:var(--secc-dark)
+}
+
+.__active::after{
+    content:'';
+    display:block;
+    margin:0 auto;
+    width:100%;
+    height:3px;
+    background:var(--secc-dark);
+}
+.__p__nav_link .__active + .__p__nav_link::after{
+    display:block;
+    background:var(--secc-dark)
+}
+
+.__about__company,.__jobs__company,.__gallery__company{
+    min-height:300px;
+    width:100%;
+    background:#fff;
+    border-radius:10px;
+    padding:18px 12px;
+}
+
+.__card p{
+    color:rgb(112, 112, 112);
+    line-height:1.5rem;
+}
+
+.__scroll__company__info{
+    display:none
+}
+
+.stick___nav{
+    position:fixed;
+    left:0;
+    right:0;
+    border-radius:0px;
+    height:fit-content;
+    z-index:3;
+}
+.__scroll__profile_pic{
+    width:50px;
+    height:50px;
+}
+.company__profile__nav .stick___nav{
+    border-radius:0px;    
+}
+
+.stick___nav .__profile__nav__links{
+    justify-content:flex-end;
+}
+.stick___nav .__scroll__company__info{
+    display:flex
+}
+
+.__carousel__outer{
+    overflow-x:scroll;
+    overflow-y:hidden;
+    z-index:0;
+    scroll-behavior:smooth;
+}
+.__carousel__inner{
+    width:2100px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    z-index:0;
+}
+.__carousel__indicators{
+    display:flex;
+    width:100%;
+    justify-content:center;
+    align-items:center;
+    margin:20px auto;
+}
+.__carousel__indicators i{
+    padding:10px;
+    border:0.8px solid #ddd;
+    color:#333;
+    cursor:pointer;
+    transition:0.1s ease-in-out;
+}
+.__carousel__indicators i:hover{
+    padding:10px;
+    border:0.8px solid #ddd;
+    color:#fff;
+    background:var(--secc-dark)
+}
+.__carousel__outer::-webkit-scrollbar{
+    display:none
+}
+
+@media(max-width:1020px){
+    .__company__identity{
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+        align-items:center;
+        gap:10px;
+        position:absolute;
+        bottom:10px;
+        left:2%;
+        right:2%;
+        text-align: center;
+    }
+    .__company__identity p{
+        width:90%;
+        margin:0 auto
+    }
+    .__intro__buttons{
+        display:flex;
+        margin-left:auto;
+        margin-right:auto;
+        gap:15px;
+        align-items:center;
+    }
+    .__hide__mobile{
+        display:none;
+    }
+}

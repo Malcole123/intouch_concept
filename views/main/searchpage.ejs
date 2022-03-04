@@ -6,12 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/searchstyles.css" />
-
     <!----Font Awesome CDN-->
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    />
+    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,262 +16,581 @@
     />
     <!----Boot-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="/js/script.js" defer></script>
-    <script async src="//jsfiddle.net/user2314737/h3k1amhp/embed/" defer></script>
+    <!--<script async src="//jsfiddle.net/user2314737/h3k1amhp/embed/" defer></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
+    <script type="module" src="/js/setSearch.js" defer></script>
     <script type="module" src="/js/searchscripts.js" defer></script>
-    <script src="/js/search-auto.js" defer></script>
 
-    <title>Job | Search</title>
+    <title>inTouch | Search</title>
   </head>
   <body>
+    <div class="loader__overlay">
+        <img src="../images/logo.svg" alt="Logo">
+        <div class="loader"></div>
+        <p class="text-white text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, officiis.</p>
+    </div>
     <section class="search-header">
-      <div class="brand-banner">
-        <div class="brand-logo">
-          <a href="/main/home"><img src="../images/logo.svg" alt="Intouch logo. Click to go home"></a>
-        </div>
-        <div class="brand-user-btn">
-          <a class="dark-btn" href="/user/login">Log In</a>
-          <a class="light-btn" href="/user/register">Sign up</a>
-        </div>
+      <%-include( '../components/search_nav' ) -%>
+    </section>
+    <section class="search-page-body" id="searchBody">
+      <div class="container bg-white">
+        <form @change="fiter__jobs" @submit.prevent="fiter__jobs">
+          <div class="filter__body">
+            <div id="filter__init-call" class="filter__option __mobile" aria-expanded="false">
+              <span>Filter</span>
+              <i class="fas fa-tune"></i>
+            </div>
+            <ul class="filter-list">
+              <i id="filter__init-dismiss" class="d-sm-block d-md-block d-lg-none fas fa-times-circle fs-4 mb-2"></i>
+              <li>
+                <div class="dropdown">
+                  <div class="filter__option" id="companyButton">
+                    <span>Company</span>
+                    <i class="fas fa-caret-down"></i>
+                  </div>
+                  <ul class="filter_option__menu" id="companyMenu" aria-labelledby="job type menu dropdown">
+                      <li>
+                        <div class="form-floating">
+                          <input class="form-control" type="text" id="companySearchInput" v-model.trim="display.filter.company">
+                          <label for="countrySearchInput">Search Company:</label>
+                        </div>
+                        <button type="button" class="btn btn-dark mt-3">Search</button>
+                      </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <div class="filter__option" id="jobTypeButton">
+                    <span>Job Type</span>
+                    <i class="fas fa-caret-down"></i>
+                  </div>
+                  <ul class="filter_option__menu" id="jobTypeMenu" aria-labelledby="job type menu dropdown">
+                    <li>
+                      <div class="form-check d-flex justify-content-between w-100">
+                        <label class="form-check-label" for="fullTimeCheck">
+                          Full Time
+                        </label>
+                        <input class="form-check-input" type="checkbox" name="fullTimeCheck" id="fullTimeCheck" checked @click="filter__jobType('full-time')">
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-check d-flex justify-content-between w-100">
+                        <label class="form-check-label" for="partTimeCheck">
+                          Part Time
+                        </label>
+                        <input class="form-check-input" type="checkbox" name="partTimeCheck" id="partTimeCheck" @click="filter__jobType('part-time')">
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-check d-flex justify-content-between w-100">
+                        <label class="form-check-label" for="seasonalCheck">
+                          Seasonal
+                        </label>
+                        <input class="form-check-input" type="checkbox" name="seasonalCheck" id="seasonalCheck" @click="filter__jobType('seasonal')">
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-check d-flex justify-content-between w-100">
+                        <label class="form-check-label" for="contractCheck">
+                          Contract
+                        </label>
+                        <input class="form-check-input" type="checkbox" name="contractCheck" id="contractCheck" @click="filter__jobType('contract')">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <div class="filter__option" id="locationButton">
+                    <span>Location</span>
+                    <i class="fas fa-caret-down"></i>
+                  </div>
+                  <ul class="filter_option__menu" id="locationMenu" aria-labelledby="location menu dropdown">
+                    <li>
+                      Search jobs in area
+                      <div class="form-floating">
+                        <select class="form-select" id="countrySearchInput" aria-label="Floating label select example" v-model="display.filter.location.country">
+                          <option class="pt-2 pb-2 ps-2" selected value="jamaica">Jamaica</option>
+                          <option class="pt-2 pb-2 ps-2" value="trinidad and tobago">Trinidad & Tobago</option>
+                          <option class="pt-2 pb-2 ps-2" value="haiti">Haiti</option>
+                          <option class="pt-2 pb-2 ps-2" value="puerto rico">Puerto Rico</option>
+                          <option class="pt-2 pb-2 ps-2" value="dominicn republic">Dominican Republic</option>
+                        </select>
+                        <label for="countrySearchInput">Country:</label>
+                      </div>
+                    </li>
+                   <li>
+                    <div class="form-floating">
+                      <select class="form-select" id="subdivInput" aria-label="Floating label select example" v-model="display.filter.location.s_div">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                      <label for="subdivInput">Parish/ State</label>
+                    </div>
+                   </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <div class="filter__option" id="quickApplyButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>Quick Apply</span>
+                    <i class="fas fa-caret-down"></i>
+                  </div>
+                  <ul class="filter_option__menu" id="quickApplyMenu" aria-labelledby="job type menu dropdown">
+                    <li>
+                      <div class="form-check d-flex justify-content-between w-100">
+                        <label class="form-check-label" for="applyOnlineCheck">
+                          Apply Online
+                        </label>
+                        <input class="form-check-input" type="radio" name="applyOnlineCheck" id="applyOnlineCheck">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <div class="filter__option" id="sortButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>Sort by</span>
+                    <i class="fas fa-caret-down"></i>
+                  </div>
+                  <ul class="filter_option__menu" id="sortResultMenu" aria-labelledby="job type menu dropdown">
+                    <li>
+                      <div class="form-check d-flex justify-content-between w-100">
+                        <label class="form-check-label" for="fullTimeCheck">
+                          New to old
+                        </label>
+                        <input class="form-check-input" type="radio" name="fullTimeCheck" id="fullTimeCheck">
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-check d-flex justify-content-between w-100">
+                        <label class="form-check-label" for="fullTimeCheck">
+                          A - Z
+                        </label>
+                        <input class="form-check-input" type="radio" name="fullTimeCheck" id="fullTimeCheck">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          <div style="display:flex;gap:8px;justify-content:end;margin-left:auto">
+            <span style="font-weight:400">Set Alerts</span>
+            <div class="switch__outer">
+              <div class="switch__inner"></div>
+            </div>
+          </div>
+          
+          </div>
+        </form>
       </div>
-      <nav>
-        <div class="search-field">
-          <div class="search-input">
-            <input
-            type="text"
-            id="career-search"
-            name="careerSearch"
-            placeholder="Search jobs near you" autocomplete="off"
-          />
-          <div class="career-search-auto-complete">
+     <div class="container bg-white">
+       <input type="hidden" id="job__intermed"value="<%= JSON.stringify(jData) %>">
+       <div class="row">
+         <div class="col-sm-12 col-md-12 col-lg-5 position-relative bg-white h-100 results-display">      
+            <div class="bg-white results-body">
+              <div class="bg-white result-scroll-body">
+            <% if(jData.items.length > 0){ %>
+              <% jData.items.forEach((listing, index)=>{ %>
+                <% if(index%3 === 0 && index > 0){ %>
+                  <div class="inline-ad-space" v-if="display.item_visible > 0">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
+                        crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-format="fluid"
+                        data-ad-layout-key="-ed+6k-30-ac+ty"
+                        data-ad-client="ca-pub-9149531285371942"
+                        data-ad-slot="1909465585"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                  </div>     
+                  <div class="job-card" @click="changeFocus(<%= listing.id %>)" v-if="display.filter.job_Type.includes('<%= listing.type %>')">
+                    <% if(listing.data.urls.company_logo.length >= 1){ %>
+                      <img src="<%= listing.data.urls.company_logo %>" alt="<%= listing.title %>">                        
+                    <% }else{ %>
+                      <img src="../images/imageplaceholder.png" alt="<%= listing.title %>">
+                    <% } %>                    <div class="job-card-content">
+                      <h4 style="color:rgb(90,90,90);font-size:1.02rem"><%= listing.title %></h4>
+                      <h6 style="color:rgb(90,90,90);font-size:0.8rem;"><%= listing.company_name_posted %></h6>
+                      <div class="job-rel-info">
+                        <div class="rel-info-loc badge bg-transparent text-dark">
+                          <i class="fas fa-map-pin"></i>
+                          <span><%= listing.sub_division %> , <%=listing.loc_country %></span>
+                        </div>
+                        <div class="badge bg-transparent text-dark rel-info-time">
+                          <i class="fas fa-clock"></i>
+                          <span style="text-transform:capitalize;"><%= listing.type.replaceAll('-',' ') %></span>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-chevron-right" style="position:absolute;right:6px;bottom:6px"></i>
+                    </div>
+                  </div>
+                <% }else{ %>
+                  <div class="job-card" @click="changeFocus(<%= listing.id %>)" v-if="display.filter.job_Type.includes('<%= listing.type %>')">
+                    <% if(listing.data.urls.company_logo.length >= 1){ %>
+                      <img src="<%= listing.data.urls.company_logo %>" alt="<%= listing.title %>">                        
+                    <% }else{ %>
+                      <img src="../images/imageplaceholder.png" alt="<%= listing.title %>">
+                    <% } %>
+                    <div class="job-card-content">
+                      <h4 style="color:rgb(90,90,90);font-size:1.02rem"><%= listing.title %></h4>
+                      <h6 style="color:rgb(90,90,90);font-size:0.8rem"><%= listing.company_name_posted %></h6>
+                      <div class="job-rel-info">
+                        <div class="rel-info-loc badge bg-transparent text-dark">
+                          <i class="fas fa-map-pin"></i>
+                          <span><%= listing.sub_division %> , <%=listing.loc_country %></span>
+                        </div>
+                        <div class="rel-info-time badge bg-transparent text-dark">
+                          <i class="fas fa-clock"></i>
+                          <span style="text-transform: capitalize;"><%= listing.type.replaceAll('-',' ') %></span>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-chevron-right" style="position:absolute;right:6px;bottom:6px"></i>
+                    </div>
+                  </div>
+                  <% } %>             
+              <% }) %>
+              <div class="inline-ad-space" v-if="display.item_visible < 2 && display.item_visible > 0">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
+                    crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-format="fluid"
+                    data-ad-layout-key="-ed+6k-30-ac+ty"
+                    data-ad-client="ca-pub-9149531285371942"
+                    data-ad-slot="1909465585"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </div>         
+            <% }else{ %>
+              <div class="w-100 d-flex justify-content-center align-items-center flex-column no-results">
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                <p>No results match your search</p>
+                <a href="#" class="btn btn-dark mt-2 mb-4">See All</a>
+                <div class="inline-ad-space" v-if="display.item_visible > 0">
+                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
+                      crossorigin="anonymous"></script>
+                  <ins class="adsbygoogle"
+                      style="display:block"
+                      data-ad-format="fluid"
+                      data-ad-layout-key="-ed+6k-30-ac+ty"
+                      data-ad-client="ca-pub-9149531285371942"
+                      data-ad-slot="1909465585"></ins>
+                  <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+              </div>
+              <% } %>
+              <div class="w-100 d-flex justify-content-center align-items-center flex-column no-results" v-if="display.item_visible === 0">
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                <p>No results match your search</p>
+                <a href="#" class="btn btn-dark mt-2 mb-4">See All</a>
+                <div class="inline-ad-space">
+                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
+                      crossorigin="anonymous"></script>
+                  <ins class="adsbygoogle"
+                      style="display:block"
+                      data-ad-format="fluid"
+                      data-ad-layout-key="-ed+6k-30-ac+ty"
+                      data-ad-client="ca-pub-9149531285371942"
+                      data-ad-slot="1909465585"></ins>
+                  <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+              </div>
+              </div>
+              </div>
+            </div>
+         </div>
+         <% if(jData.items.length > 0 ){ %>
+        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display">
+            <div class="job-show-banner">
+              <div class="mb-3 return_to_home __mobile">
+                <div class="badge bg-dark">
+                  <i class="text-white fas fa-chevron-left"></i>
+                  <span class="text-white ms-2">Return to search</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between flex-wrap mb-2 job-show__header">
+                <h4>{{focus.title}}</h4>
+                <div>
+                  <% if(user.id > 0){%>
+                    <i class="fas fa-share act-btn" id="share__handle"></i>
+                    <i id="favourite__handle" class="fas fa-heart act-btn" v-if="!pref.f_jobs.includes(focus.id)"></i>
+                    <i id="favourite__handle" class="fas fa-heart act-btn button-active" v-if="pref.f_jobs.includes(focus.id)"></i>  
+                  <% }else{ %>
+                    <i class="fas fa-share dis-act-btn" id="share__handle"></i>
+                    <a href="/user/login?sendTo=search"><i id="register__handle" class="fas fa-heart dis-act-btn"></i></a>
+                  <% } %>
+                </div>
+              </div>
+              <div class="job-show__header_sec">
+                  <span>{{focus.company_name}}</span>
+                  <span>| {{focus.loc_sub_division}}, {{focus.loc_country}} |</span>
+                  <span>{{ relativeDate(focus.created) }} |</span>
+                  <span style="font-weight:600;color:#2B32B2">{{ focus.app_count }} applicants</span>
+                  <% if(user.id > 0){ %>
+                    <button style="margin-left:auto" type="button" class="btn btn-primary" id="applyButtonInit">Apply</button>
+                  <% }else{ %>
+                    <a style="margin-left:auto"href="/user/login?sendTo=search" class="btn btn-primary">Apply</a>
+                  <% } %>
+              </div>
+              <div class="job-show__header_ter">
+                  <div style="min-width:95px">
+                    <i class="fas fa-building"></i>
+                    <span>{{focus.comp_size}}</span>
+                  </div> 
+                  <div>
+                    <i class="fas fa-briefcase"></i>
+                    <span style="text-transform:capitalize;">{{focus.type.replaceAll('-',' ')}}</span>
+                  </div>                  
+              </div>
+            </div>
+            <div class="job-show-body">
+              <div class="job-show-scroll-body">
+                <div class="about__position __section">
+                  <p>{{ focus.pos_det.summary }}</p>
+                </div>
+                <div class="about__responsibilities __section">
+                  <h6>Responsibilities</h6>
+                  <ul>
+                    <li v-for="r in focus.pos_det.resp" :key="r.id">{{r}}</li>
+                  </ul>
+                </div>
+                <div class="about__qualifications __section">
+                  <h6>Qualifications</h6>
+                  <ul>
+                    <li v-for="q in focus.pos_det.d_qual" :key="q.id">{{q}}</li>
+                  </ul>
+                </div>
+                <div class="about__benefits __section">
+                  <h6>Benefits</h6>
+                  <ul>
+                    <li v-for="b in focus.pos_det.ben" :key="b.id">{{b}}</li>
+                  </ul>
+                </div>
+                <div class="about__company __section">
+                  <h6>About Company</h6>
+                  <div class="d-flex justify-content-between align-items-start mt-3">
+                    <img style="height:60px;" src="../images/imageplaceholder.png" alt="">
+                    <div class="ms-2">
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est culpa consequatur dolores quam ad delectus perspiciatis molestiae fugit, iste atque iure omnis enim distinctio vitae maiores debitis laboriosam illo voluptate.</p>
+                      <a style="margin-left:auto" class="btn btn-dark" :href="setCompUrl(focus.company_name)">See Company Profile</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+          </div>   
+          <% }else{ %>
+        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 empty-job">
+          <div class="vertical-ad-space">
 
           </div>
-          </div>
-          <select id="where-select">
-            <option value="" disabled selected hidden>Where ?</option>
-          </select>
-          <button type="button" id="searchJobsBtn">
-            <i class="fas fa-search"></i>
-          </button>
         </div>
-      </nav>
-    </section>
-    <section class="search-page-body">
-      <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-3">
-              <div class="filter-search-card">
-                <span>Filter</span>
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Location
-                      </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                      <div class="accordion-body">
-                        <div class="loc-type">
-                          <span>Kingston</span>
-                          <input type="radio">
-                        </div>
-                        <div class="loc-type">
-                          <span>St. Andrew</span>
-                          <input type="radio">
-                        </div>
-                        <div class="loc-type">
-                          <span>Clarendon</span>
-                          <input type="radio">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        Employment type
-                      </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                      <div class="accordion-body">
-                        <div class="emp-type">
-                          <span>Full time</span>
-                          <input type="radio">
-                        </div>
-                        <div class="emp-type">
-                          <span>Part time</span>
-                          <input type="radio">
-                        </div>
-                        <div class="emp-type">
-                          <span>Seasonal</span>
-                          <input type="radio">
-                        </div>
-                        <div class="emp-type">
-                          <span>Contract</span>
-                          <input type="radio">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThree">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                        Salary
-                      </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                      <div class="accordion-body">
-                        <div class="sal-type">
-                          <span>Disclosed</span>
-                          <input type="radio">
-                        </div>
-                        <div class="sal-type">
-                          <span>Undisclosed</span>
-                          <input type="radio">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-6">
-              <div class="results-indicator">
-                <span>jobs found in</span>
-                <span id="search-result-scope"></span>
-              </div>
-              <div class="job-display">
-                
-              
-              </div>
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border text-primary" id="loadingResultsProgress" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-3">
-                <div class="get-updates-card">
-                    <img src="../images/getupdatesill.svg" alt="Get updates from ">
-                    <h2>Get updates on new jobs in this category</h2>
-                    <button type="button" class="dark-btn"><i class="fas fa-bell"></i></button>
-                </div>
-                <div class="vertical-ad-space"></div>
-            </div>
-          </div>
-      </div>
-    </section>
-    <div class="filter-toggle">
-      <i class="fas fa-sliders-h"></i>
-    </div>
-    <div class="scroll-top-action">
-      <i class="fas fa-chevron-up"></i>
-    </div>
-    <section class="footer">
+          <% } %>
 
+       </div>
+     </div>
+     </div>
     </section>
-    <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="focus___overlay"></div>
+    <!-- App Modal -->
+<div class="modal fade" id="applicationModal" tabindex="-1" aria-labelledby="applicationModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Senior Web Developer</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="application__submit">
+        <!--form starts here -->
+        <div class="pt-2 pb-4 __submit_step" v-if="current_step===1">
+            <div class="p-3 mb-2 __step_header">
+              <h5>{{listing.title}}</h5>
+              <p>{{listing.company}}</p>
+            </div>
+            <div class="container">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="applicantNAMEInput" placeholder="Bob Builder" v-model="u_Data.name">
+                  <label for="applicantNAMEInput">Enter name</label>
+                  <div class="invalid-feedback">
+                    Please enter your name
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="applicantEMAILInput" placeholder="m@example.com" v-model="u_Data.email">
+                  <label for="applicantEMAILInput">Enter email</label>
+                  <div class="invalid-feedback">
+                    Please enter a valid email
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="applicantPHONEInput"name="phoneInput" placeholder="8765555678" v-model="u_Data.phone">
+                  <label for="applicantPHONEInput">Enter Phone number</label>
+                  <div class="invalid-feedback">
+                    Don't miss an oppurtunity, please check your phone number
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="applicantCOUNTRYInput" placeholder="Jamaica" value="Jamaica" v-model="u_Data.country">
+                  <label for="applicantCOUNTRYInput">Enter country</label>
+                  <div class="invalid-feedback">
+                    Please enter your country
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <span>Resume (optional)</span>
+                <div class="mb-3 mt-2">
+                  <input type="file" class="form-control" aria-label="file example" id="applicantRESUMEInput" required>
+                  <div class="invalid-feedback">Invalid file type.</div>
+                  <div class="invalid-feedback">
+                    Please upload a pdf,docx, doc, txt file no greater than 10mb.
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="w-100 act__form">
+                  <p class="mb-2 text-center">By proceeding you agree to us sharing your entered information with the listing's employer</p>
+                  <div class="act___buttons">
+                    <button type="button" class="btn btn-dark w-75" id="dismissApplicationModal" @click="resetState">Cancel</button>
+                    <button type="button" class="btn btn-success w-75" @click="stepHandler('1')">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="pt-2 pb-4 __submit_step" v-if="current_step===2">
+          <div class="p-3 mb-2 __step_header">
+            <h5>{{listing.title}}</h5>
+            <p>{{listing.company}}</p>
+          </div>
+          <div class="container"> 
+            <div class="col-12 mb-3 application_question" v-for="quest in listing.questions" :key="quest.id">
+              <div>
+                <label for="questionInput" name="" class="form-label">{{quest.question}}</label>
+                <input type="text" class="form-control" id="applicantQUESTIONANSWERInput" placeholder="What color is the sky" @blur="questionHandler">
+              </div>
+            </div>    
+            <div class="col-12 mt-3">
+              <div class="w-100 act__form">
+                <p class="mb-2 text-center">By proceeding you agree to us sharing your entered information with the listing's employer</p>
+                <div class="act___buttons">
+                  <button type="button" class="btn btn-dark w-75" @click="goBack">Previous</button>
+                  <button type="button" class="btn btn-success w-75" @click="stepHandler('2')">Submit Applicaton</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="pt-2 pb-4 __submit_step" v-if="current_step===3 && state.complete">
+        <div class="container d-flex flex-column justify-content-center align-items-center"> 
+          <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+          <lottie-player src="https://assets1.lottiefiles.com/private_files/lf30_nsqfzxxx.json"  background="transparent"  speed="1"  style="width: 60%; height: auto;"    autoplay></lottie-player>
+          <h6 class="mt-3 mb-3">Your application has been sent to {{listing.company}}</h6>
+          <button class="btn btn-dark" @click="resetState">Great, Keep browsing</button>
+        </div>
+      </div>
+      <div class="pt-2 pb-4 __submit_step" v-if="current_step===3 && state.rejected">
+        <div class="container d-flex flex-column justify-content-center align-items-center"> 
+          <h6 class="mt-3 mb-3">Something went wrong, Please try again later </h6>
+          <button class="btn btn-dark" @click="resetState">Ok</button>
+        </div>
+      </div>
+      <div class="pt-2 pb-4 __submit_step bg-transparent" v-if="current_step===3 && state.processing">
+        <div style="height:200px" class="container bg-transparent d-flex flex-column justify-content-center align-items-center"> 
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>        
+        </div>
+      </div> 
+        <!--form ends here-->
+      </div>
+  </div>
+  </div>
+</div>
+<!--Share  Modal -->
+<div class="modal fade" id="shareModalCenter" tabindex="-1" role="dialog" aria-labelledby="shareModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-center" id="shareModalLongTitle"></h5>
+        <button type="button" class="btn close" data-dismiss="modal" aria-label="Close" id="closeShareModal">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-        <div class="mod-offer-owner">
-          <img id="mod-offer-owner-image"src="/public/images/singertest.png" alt="Singer">
-          <div class="mod-offer-owner-content">
-            <h2 id="mod-offer-owner">Singer Jamaica</h2>
-            <div class="mod-offer-contact-data">
-              <div class="mod-contact-email">
-                <i class = "fas fa-envelope"></i>
-                <span id="mod-offer-owner-email">spam@example.com</span>
-              </div>
-              <div class="mod-contact-phone">
-                <i class="fas fa-phone"></i>
-                <span id="mod-offer-owner-phone">+1(876)555-5678</span>
-              </div>
-              <div class="mod-contact-location">
-                <i class="fas fa-map-pin"></i>
-                <span id="mod-offer-owner-address">7 Imaginary Way, Wonderland Blvd, Neverland</span>
-              </div>
-            </div>
+        <div class="container">
+          <div style="display:flex;gap:10px;width:80%;margin:0 auto;justify-content:center;align-items:center;" class="share__buttons">
+            <a :href="links.facebook" target="_blank"><img class="share__logo" src="../images/brand_logos/facebook.svg" alt="Share by facebook" @click="createShare('facebook')"></a>
+            <img id="whatsappShare" class="share__logo" src="../images/brand_logos/whatsapp.svg" alt="Share by whatsapp" @click="createShare('whatsapp')">
+            <a :href="links.instagram" target="_blank"><img class="share__logo" src="../images/brand_logos/instagram.svg" alt="Share by instagram" @click="createShare('instagram')"></a>
+            <a :href="links.twitter" target="_blank"><img class="share__logo" src="../images/brand_logos/twitter.svg" alt="Share by twitter" @click="createShare('twitter')"></a>
           </div>
-        </div>
-        <div class="mod-offer-body">
-          <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                  ABOUT COMPANY
-                </button>
-              </h2>
-              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                <div class="accordion-body">
-                  <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                  ABOUT POSITION
-                </button>
-              </h2>
-              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                <div class="accordion-body">
-                  <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                  QUALIFICATIONS FOR POSITION
-                </button>
-              </h2>
-              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                <div class="accordion-body">
-                  <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                  COMPENSATION
-                </button>
-              </h2>
-              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                <div class="accordion-body">
-                  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="panelsStayOpen-headingFOur">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                  APPLICATION PROCESS
-                </button>
-              </h2>
-              <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
-                <div class="accordion-body">
-                  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
+          <div class="row mt-2 mb-2">
+            <span class="text-center fs-5"></span>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="w-100 __copy_input_place">
+                <img class="copy__icon" src="../images/copyIcon.svg" alt="copy icon" v-if="!link_copied" @click="copyLink">
+                <img class="copy__icon" src="../images/copiedIcon.svg" alt="copy icon" v-if="link_copied">
+                <input id="shareUrlCopyInput" class="form-control form-control-lg" type="text" placeholder="Copy url" v-model="link">
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">SAVE</button>
-        <button type="button" class="btn btn-primary">APPLY</button>
+      <div class="modal-footer bg-white border-0">
       </div>
     </div>
   </div>
-
 </div>
+
+
+<%-include('../components/footer.ejs') -%>
+<div class="notif__display">
+  <div class="notif__body">
+    <div class="d-flex justify-content-between align-items-center pb-2 mb-3 " style="gap:10px">
+      <h3>Notifications</h3>
+      <span style="height:2px;flex:1;background:#ddd;border-radius:10x;"></span>
+      <i style="cursor:pointer;" class="fas fa-times fs-3 text-dark _alert"></i>
+    </div>  
+    <div class="__notif__holder">
+        <div v-for="notif in notif.display" :key="notif.id" style="height:130px;width:100;display:flex;align-items:center;gap:10px;position:relative" v-bind:class="notif.noticed ? '__notif__card' : '__notif__card __unread_notif'">
+          <div class="new__notif__ind" v-if="!notif.noticed" style="width:10px;height:10px;border-radius:50%;background:#f44336"></div>
+          <div class="___notif_content d-flex " style="flex:1;gap:12px;align-items:flex-start;">
+              <img src="../images/imageplaceholder.png" alt="Placeholder image" style="width:55px">
+              <div>
+                <p>{{notif.body}}</p>
+                <a v-if="notif.application_notif" :href="notif.direct_user_to">See next steps</a>
+                <a v-if="notif.job_alert_notif" :href="notif.direct_user_to">See Jobs</a>
+                <a v-if="notif.change_in_job_notif" :href="notif.direct_user_to">View</a>
+              </div>
+          </div>
+          <div class="__notif__remove">
+            <i class="fas fa-trash fs-6"></i>
+          </div>
+          <span style="position:relative;bottom:5px;right:3px;color:rgba(94, 93, 93, 0.452);font-size:0.7rem">{{setRelative(notif.created_at)}}</span>
+        </div>
+    </div>  
+  </div>   
+  </div>
+<!--Off Can-->
+<%-include( '../components/side_nav' ) -%>
   </body>
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

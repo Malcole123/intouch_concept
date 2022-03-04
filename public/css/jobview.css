@@ -1,0 +1,453 @@
+*{
+    --main-accent:#f44336;
+    --prim-dark:#3F3D56;
+    --secc-dark:#2B32B2;
+}
+html{
+    overflow-x: hidden;
+}
+.show-space{
+    height:120px
+}
+.horizontal-top{
+    top:0
+}
+.horizontal-bottom{
+    bottom:0
+}
+.job-view-header{
+    background:#F5F5F5;
+    width:100%;
+    height:fit-content;
+}
+nav{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:12px 25px;
+    position:sticky;
+    top:0;
+    left:0;
+    right:0;
+    transition:0.3s ease-in-out;
+    background:var(--secc-dark);
+}
+.scroll-nav{
+    position:fixed;
+    background:var(--secc-dark);
+    z-index:99;
+}
+nav img{
+    width:120px;
+}
+
+
+.main-list{
+    list-style-type:none;
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+    gap:25px;
+}
+.nav-links ul li a{
+    font-size:1.1rem;
+    text-decoration:none;
+    color: #fff;
+}
+.nav-link-hver::after{
+    content:"";
+    display: block;
+    width:0%;
+    height:2px;
+    background:#fff;
+    margin:0 auto;
+    transition: 0.4s ease-in-out;
+}
+.nav-link-hver:hover::after{
+    width:100%;
+}
+  .nav-links .light-btn{
+      padding:12px 20px;
+      border:1px solid #fff;
+      background:#f44336;
+      color:#fff
+  }
+  .nav-links .dark-btn{
+    padding:12px 20px;
+    border:1px solid var(--prim-dark);
+    background:var(--prim-dark);
+    color:#fff;
+  }
+.scroll-nav .nav-links ul li a{
+    color:#fff
+}
+.scroll-nav .nav-links .dark-btn{
+    color:#fff;
+}
+  .menu-toggle {
+    color: var(--prim-dark);
+    margin-right: 0px;
+    cursor: pointer;
+    display:none;
+  }
+  #menu-top,
+  #menu-btm {
+    display: block;
+    width: 45px;
+    height: 3px;
+    background: var(--secc-dark);
+    transform-origin: center;
+    transition: 0.4s ease-in-out;
+  }
+  #menu-txt {
+    transition: 0.4s ease-in-out;
+    color:var(--secc-dark)
+  }
+  .open-text {
+    opacity: 0;
+  }
+  .open-top {
+    transform: rotate(44deg) translateY(14px);
+    width: 30px;
+  }
+  .open-bottom {
+    transform: rotate(-44deg) translate(3px, -18px);
+    width: 30px;
+  }
+  .search-field{
+    border-radius:10px;
+    width:60%;
+    height:40px;
+    border:0.8px solid #dddd;
+    background:#fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index:1;
+    transition:0.4s ease-in-out;
+}
+.search-input{
+    width:100%;
+    height:100%;
+    position:relative;
+    border-radius:10px 0px 0px 10px;
+}
+.career-search-auto-complete{
+    position:absolute;
+    max-height:240px;
+    width:100%;
+    background:#fff;
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+    display:none;
+    overflow-y: scroll;
+    transition: 0.3s ease-in-out;
+}
+.career-search-auto-complete::-webkit-scrollbar{
+    width:5px;
+}
+.career-search-auto-complete::-webkit-scrollbar-track{
+  background:#ddd
+}
+.career-search-auto-complete::-webkit-scrollbar-thumb{
+  background:var(--secc-dark)
+}
+.career-search-auto-complete > *, .search-field select option {
+    display:flex;
+    justify-content: space-between;
+    font-size:1rem;
+    color:#333;
+    padding:12px 10px;
+    border-bottom:0.5px solid #ddd;
+}
+.career-search-auto-complete > *:hover,  .search-field select option:hover{
+  color:#fff;
+  background:var(--secc-dark)
+}
+.search-field input{
+    height:100%;
+    width:100%;
+    border:none;
+    outline:none;
+    font-size:1.1rem;
+    font-weight:500;
+    padding-left:45px;
+    background:#fff url('/images/magnifier.png');
+    background-size:1em;
+    background-repeat: no-repeat;
+    background-position: top 12px left 5px;
+    border-radius:10px 0px 0px 10px;
+}
+.search-field select{
+    border:none;
+    outline:none;
+    width:35%;
+    height:100%;
+    padding-left:45px;
+    font-size:1.1rem;
+    font-weight:500;
+    border-left:0.5px solid #dddd;
+    background:#ffff url('/images/locationPin.png');
+    background-repeat: no-repeat;
+    background-size:1.1em;
+    background-position: top 12px left 5px;;
+    z-index:99;
+}
+.search-field button{
+    height:100%;
+    width:15%;
+    font-size:1.1rem;
+    background:#f44336;
+    border:2px solid #fff;
+    outline: none;
+    color:#fff;
+    cursor:pointer;
+    border-radius:0px 10px 10px 0px;
+}
+.search-field button:hover{
+    background:var(--secc-dark)
+}
+.search-header .search-field{
+    width:60%;
+    margin-right:auto;
+}
+.company-job-head{
+    width:90%;
+    margin:0 auto;
+    margin-top:35px;
+    height:250px;
+    background:#fff url('/images/jbdispdeafaultbg.jpg');
+    background-size:cover;
+    background-position: center;
+    border-radius: 5px;
+}
+.job-head-content{
+    bottom:0;
+    height:50%;
+    width:100%;
+    background:#fff;
+    padding:5px 12px;
+    display: flex;
+    gap:10px;
+}
+.job-head-content img{
+    transform: translateY(-50%);
+    width:5em;
+    height:5em;
+}
+.job-head-content a{
+    padding:10px 16px;
+    text-decoration:none;
+    background:var(--secc-dark);
+    color:#fff;
+    display:block;
+    margin-top:5px;
+}
+.job-head-content a:hover{
+    padding:10px 16px;
+    text-decoration:none;
+    background:var(--secc-dark);
+    color:#fff;
+}
+.scrl-dwn-indicator{
+    margin:0 auto;
+    width:24px;
+    height:134px
+}
+.display-job-main{
+    min-height:100vh;
+    height: fit-content;
+    width:100%;
+    padding:50px 0;
+    background:#F5F5F5
+}
+.job-main{
+    width:90%;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:5fr 2fr;
+    gap:10px;
+}
+.overview,.about-position{
+    width:100%;
+    height:fit-content;
+    padding:40px 12px;
+    background:#fff;
+    border-radius:5px;
+}
+.overview h3, .about-position h3{
+    font-size:1.5em
+}
+.overview h3::after, .about-position h3::after{
+    content:"";
+    display:block;
+    width:100%;
+    background:#ddd;
+    height:3px;
+    margin:10px auto;
+}
+.company-info{
+    padding:20px 0;
+    border-bottom:3px solid #ddd;
+}
+.about-company,.mission-state{
+    padding:15px 0;
+}
+.ad-space{
+    height:220px;
+    background:#333;
+    width:100%;
+}
+.h-ad-space{
+    width:100%;
+    height:70px;
+    background:#333;
+}
+.about-position strong,.overview strong{
+    position:relative;
+    margin-bottom:25px;
+
+}
+
+.about-position strong::after,.overview strong::after{
+    content:"";
+    display:block;
+    height:3px;
+    width:100%;
+    border-radius:10px;
+    background:var(--main-accent);
+    position:absolute;
+}
+.application-list-item{
+    display:flex;
+    gap:35px;
+}
+.application-indicator{
+    background:var(--main-accent);
+    color:#fff;
+    padding:10px 16px;
+    border-radius:100%;
+    position:relative;
+}
+.application-indicator::after{
+    content:"";
+    display:block;
+    width:1.2em;
+    background:var(--main-accent);
+    border-radius:0px 4px 4px 0 ;
+    height:5px;
+    position:absolute;
+    top:50%;
+    right:0;
+    transform:translateX(98%)
+}
+.about-position button{
+    margin-left:auto
+}
+@media(max-width:1020px) {
+    nav{
+        gap:10px;
+    }
+    .search-field{
+        width:20%;
+        display:grid;
+        grid-template-columns: 1fr;
+        background:#fff;
+        border-radius:10px;
+        flex:1;
+        margin-left:auto;
+    }
+    .search-field input{
+        height:50px;
+        width:100%;
+        background:transparent url('/images/magnifier.png');
+        background-repeat: no-repeat;
+        background-size:1.2rem;
+        background-position:top 11px left 5px;
+        z-index:0;
+    }
+    .search-field select{
+        display:none;
+        border:none;
+        outline:none;
+        padding-left: 45px;
+        width:100%;
+        height:50px;
+        border-left:none;
+        border-top:1px solid var(--prim-dark);
+        background:#ffff url('/images/locationPin.png');
+        background-size:1.4rem;
+        background-position:top 12px left 4px;
+        background-repeat: no-repeat;
+    }
+    .search-field select option{
+        padding-left:45px;
+    }
+    .search-field button{
+        height:50px;
+        width:100%;
+        font-size:1.1rem;
+        background:var(--secc-dark);
+        border:2px solid var(--secc-dark);
+        outline: none;
+        border:none;
+        color:#fff;
+        cursor:pointer;
+        border-radius: 0px 0px 10px 10px;
+    }
+    .search-field button{
+        display:none;
+    }
+    .scrl-dwn-indicator{
+        margin:0 auto;
+    }
+    .job-main{
+        width:100%;
+        margin:0 auto;
+        display:grid;
+        grid-template-columns:1fr;
+        gap:10px;
+    }
+    .overview,.about-position{
+        width:100%;
+        height:fit-content;
+        padding:20px 12px;
+        background:#fff;
+        border-radius:5px;
+    }
+    .overview h3, .about-position h3{
+        font-size:1.5em
+    }
+    .overview h3::after, .about-position h3::after{
+        content:"";
+        display:block;
+        width:100%;
+        background:#ddd;
+        height:3px;
+        margin:10px auto;
+    }
+    .company-info{
+        padding:20px 0;
+        border-bottom:3px solid #ddd;
+    }
+    .about-company,.mission-state{
+        padding:15px 0;
+    }
+    .ad-space{
+        height:100px;
+        background:#333;
+        width:100%;
+    }
+    .h-ad-space{
+        width:100%;
+        height:70px;
+        background:#333;
+    }
+}
+@media(max-width:920px) {  
+    .scrl-dwn-indicator{
+        margin:0 auto;
+    }
+    .mini-header{
+        margin:0 auto;
+    }
+}

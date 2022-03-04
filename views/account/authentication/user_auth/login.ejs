@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/user.css" />
+    <!----Font Awesome CDN-->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!----Boot-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
+    <script type="module"src="/js/user/former.js" defer></script>
+
+    <title>Intouch|Log In</title>
+  </head>
+  <body>
+    <section class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <img src="../images/loginill.png" alt="Join the ultimate talent network">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <div class="sign-up-form">
+                        <h3>Log In</h3>
+                        <form class="needs-validation" id="login-form" @submit.prevent="processForm" action="/user/auth/login" @change="checkFormReady">
+                              <div class="row g-2 mt-2">
+                                <div class="col">
+                                  <div class="form-floating">
+                                    <input type="email" class="form-control" id="loginemailInput" placeholder="name@example.com" v-model.trim="email">
+                                    <label for="emailInput">Email address:</label>
+                                    <div class="invalid-feedback">
+                                        <p id="emailFeedback">{{errorMsg.error}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row g-2 mt-2">
+                                <div class="col">
+                                  <div class="form-floating">
+                                    <input type="password" class="form-control" id="enterpasswordInput" placeholder="password" v-model.trim="password">
+                                    <label for="enterpasswordInput">Enter password:</label>
+                                        <div class="invalid-feedback">
+                                            <p id="passFeedback">{{errorMsg.error}}</p>
+                                        </div>
+                                  </div>
+                                </div>
+                              </div>
+                                <div class="col-sm-12 col-md-9 col-lg-3 mb-2 mt-2">
+                                    <button class="btn btn-dark" type="submit" v-if="!processing">
+                                        Log In
+                                    </button>
+                                    <button class="btn btn-primary" type="button" disabled v-if="processing">
+                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                      Loading...
+                                    </button>
+                                </div>
+                              </form>
+
+                                <div class="col-12 d-flex mb-6">
+                                    <p class="user-redirects">Don't have an account?<br><a href="/user/register">Sign up</a></p>
+                                    <p class="user-redirects ms-2">Forgot your password?<br><a href="/user/recover">Reset password</a></p>
+                                </div>                                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <svg id="visual" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+            <path d="M0 467L137 407L274 411L411 434L549 412L686 475L823 417L960 480L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3e3be8"></path>
+            <path d="M0 486L137 453L274 453L411 471L549 479L686 449L823 483L960 452L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3fc4"></path>
+            <path d="M0 493L137 483L274 494L411 466L549 472L686 459L823 497L960 457L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#41409f"></path>
+            <path d="M0 480L137 510L274 474L411 503L549 498L686 474L823 510L960 488L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#413f7a"></path>
+            <path d="M0 520L137 519L274 518L411 507L549 498L686 516L823 507L960 514L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3d56"></path>
+        </svg>
+    </section>
+  </body>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</html>

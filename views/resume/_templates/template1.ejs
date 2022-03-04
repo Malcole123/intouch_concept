@@ -1,0 +1,88 @@
+    <div class="resume-template" style="font-family:'Roboto',sans-serif;">
+        <div style="width:100%;height:18.5%;background:#c63f73 url('/images/template-images/temp1headbg.svg');background-size:cover;background-position:center;display:grid;grid-template-columns:2fr 4fr;gap:5px;font-family:'Robot',sans-serif;color:#fff;padding:6px 8px"
+        class="template-header">
+            <h1 style="border-right:3px solid #fff; max-height:80%;padding-right:2px" class="prim-head-text white-text">Hi There,<br>
+                I'm {{userName.input}}
+            </h1>
+            <div class="about-me break-text">
+                <h4 class="secc-head-text white-text">About Me</h4>
+                <p class="p-text white-text">{{userBio.input}}</p>
+            </div>
+        </div>
+        <div style="display:flex;align-items:stretch;height:81.5%" class="template-body">
+            <div style="width:35%;height:100%;background:#FF0066;color:#fff;" class="side-info d-flex flex-column h-100">
+                <div style="min-height: 25%" class="skills">
+                    <h6 style="color:#C63F73;background:#fff;text-align:center;padding:4px 0">Skills</h6>
+                    <ul>
+                        <li style="font-size:1em;color:#fff" v-for="skill in skills.userSkills" :key="skill">
+                            {{ skill }}
+                          </li>
+                    </ul>
+                </div>
+                <div style="min-height:25%" class="interest">
+                    <h6 style="color:#C63F73;background:#fff;text-align: center;padding:4px 0">Interest & Hobbies</h6>
+                    <ul>
+                        <li style="color:#fff;font-size:1em" v-for="interest in interests.userInterests" :key="interest">
+                            {{ interest }}
+                          </li>
+                    </ul>
+                </div>
+                <div style="min-height:25%" class="languages">
+                    <h6 style="color:#C63F73;text-align:center;padding:4px 0;background:#fff">Languages</h6>
+                    <ul>
+                        <li style="color:#fff;font-size:1em" v-for="language in languages.userLanguages" :key="language">
+                            {{ language }}
+                          </li>
+
+                    </ul>
+                </div>
+                <div style="min-height:25%" class="community-service">
+                    <h6 style="color:#C63F73;background:#fff;text-align:center;padding:4px 0">Community Service</h6>
+                    <ul>
+                        <li style="color:#fff;font-size:1em" v-for="charity in charities.userCharity" :key="charity">
+                            {{ charity }}
+                          </li>
+                    </ul>
+                </div>
+            </div>
+            <div style="position:relative;padding-top:10px; padding-left:10px; width:65%" class="main-info">
+                <div class="education" style="min-height:24%">
+                    <h5 style="padding:2px 5px; color:#fff; background:#C63F73;border-radius:0px;width:fit-content;font-size:1.1rem">Education</h5>
+                    <div class="education-display" style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+                        <div class="education-card" v-for="eduSet in education.entered" :key="eduSet.id">
+                            <em style="color:#FF0066; font-size:0.9em;"><i>{{eduSet.start}} - {{eduSet.end}}</i></em>
+                            <h5 style="font-size:0.85em;">{{eduSet.certification}}</h5>
+                            <p style="font-size:0.85em">{{eduSet.school}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="employment" style="min-height: 24%">
+                    <h5 style="padding:2px 5px; color:#fff; background:#C63F73;border-radius:0px;width:fit-content;font-size:1.1em">Employment history</h5>
+                    <div class="employment-display" style="display:grid; grid-template-columns:1fr 1fr 1fr;gap:5px">
+                        <div class="employment-card" v-for="empSet in employment.entered" :key="empSet.id">
+                            <span style="color:#FF0066; font-size:1em;">{{empSet.start}} - {{empSet.end}}</span>
+                            <h5 style="font-size:1.2em;">{{empSet.title}}</h5>
+                            <p style="font-size:1.1em">{{empSet.company}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="references">
+                    <h5 class="secc-head-text" style="padding:2px 5px; color:#fff; background:#C63F73;border-radius:0px;width:fit-content;font-size:1.1em">References</h5>
+                    <div class="referneces-display" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
+                        <div class="reference-card" v-for="refSet in references.entered" :key="refSet.id">
+                            <h5 style="font-size:1em;">{{refSet.name}}</h5>
+                            <li style="font-size:1em">{{refSet.title}}</li>
+                            <li style="font-size:0.95em">{{refSet.contact.email}}</li>
+                            <li style="font-size:0.95em">{{refSet.contact.phone}}</li>
+                        </div>
+                    </div>
+                </div>
+                <div style="position:absolute;bottom:0; right:0;left:0;display:grid;grid-template-columns:1fr;align-items:center;height:25%; background:#FF0066;padding:5px 8px;border-left:2px solid #fff;color:#fff" class="contacts">
+                    <h5 class="secc-head-text" style="padding:2px 5px; color:#fff; background:#FF0066;border-radius:0px;width:fit-content;font-size:0.8rem">Contact Me</h5>
+                    <span style="font-size:0.75em;display:flex;gap:5px" class="white-text"><i class="fas fa-envelope"></i>Email: {{contact.email}}</span>
+                    <span style="font-size:0.75em;display:flex;gap:5px" class="white-text"><i class="fas fa-phone-alt"></i>Phone: {{contact.phone}}</span>
+                    <span style="font-size:0.75em;display:flex;gap:5px" class="white-text"><i class="fas fa-map-pin"></i>Address: {{contact.address}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
