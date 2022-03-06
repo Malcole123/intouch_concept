@@ -83,21 +83,19 @@ router.get('/recover/confirm', async (req,res)=>{
     }
 })
 
-router.get('/identity/verify', async (req, res)=>{
-    var loggedIn = await checkForLogin(req);
-    if(!loggedIn){
-        res.render('./account/authentication/user_auth/verifyemail')
-    }else{
-        res.redirect('../main/home')
-    }
-})
-
-router.post('/auth/signup', async (req,res, next)=>{
+router.post('/auth/signup', async (req,res)=>{
     var session = req.session;
     var data = await fetchers.fetchsignAuth(req.body);
     if(data.completed){
-        session.userID = data.authToken;
-        res.send(data)
+        session.userID = data.response.authToken;
+        session.myID = data.response.user.id,
+        session.userFNAME = data.response.user.first_name,
+        session.userLNAME = data.response.user.last_name,
+        session.userEmail = data.response.user.email,
+        session.userType = data.response.user.type
+        res.send({
+            completed:true
+        })
     }else{
         res.send(data)   
     }

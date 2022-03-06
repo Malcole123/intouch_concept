@@ -34,7 +34,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <div class="sign-up-form">
                       <p class="mb-4">Please enter the verification code sent to test or click the link in your email to continue</p>
-                        <form class="needs-validation" id="verify-form" method="POST" @submit.prevent="" novalidate>
+                        <form class="needs-validation" id="verify-form" method="POST" @submit.prevent="processForm" novalidate>
                               <div class="row g-2 mt-4">
                                 <div class="col">
                                   <div class="form-floating">

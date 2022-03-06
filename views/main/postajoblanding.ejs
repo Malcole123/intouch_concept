@@ -15,87 +15,57 @@
       rel="stylesheet"
     />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
     <script src="/js/script.js" defer></script>
     <script src="/js/setSearch.js" defer></script>
-    <title>Job | Home</title>
+    <title>inTouch | Post a job </title>
   </head>
   <body>
-    <section class="home-header">
-      <%- include('../components/regular_nav.ejs')%>
-      <div class="head-content">
-        <div class="head-text">
-          <h1>
-            Hello <span>Talent,</span><br />
-            Meet <span>Opportunity.</span>
-          </h1>
-          <p>
-            Connecting talented and motivated people with interested employers
-          </p>
-          <div class="search-field">
-            <div class="search-input">
-              <input
-              type="text"
-              id="career-search"
-              name="careerSearch"
-              placeholder="Search jobs near you"
-            />
-            <div class="career-search-auto-complete">
+   <section class="paj-header">
+    <%-include('../components/regular_nav.ejs') -%>
+    <div class="container mt-5 pt-2">
+      <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+          <h1 class="text-white mb-3">Find that ideal team member</h1>
+          <p class="text-white">Searching for that ideal team member doesn’t have to be a headache. Advertise new positions, handle resume and onboarding all in one place</p>
+          <a href="/employer/register" class="gs_button">Get started</a>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 __ill_display">
+          <img style="width:80%;margin:0 auto"src="/images/blobgroup.png" alt="Join">
+        </div>
+      </div>
+    </div>
+    <svg viewBox="0 0 1440 242" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M109.5 241.444L1549.5 241.444C1549.5 241.444 2000.5 -160.056 1549.5 72.4443C1098.5 304.944 538.5 -104.056 109.5 72.4443C-319.5 248.944 109.5 241.444 109.5 241.444Z" fill="white"/>
+      </svg>      
+   </section>
+   <section class="about__section">
+        <h2 class="text-center">Search thorughly, Hire confidently</h2>
+        <div class="container mt-5">
+          <div class="row g-2">
+            <div class="col-lg-4 col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center">
+              <img style="width:45%;margin-left:auto;margin-right:auto;" src="/images/Search.png" alt="Search with confidence">
+              <h5 class="mt-2 text-center">Search</h5>
+              <p class="mt-2 text-center">Use our talent network to optimize your search for that ideal team memeber.</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center">
+              <img style="width:45%;margin-left:auto;margin-right:auto" src="/images/Newletter.png" alt="Communicate with confidence">
+              <h5 class="mt-2 text-center">Communicate</h5>
+              <p class="mt-2 text-center">Increase communication efficiency. Manage all prospect communication in one place.</p>
 
             </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center">
+              <img style="width:45%;margin-left:auto;margin-right:auto" src="/images/Folder.png" alt="Review with confidence">
+              <h5 class="mt-2 text-center">Review</h5>
+              <p class="mt-2 text-center">Review applications submitted either from your email or from our dashboard</p>
             </div>
-            <select id="where-select">
-              <option value="" disabled selected hidden>Where ?</option>
-            </select>
-            <button type="button" id="searchJobsBtn">
-              <i class="fas fa-search"></i>
-            </button>
+          </div>
+          <div class="row mt-4">
+            <a style="padding:12px 18px;color:#fff;background:#f44336;width:fit-content;margin:0 auto;text-align:center;text-decoration:none;" href="/employer/register">Get Started</a>
           </div>
         </div>
-
-      </div>
-   
-        
-    </section>
-    <section class="home-about">
-      <h2>START YOUR NEXT CAREER</h2>
-      <div class="about-key-points">
-        <div class="key-point-card">
-          <h3>FREQUENT UPDATES</h3>
-          <p>
-            Save time and speed up your job search by letting our advanced AI
-            search through our database so you only see jobs relevant to you
-          </p>
-        </div>
-        <div class="key-point-card">
-          <h3>DIVERSE NETWORK</h3>
-          <p>Find your dream job using just a few key phrases</p>
-        </div>
-        <div class="key-point-card">
-          <img
-            src="../images/home/easyapplication.svg"
-            alt="Curated results"
-          />
-          <h3>EASY APPLICATION</h3>
-          <p>
-            Don't see what you're looking for? New jobs are added every day.
-            Sign up to get updates on new job listings that interest you
-          </p>
-        </div>
-      </div>
-    </section>
-    <section class="home-job-near-you">
-      <h2>Jobs in Jamaica near you</h2>
-      <div class="home-jobs-display">
-        <div class="home-job-card">
-
-        </div>
-      </div>
-    </section>
-    <section class="footer">
-
-    </section>
-    <%- include( '../components/cookie-disclaimer.ejs' ) %>
-
+   </section>
+   <%-include('../components/footer.ejs') -%>
   </body>
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

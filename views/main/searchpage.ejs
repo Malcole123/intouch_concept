@@ -44,23 +44,6 @@
               <i id="filter__init-dismiss" class="d-sm-block d-md-block d-lg-none fas fa-times-circle fs-4 mb-2"></i>
               <li>
                 <div class="dropdown">
-                  <div class="filter__option" id="companyButton">
-                    <span>Company</span>
-                    <i class="fas fa-caret-down"></i>
-                  </div>
-                  <ul class="filter_option__menu" id="companyMenu" aria-labelledby="job type menu dropdown">
-                      <li>
-                        <div class="form-floating">
-                          <input class="form-control" type="text" id="companySearchInput" v-model.trim="display.filter.company">
-                          <label for="countrySearchInput">Search Company:</label>
-                        </div>
-                        <button type="button" class="btn btn-dark mt-3">Search</button>
-                      </li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <div class="dropdown">
                   <div class="filter__option" id="jobTypeButton">
                     <span>Job Type</span>
                     <i class="fas fa-caret-down"></i>
@@ -132,24 +115,6 @@
                       <label for="subdivInput">Parish/ State</label>
                     </div>
                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <div class="dropdown">
-                  <div class="filter__option" id="quickApplyButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span>Quick Apply</span>
-                    <i class="fas fa-caret-down"></i>
-                  </div>
-                  <ul class="filter_option__menu" id="quickApplyMenu" aria-labelledby="job type menu dropdown">
-                    <li>
-                      <div class="form-check d-flex justify-content-between w-100">
-                        <label class="form-check-label" for="applyOnlineCheck">
-                          Apply Online
-                        </label>
-                        <input class="form-check-input" type="radio" name="applyOnlineCheck" id="applyOnlineCheck">
-                      </div>
-                    </li>
                   </ul>
                 </div>
               </li>

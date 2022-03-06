@@ -16,7 +16,15 @@ const cEnroll = async (fn, ln, e , pn, p, tos,user_type,end)=>{
         body:JSON.stringify(sData)
     }).then(res=>res.json())
     .then(data=>{
-        return data
+        console.log(data)
+        return {
+            completed:true,
+            redPath:data.redPath
+        }
+    }).catch(error=>{
+        return {
+            completed:false,
+        }
     })
 
     return rData
@@ -38,6 +46,9 @@ const cEnter = async (e , p, sTo,eP)=>{
     .then(data=>{
       return data
     }).catch(e , ()=>{
+        return {
+            ok:false
+        }
     })
     return rData
 }
@@ -54,10 +65,8 @@ const cRecover = async (e)=>{
         body:JSON.stringify(sData)
     }).then(res=>{
         res.json()
-        console.log(res)
     })
     .then(data=>{
-        console.log(data)
         return data
     }).catch(e , ()=>{
     })

@@ -14,6 +14,7 @@ const onBoardingRouter = require('./routes/user_onboarding.js');
 const dashboardRouter = require('./routes/client_user/dashboard/dash_pages.js');
 const analyticRouter = require('./routes/analytics/analytics.js');
 const userAlertRouter = require('./routes/alerts/user.js');
+const companyRouter = require('./routes/client_user/account/company.js')
 
 const fetchers = require('./fetchers.js');
 const cookieParser = require("cookie-parser");
@@ -48,6 +49,7 @@ app.use('/onboarding',onBoardingRouter);
 app.use('/dashboard',dashboardRouter);
 app.use('/analytics',analyticRouter);
 app.use('/alerts',userAlertRouter);
+app.use('/company',companyRouter);
 
 
 

@@ -11,7 +11,7 @@ const applicationSubmitUrl = process.env.SUBMIT_APPLICATION_URL;
 const editGeneralPreferencesURL = process.env.EDIT_GENERAL_PREFERENCES;
 const getNotificationURL = process.env.GET_NOTIFICATIONS;
 const getCompanyDataURL = process.env.GET_COMPANY_INFO;
-
+const createCompanyURL = process.env.CREATE_COMPANY
 
 const fs = require('fs')
 const axios = require('axios').default
@@ -29,10 +29,9 @@ const signupAuthFetch = async (req)=>{
       })
       .then(res => {
         var retData = {
-          "auth":res.data.authToken,
-          "completed":true,
-          "v_code":res.data.v_code,
-          "email":req.email,
+          auth:res.data.response.authToken,
+          completed:true,
+          user:res.data.response.user
         }
         return retData
       })
@@ -68,7 +67,6 @@ const loginAuthFetch = async (req)=>{
   return response
 }
 
-
 const authMe = async (token)=>{
   const response = await  axios.get(`${authMeURL}`, {
       headers:{
@@ -79,7 +77,7 @@ const authMe = async (token)=>{
   .then(res => {
     return {
       ok:true,
-      data:res.data
+      data:res.data,
     }
   })
   .catch(err => {
@@ -217,6 +215,65 @@ const removeNotification = async (user_id,my_id,notif_id)=>{
   return response
 }
 
+const createNewCompany = async (c_Data,auth,user)=>{
+  const response = await  axios.post(createCompanyURL,{
+    name:c_Data.name,
+    about_company:c_Data.about,
+    mission_statement:c_Data.mission_state,
+    industry:c_Data.industry,
+    official_website:c_Data.official_website,
+    company_size:c_Data.company_size,
+    company_type:c_Data.company_type,
+    recruiter_email:c_Data.recruiter_email,
+    recruiter_phone:c_Data.recruiter_phone,
+    country:c_Data.country,
+    creator:user,
+    company_data:JSON.stringify({
+      "urls": {
+        "company_logo": "",
+        "direct_user_to": "",
+        "application_test": ""
+      },
+      "company_id":"",
+      "company_name": c_Data.name.toLowerCase(),
+      "company_details": {
+        "contact": {
+          "email": c_Data.recruiter_email,
+          "phone": c_Data.recruiter_phone
+        },
+        "country": c_Data.country,
+        "sub_div": "",
+        "industry": c_Data.industry,
+        "company_size": c_Data.company_size,
+        "company_type": c_Data.company_type,
+        "headquarters": "",
+        "about_company": c_Data.about,
+        "company_website": c_Data.official_website,
+        "mission_statement": c_Data.mission_state
+      }
+    })
+  },
+  {
+    headers:{
+      'Authorization':`Bearer ${auth}`,
+      'Content-Type':'application/json',
+    }
+  })
+  .then(res => {
+    var retData = {
+        ok:true,
+        data:res.data
+    }
+    return retData
+  })
+  .catch(err => {
+    var retData = {
+      ok:false,
+    }
+    return retData
+  });
+  return response
+}
 
 /*Common User End*/
 
@@ -258,4 +315,5 @@ module.exports = {
   getNotif:getNotifications,
   removeNotif:removeNotification,
   getCompanyData:getCompanyInfo,
+  createCompany:createNewCompany,
 }

@@ -1,6 +1,7 @@
 :root{
     --prim-dark:#3F3D56;
     --secc-dark:#3E3BE8;
+    --main--accent:#f44336;
 }
 
 *{
@@ -95,6 +96,58 @@
 #formFeedBack{
     font-weight:600;
     color:#f44336;
+}
+
+.step__indicator{
+    width:80%;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    gap:5px;
+}
+
+.indicator{
+    height:45px;
+    width:45px;
+    border-radius:50%;;
+    font-size:1.3rem;
+    font-weight:600;
+    border:0.8px solid #ddd;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.5s
+}
+
+.progress{
+    height:2px;
+    width:8em;
+    background:#ddd;
+    border-radius:3px;
+}
+
+.loader__bar{
+    height:100%;
+    width:0%;
+    background:var(--secc-dark);
+    animation:nextStep 0.2s linear forwards;
+}
+
+.__active_step{
+    background:var(--secc-dark);
+    color:#fff;
+    border:none;
+}
+
+@keyframes nextStep {
+    0%{
+        width:0%
+    }
+    100%{
+        width:100%
+    }
+    
 }
 
 

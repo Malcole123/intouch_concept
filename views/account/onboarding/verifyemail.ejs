@@ -120,18 +120,17 @@
                 })
             }).then(res=>res.json())
             .then(data=>{
+              console.log(data)
               return data
             })
 
             if(s.ok){
-              if(eCode===s.vcode){
-                window.location.href=s.redirect
-              }else{
+              window.location.href='/onboarding/employer/company/register'
+            }else{
                 var inputs = document.querySelectorAll('input');
                 inputs.forEach((item)=>{
                   setInvalid(item.id)
                 })
-              }
             }
         }
     }

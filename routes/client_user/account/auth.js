@@ -49,11 +49,16 @@ router.get('/login', async (req, res)=>{
 router.post('/auth/register/client', async (req,res)=>{
     var session = req.session;
     var data = await fetchers.fetchsignAuth(req.body);
-    var userInfo = await fetchers.fetchAuthMe(session.userID)
     if(data.completed){
-        session.userID = data.authToken;
+        session.userID = data.auth;
+        session.userEmail = data.user.email;
+        session.userFNAME = data.user.first_name;
+        session.userLNAME = data.user.last_name;
+        session.userType = data.user.role;
+        session.myID = data.user.id;
         res.send({
-            data:data,
+            ok:true,
+            redPath:'/onboarding/identity/verifyemail'
         })
     }else{
         res.send(data) 
@@ -64,17 +69,17 @@ router.post('/auth/login/client', async (req,res)=>{
     var data = await fetchers.fetchloginAuth(req.body);
     var redPath;
     if(data.completed){
+        session.myID = data.data.id
         session.userID = data.data.authToken;
         session.userEmail = data.data.email;
         session.userType =  data.data.role;
         session.userFNAME =  data.data.first_name;
         session.userLNAME =  data.data.last_name;
         session.companyID =  data.data.verified_companies_id;
-        console.log(session)
         if( data.data.role === 'client'){
             redPath = '/dashboard/home'
         }else{
-            redPath='/main/home'
+            redPath='/main/seejobs?q=&country=&sub_division='
         }
         res.send({
             completed:true,
@@ -88,10 +93,16 @@ router.post('/auth/login/client', async (req,res)=>{
 router.post('/auth/identity/verify', async (req,res)=>{
     var session = req.session;
     var data = await fetchers.fetchAuthMe(session.userID);
-    if(data.ok && data.vcode == req.body.code){
+    var codeMatch;
+    if(parseInt(data.data.v_code) === parseInt(req.body.code)){
+        codeMatch=true
+    }else{
+        codeMatch = false
+    }
+    if(data.ok && codeMatch){
         res.send({
             ok:true,
-            redirect:'',
+            redirect:'/onboarding/company/register',
         })
     }else{
         res.send({

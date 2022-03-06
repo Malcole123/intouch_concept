@@ -34,14 +34,18 @@ router.get('/home', async (req, res)=>{
         comp_id:session.companyID
     }
     var application = await getters.submittedApplications(req.session.companyID,'');
-    var company_data = await getters.getCompInfo(req.session.companyID,"empty");
-    if(session.userID){
-        res.render('./dashboard/index',{
-            active_list:company_data.data.listings,
-            userDetails:userData,
-            application:application.data,
-            companyData:company_data.data.company_data
-        })
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/index',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                application:application.data,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
     }else{
         res.redirect('/employer/login')
     }

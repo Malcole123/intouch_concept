@@ -26,10 +26,20 @@ const rApp = new Vue({
             passConfirm:"Your passwords do not match",
             tosAgree:"You must agree to our terms of service to continue"
         },
-        formReady:false
+        formReady:false,
+        processing:false,
     },
     methods:{
         processForm:()=>{
+            var form = document.getElementById('register-form');
+            var ePoint = form.getAttribute('action');
+            rApp.processing = true
+            var userType;
+            if(window.location.href.includes('employer')){
+                userType = 'client'
+            }else{
+                userType = 'common'
+            }
             var sendData = {
                 fn:rApp.firstName,
                 ln:rApp.lastName,
@@ -37,15 +47,16 @@ const rApp = new Vue({
                 pn:rApp.phoneNumber,
                 ps:rApp.password,
                 tos:rApp.tosAgree,
-                user_type:'common',
-                end:'../user/'
+                user_type:userType,
+                end:''
             };
             const processor = async ()=>{
-                var r = await cEnroll(sendData.fn, sendData.ln, sendData.em, sendData.pn,sendData.ps, sendData.tos);
+                var r = await cEnroll(sendData.fn, sendData.ln, sendData.em, sendData.pn,sendData.ps, sendData.tos,sendData.user_type,ePoint);
                 if(r.completed){
-                    window.location.pathname = "/user/identity/verify"  
+                    window.location.href = "/onboarding/identity/verifyemail"  
                 }else{
                     rApp.errorMsg.email = "User already exists"
+                    rApp.processing = false
                     setInvalid('emailInput');
                 }            
             }
@@ -424,12 +435,128 @@ const verifyCode = new Vue({
         },
         processForm:async ()=>{
             var eCode = `${verifyCode.one}${verifyCode.two}${verifyCode.three}${verifyCode.four}${verifyCode.five}`;
-            const s =  await fetch('')
+            console.log(eCode)
+            const s =  await fetch('/employer/auth/identity/verify',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({
+                    code:eCode
+                })
+            }).then(res=>res.json()).then(data=>console.log(data))
 
         }
     }
 })
 
+const compReg = new Vue({
+    el:"#registerCompBody",
+    data:{
+        current_step:1,
+        info:{
+            name:'',
+            industry:'',
+            company_size:'',
+            company_type:'',
+            about:'',
+            mission_state:'',
+            recruiter_email:'',
+            recruiter_phone:'',
+            official_website:'',
+            country:'',
+        },
+        progress:{
+            step_one:false,
+            step_two:false,
+            step_three:false,
+            step_four:false,
+        }
+    },
+    methods:{
+        stepCheck:(step)=>{
+            var data = compReg.info
+            switch(step){
+                case 1:
+                    var req_val = [data.name,data.industry,data.company_size,data.company_type];
+                    var reqInput = ['Name','Industry','Size','Type'];
+                    var error = []
+                    req_val.forEach((param,index)=>{
+                        if(param.length === 0){
+                            error.push(index)
+                        }else{
+                            setvalid(`company${reqInput[index]}Input`)
+                        }
+                    });
+                    error.forEach((err)=>{
+                        setInvalid(`company${reqInput[err]}Input`)
+                    });
+                    if(error.length === 0){
+                        compReg.current_step = 2;
+                        compReg.progress.step_one = true
+                    }
+                    break
+                case 2:
+                    var req_val = [data.about,data.mission_state];
+                    var reqInput = ['About','Mission'];
+                    var error = [];
+                    req_val.forEach((param,index)=>{
+                        if(param.length === 0){
+                            error.push(index)
+                        }else{
+                            setvalid(`company${reqInput[index]}Input`)
+                        }
+                    })
+                    error.forEach((err)=>{
+                        setInvalid(`company${reqInput[err]}Input`)
+                    });
+                    if(error.length === 0){
+                        compReg.current_step = 3;
+                        compReg.progress.step_two = true
+                    }
+                    break
+                case 3:
+                    var req_val = [data.recruiter_email,data.recruiter_phone,data.official_website,data.country];
+                    var reqInput = ['Email','Phone','Website','Country'];
+                    var error = [];
+                    req_val.forEach((param,index)=>{
+                        if(param.length === 0){
+                            error.push(index)
+                        }else{
+                            setvalid(`company${reqInput[index]}Input`)
+                        }
+                    })
+                    error.forEach((err)=>{
+                        setInvalid(`company${reqInput[err]}Input`)
+                    });
+                    if(error.length === 0){
+                        compReg.submit()
+                    }
+                    break
+            }
+        },
+        submit:async ()=>{
+            var ret = await fetch('/company/create',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify(compReg.info)
+            }).then(res=>res.json()).then(data=>{
+                return {
+                    ok:true
+                }
+            }).catch(error=>{
+                return {
+                    ok:false
+                }
+            })
+            if(ret.ok){
+                window.location.href="/dashboard/home"
+            }
+        }
+    }
+})
 
 
 const setInvalid = (id)=>{
