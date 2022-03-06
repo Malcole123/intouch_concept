@@ -688,7 +688,7 @@ nav svg{
 }
 
 .inline-ad-space{
-    background:#ddd;
+    background:transparent;
     width:100%;
     height:130px;
 }

@@ -82,7 +82,7 @@ const setSearchState= new Vue({
             setTimeout(()=>{
                 var loader = document.getElementsByClassName('loader__overlay')[0];
                 loader.style.display = "none"
-            },900)
+            },200)
             var str_data = document.getElementById('job__intermed');
             var par_data = JSON.parse(str_data.value);
             if(par_data.items.length > id){
