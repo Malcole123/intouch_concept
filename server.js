@@ -61,7 +61,7 @@ app.get('*', function(req, res){
 });
 
 
-console.log('port')
+console.log(`port open on ${port}`)
 app.listen(port);
 
 
