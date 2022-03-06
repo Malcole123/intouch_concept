@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000
 
 const employerRouter = require('./routes/client_user/account/auth.js')
 const mainRouter = require('./routes/main.js');
-const resumeRouter = require('./routes/resumeBuild/router.js');
+const resumeRouter = require('./routes/resumebuild/handler.js');
 const onBoardingRouter = require('./routes/user_onboarding.js');
 const dashboardRouter = require('./routes/client_user/dashboard/dash_pages.js');
 const analyticRouter = require('./routes/analytics/analytics.js');
