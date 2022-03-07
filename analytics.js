@@ -13,17 +13,6 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use(sessions({
-    secret: sessionKey,
-    saveUninitialized:true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
-}));
-
-
-
-
-
 
 
 module.exports = router

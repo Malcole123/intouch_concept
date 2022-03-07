@@ -8,19 +8,12 @@ const express = require('express');
 const { append } = require('express/lib/response');
 const fetchers = require('../../fetchers');
 const cookie = require('cookie');
-const csessions = require('client-sessions');
 const sessions = require('express-session');
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use(sessions({
-    secret: sessionKey,
-    saveUninitialized:true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
-}));
 
 
 router.get('/create/templates', (req,res)=>{

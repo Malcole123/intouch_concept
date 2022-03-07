@@ -13,8 +13,6 @@ const getSubmittedApplicationsURL = process.env.GET_SUBMITTED_APPLICATIONS
 const fs = require('fs')
 const axios = require('axios').default
 const express = require('express');
-const res = require('express/lib/response');
-
 
 const getallMyListings = async (id,name)=>{
     const data = await  axios.get(`${fetchMyListings}?company_id=${id}&company_name=${name}`, {
@@ -110,7 +108,6 @@ const createMyListing = async (info,id)=>{
         //
     })
     .then(res => {
-        console.log(res.data)
      return {
          error:false,
          listing:res.data,
@@ -223,7 +220,6 @@ const editMyListing = async (info,id,comp_id)=>{
 }
 
 const getMyCompanyDetail = async (id=0,name)=>{
-    console.log(id)
     const data = await  axios.get(`${getCompInfoURL}?company_name=${name}&company_id=${id}`, {
         headers:{
           "Content-Type":"application/json"
@@ -237,7 +233,6 @@ const getMyCompanyDetail = async (id=0,name)=>{
         }
     })
     .catch(err => {
-        console.log(err)
         return{
             ok:false,
             message:err.message,

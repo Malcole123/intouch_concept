@@ -9,18 +9,12 @@ const app = express();
 const { append } = require('express/lib/response');
 const fetchers = require('../../../fetchers');
 const cookie = require('cookie');
-const csessions = require('client-sessions');
 const session = require('express-session');
 const urlHandler = require('../../../urlHandlers');
 const cookieParser = require('cookie-parser');
 const router = express.Router();
 
-router.use(session({
-    secret: sessionKey,
-    saveUninitialized:false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
-}));
+
 router.use(cookieParser())
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));

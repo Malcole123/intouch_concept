@@ -12,7 +12,6 @@
   "dependencies": {
     "@restpack/client": "^2.0.0",
     "axios": "^0.25.0",
-    "client-sessions": "^0.8.0",
     "connect-mongodb-session": "^3.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^14.2.0",

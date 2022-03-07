@@ -10,8 +10,6 @@ const express = require('express');
 const sessions = require('express-session');
 const fetchers = require('../fetchers.js');
 const router = express.Router();
-const mongoose = require('mongoose');
-var MongoDBStore = require('connect-mongodb-session')(sessions);
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));

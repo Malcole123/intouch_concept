@@ -9,11 +9,7 @@ const app = express();
 const { append } = require('express/lib/response');
 const fetchers = require('../../fetchers');
 const cookie = require('cookie');
-const csessions = require('client-sessions');
 const sessions = require('express-session');
-const mongoose = require('mongoose');
-var MongoDBStore = require('connect-mongodb-session')(sessions);
-
 const urlHandler = require('../../urlHandlers');
 const router = express.Router();
 
@@ -42,7 +38,6 @@ const idbyAuth = async (req, token)=>{
     var session = req.session;
     if(session.userID){
         var data = await fetchers.fetchAuthMe(token);
-        console.log(data);
         return data
     }else{
         return false

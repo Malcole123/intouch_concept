@@ -33,7 +33,6 @@ const pdfGenerator = async (html)=>{
         pdf_height: "1026px",
         pdf_width:'816px' /* , other options */,
       }).then(res=>{ 
-          console.log(res);
           return res
         })
       return response

@@ -22,7 +22,14 @@ const sessions = require('express-session');
 var MongoDBSession = require('connect-mongodb-session')(sessions);
 const mongoose = require('mongoose');
 const mongoURI = 'mongodb+srv://malik123:passMalcoleman123@cluster0.wtnk5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-
+mongoose.connect(mongoURI,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true,
+}).then((res)=>{
+    console.log('Connected')
+}).catch(error=>{
+    console.log('something went wrong',error)
+})
 
 const store = new MongoDBSession({
     uri:mongoURI,
@@ -32,6 +39,8 @@ const store = new MongoDBSession({
 const fs = require('fs')
 const http = require('http')
 const express = require('express');
+const router = require('./routes/main.js');
+const { resolveNaptr } = require('dns');
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -69,6 +78,10 @@ app.use('/company',companyRouter);
 app.get('*', function(req, res){
     res.status(404).send('body')
 });
+
+router.get('/',(req,res)=>{
+    res.render('./main/index.ejs')
+})
 
 
 console.log(`port open on ${port}`)

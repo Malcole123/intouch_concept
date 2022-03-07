@@ -21,7 +21,6 @@ const jobQueryAll = async (jobQuery="", country="", sub_division="")=>{
         return res
     })
     .catch(err => {
-      console.log('Error: ', err.message);
       return err
     });
     return response.data

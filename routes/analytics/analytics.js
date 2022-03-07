@@ -14,13 +14,6 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use(sessions({
-    secret: sessionKey,
-    saveUninitialized:true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
-}));
-
 
 router.post('/share/create',async(req,res)=>{
     const result = await handle.create_Share(req.body.job_id, req.body.share_method,req.body.referral);

@@ -188,11 +188,9 @@ const getNotifications = async (auth_id,my_id)=>{
     }
   })
   .then(res => {
-    console.log(res.data)
     return res.data
   })
   .catch(err => {
-    console.log(err)
     return err
   });
   return response
@@ -205,11 +203,9 @@ const removeNotification = async (user_id,my_id,notif_id)=>{
     notif_id:notif_id,
   })
   .then(res => {
-    console.log(res.data);
     return res
   })
   .catch(err => {
-      console.log(err);
       return err
   });
   return response
