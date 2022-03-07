@@ -22,12 +22,7 @@ const sessions = require('express-session');
 var MongoDBSession = require('connect-mongodb-session')(sessions);
 const mongoose = require('mongoose');
 const mongoURI = 'mongodb+srv://malik123:passMalcoleman123@cluster0.wtnk5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-mongoose.connect(mongoURI,{
-    useNewUrlParser:true,
-    useUnifiedTopology:true,
-}).then((res)=>{
-    console.log('Connected')
-})
+
 
 const store = new MongoDBSession({
     uri:mongoURI,
