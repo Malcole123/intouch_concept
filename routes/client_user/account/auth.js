@@ -3,7 +3,6 @@ if(process.env.NODE_ENV !== "production"){
 }
 
 const sessionKey = process.env.SESSION_SECRET
-const base_url = process.env.BASE_URL
 const express = require('express');
 const app = express();
 const fetchers = require('../../../fetchers');
@@ -13,12 +12,6 @@ const urlHandler = require('../../../urlHandlers');
 const cookieParser = require('cookie-parser');
 const router = express.Router();
 
-router.use(session({
-    secret: sessionKey,
-    saveUninitialized:false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
-}));
 router.use(cookieParser())
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));

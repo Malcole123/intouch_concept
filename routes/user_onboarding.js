@@ -3,13 +3,10 @@ if(process.env.NODE_ENV !== "production"){
 }
 
 const sessionKey = process.env.SESSION_SECRET
-const base_url = process.env.BASE_URL
 const express = require('express');
-const app = express();
 const fetchers = require('../fetchers.js');
 const cookie = require('cookie');
 const sessions = require('express-session');
-const urlHandler = require('../urlHandlers');
 
 const router = express.Router();
 router.use(express.json());

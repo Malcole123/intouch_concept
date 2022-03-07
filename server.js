@@ -4,6 +4,10 @@ if(process.env.NODE_ENV !== "production"){
 const sessionKey = process.env.SESSION_SECRET
 
 const port = process.env.PORT
+const fs = require('fs')
+const http = require('http')
+const express = require('express');
+const app = express();
 
 const userRouter = require('./routes/user/auth.js');
 const userEditRouter = require('./routes/user/edit.js');
@@ -35,17 +39,8 @@ const store = new MongoDBSession({
     collection:'applicationSessions'
 })
 
-const fs = require('fs')
-const http = require('http')
-const express = require('express');
-const router = require('./routes/main.js');
-const { resolveNaptr } = require('dns');
-const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-
-
-
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(sessions({
@@ -78,7 +73,7 @@ app.get('*', function(req, res){
     res.status(404).send('body')
 });
 
-router.get('/',(req,res)=>{
+app.get('/',(req,res)=>{
     res.render('./main/index.ejs')
 })
 

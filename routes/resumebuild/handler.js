@@ -5,7 +5,6 @@ if(process.env.NODE_ENV !== "production"){
 const buildFunc = require('./builder.js')
 const sessionKey = process.env.SESSION_SECRET
 const express = require('express');
-const { append } = require('express/lib/response');
 const fetchers = require('../../fetchers');
 const cookie = require('cookie');
 const sessions = require('express-session');

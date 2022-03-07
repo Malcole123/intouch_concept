@@ -6,7 +6,6 @@ const sessionKey = process.env.SESSION_SECRET
 const base_url = process.env.BASE_URL
 const express = require('express');
 const app = express();
-const { append } = require('express/lib/response');
 const fetchers = require('../../../fetchers');
 const cookie = require('cookie');
 const session = require('express-session');
