@@ -73,23 +73,8 @@ app.use('/company',companyRouter);
 
 
 app.get('*', function(req, res){
-    res.status(404).send('body')
+    res.status(404).send('Not found')
 });
-
-app.get('/',(req,res)=>{
-    var session = req.session;
-    if(session.userID){
-        var button = "../components/buttons/logged_in_state"
-        res.render('./main/index',{
-            lgBtn:button,
-        })
-    }else{
-        var button = "../components/buttons/login_signup_button"
-        res.render('./main/index',{
-            lgBtn:button
-        })
-}})
-
 
 console.log(`port open on ${port}`)
 app.listen(port);
