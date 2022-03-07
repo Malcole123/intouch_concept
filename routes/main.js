@@ -16,7 +16,6 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get('/home', (req,res)=>{
     var session = req.session;
-    req.session.ok = true;
     if(session.userID){
         var button = "../components/buttons/logged_in_state"
         res.render('./main/index',{

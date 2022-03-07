@@ -3,10 +3,10 @@ if(process.env.NODE_ENV !== "production"){
 }
 const sessionKey = process.env.SESSION_SECRET
 
+const port = process.env.PORT
+
 const userRouter = require('./routes/user/auth.js');
 const userEditRouter = require('./routes/user/edit.js');
-const port = process.env.PORT || 3000
-
 const employerRouter = require('./routes/client_user/account/auth.js')
 const mainRouter = require('./routes/main.js');
 const resumeRouter = require('./routes/resumebuild/handler.js');
@@ -16,7 +16,6 @@ const analyticRouter = require('./routes/analytics/analytics.js');
 const userAlertRouter = require('./routes/alerts/user.js');
 const companyRouter = require('./routes/client_user/account/company.js')
 
-const fetchers = require('./fetchers.js');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 var MongoDBSession = require('connect-mongodb-session')(sessions);
