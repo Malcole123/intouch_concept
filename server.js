@@ -37,7 +37,6 @@ const store = new MongoDBSession({
 const fs = require('fs')
 const http = require('http')
 const express = require('express');
-const { session } = require('passport/lib');
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -73,8 +72,13 @@ app.use('/company',companyRouter);
 
 
 app.get('*', function(req, res){
-    res.status(404).send('Not found')
+    res.status(404).send('body')
 });
+
+app.get('/',(req,res)=>{
+    res.render('./main/index')
+})
+
 
 console.log(`port open on ${port}`)
 app.listen(port);
