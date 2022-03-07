@@ -75,10 +75,6 @@ app.get('*', function(req, res){
     res.status(404).send('body')
 });
 
-app.get('/',(req,res)=>{
-    res.render('./main/index')
-})
-
 
 console.log(`port open on ${port}`)
 app.listen(port);
