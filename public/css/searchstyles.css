@@ -20,7 +20,7 @@ html{
 }
 .focus___overlay{
     height:100vh;
-    width:100vw;
+    width:100%;
     background:rgba(0, 0, 0, 0.2);
     top:0;
     bottom:0;
@@ -32,7 +32,7 @@ html{
 }
 .loader__overlay{
     height:100vh;
-    width:100vw;
+    width:100%;
     position:fixed;
     z-index:99;
     background:#f44336;
@@ -356,7 +356,7 @@ nav svg{
     left:0;
     right:0;
     top:-100vh;
-    width:100vw;
+    width:100%;
     height:100vh;
     padding-top:90px;
     background:#fff;
@@ -759,7 +759,7 @@ nav svg{
 
 .application__area{
     height: 100vh;
-    width:100vw;
+    width:100%;
     background:rgba(0, 0, 0, 0.5);
     /*position:fixed;*/
     top:0;
@@ -852,7 +852,7 @@ nav svg{
 @media(max-width:1020px){
     .focus___overlay{
         height:100vh;
-        width:100vw;
+        width:100%;
         background:rgba(0, 0, 0, 0.2);
         top:0;
         bottom:0;
@@ -867,7 +867,7 @@ nav svg{
     }
     .menu-options__display{
         position:fixed;
-        width:100vw;
+        width:100%;
         height:100vh;
         background:#fff;
         box-shadow:none;
@@ -945,14 +945,14 @@ nav svg{
         position:fixed;
         background:#fff;
         height:100vh;
-        width:100vw;
+        width:100%;
         z-index:3;
-        right:-100vw;
+        right:-100%;
         top:70px;
         transition:0.4s ease-in-out;
     }
     .show-job-section{
-        transform:translateX(-100vw);
+        transform:translateX(-100%);
     }
     .results-body,.job-show-body{
         height:100%;
@@ -994,7 +994,7 @@ nav svg{
         top:-100vh;
         left:0;
         height:100vh;
-        width:100vw;
+        width:100%;
         z-index:99;
         background:#fff;
         transition:0.7s ease-in-out;

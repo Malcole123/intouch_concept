@@ -4,26 +4,21 @@ if(process.env.NODE_ENV !== "production"){
 
 const sessionKey = process.env.SESSION_SECRET
 const jobCalls = require('../jobFetchers.js');
-const urlHandlers = require('../urlHandlers.js')
+const urlHandlers = require('../urlHandlers.js');
+const qHandler = urlHandlers.qHandler;
 const express = require('express');
 const sessions = require('express-session');
 const fetchers = require('../fetchers.js');
-
 const router = express.Router();
+const mongoose = require('mongoose');
+var MongoDBStore = require('connect-mongodb-session')(sessions);
+
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use(sessions({
-    secret: sessionKey,
-    saveUninitialized:true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
-}));
-
-const qHandler = urlHandlers.qHandler;
-
 router.get('/home', (req,res)=>{
     var session = req.session;
+    req.session.ok = true;
     if(session.userID){
         var button = "../components/buttons/logged_in_state"
         res.render('./main/index',{

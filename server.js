@@ -19,11 +19,27 @@ const companyRouter = require('./routes/client_user/account/company.js')
 const fetchers = require('./fetchers.js');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
+var MongoDBSession = require('connect-mongodb-session')(sessions);
+const mongoose = require('mongoose');
+const mongoURI = 'mongodb+srv://malik123:passMalcoleman123@cluster0.wtnk5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+mongoose.connect(mongoURI,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true,
+}).then((res)=>{
+    console.log('Connected')
+})
+
+const store = new MongoDBSession({
+    uri:mongoURI,
+    collection:'applicationSessions'
+})
+
 
 
 const fs = require('fs')
 const http = require('http')
 const express = require('express');
+const { session } = require('passport/lib');
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -36,8 +52,10 @@ app.use(sessions({
     secret: sessionKey,
     saveUninitialized:false,
     cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
+    resave: false,
+    store:store,
 }));
+
 
 
 app.use('/user', userRouter);

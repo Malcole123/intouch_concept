@@ -308,7 +308,7 @@ nav img{
   }
   .home-about{
       min-height:100vh;
-      width:100vw;
+      width:100%;
       padding:50px 20px;
       position:relative;
       background:#FF2323;
@@ -359,10 +359,10 @@ nav img{
 }
 .home-job-near-you{
     min-height:100vh;
-    width:100vw;
+    width:100%;
     background:#fff url('/images/home/homejobsnearback.svg');
     background-position: bottom -2px left 0;
-    background-size:100vw;
+    background-size:100%;
     background-repeat:no-repeat;
     padding:70px 0;
     position:relative
@@ -440,9 +440,9 @@ nav img{
       .nav-links{
           position:fixed;
           height:100vh;
-          width:100vw;
+          width:100%;
           top:0;
-          right:-100vw;
+          right:-100%;
           padding:50px 0;
           background:#f44336;
           transition:0.4s ease-in-out
@@ -470,7 +470,7 @@ nav img{
     }
 
       .open-menu{
-          transform:translateX(-100vw);
+          transform:translateX(-100%);
           z-index:97;
       }
       #menu-txt{

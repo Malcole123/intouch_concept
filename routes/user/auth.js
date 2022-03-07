@@ -11,22 +11,23 @@ const fetchers = require('../../fetchers');
 const cookie = require('cookie');
 const csessions = require('client-sessions');
 const sessions = require('express-session');
+const mongoose = require('mongoose');
+var MongoDBStore = require('connect-mongodb-session')(sessions);
+
 const urlHandler = require('../../urlHandlers');
-
 const router = express.Router();
-
-
 
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use(sessions({
-    secret: sessionKey,
-    saveUninitialized:true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false 
-}));
+const isAuth=(req,res,next)=>{
+    if(req.session.userID){
+        res.redirect('/main/seejobs?q=&country=&sub_division=')
+    }else{
+        next();
+    }
+}
 
 const checkForLogin = (req, id)=>{
     var session = req.session;
@@ -48,7 +49,7 @@ const idbyAuth = async (req, token)=>{
     }
 }
 
-router.get('/login', async (req,res)=>{
+router.get('/login', isAuth, async (req,res)=>{
     var loggedIn = await checkForLogin(req);
     if(!loggedIn){
         res.render('./account/authentication/user_auth/login')
@@ -57,7 +58,7 @@ router.get('/login', async (req,res)=>{
     }
 })
 
-router.get('/register', async (req,res)=>{
+router.get('/register', isAuth, async (req,res)=>{
     var loggedIn = await checkForLogin(req);
     if(!loggedIn){
         res.render('./account/authentication/user_auth/register')

@@ -25,9 +25,15 @@ router.use(cookieParser())
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
+const isAuth=(req,res,next)=>{
+    if(req.session.userID && req.session.userType === 'client'){
+        next()
+    }else{
+        res.redirect('/employer/login')
+    }
+}
 
-
-router.get('/register', async (req, res)=>{
+router.get('/register', isAuth, async (req, res)=>{
     var session = req.session
     if(session.userID){
         res.redirect('/dashboard/home')
@@ -36,7 +42,7 @@ router.get('/register', async (req, res)=>{
     }
 })
 
-router.get('/login', async (req, res)=>{
+router.get('/login', isAuth, async (req, res)=>{
     var session = req.session
     if(session.userID){
         res.redirect('/dashboard/home')
