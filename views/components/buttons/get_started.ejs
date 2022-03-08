@@ -1,0 +1,11 @@
+<% if(!get_start){ %>
+    <li><a style="padding:8px 12px;background:#fff;color:#f44336;border-radius:8px;border:1px solid #f44336" href="/user/profile/edit"><i class="fa-solid fa-user" style="color:#f44336"></i> &nbsp<%= user.fname %></a></li>
+<%}else{ %>
+    <% if(access === 'client'){ %>
+        <li><a style="padding:8px 12px;background:#fff;color:#f44336;border-radius:8px;border:1px solid #f44336" href="/employer/register">Sign Up</a></li>
+        <li><a style="padding:8px 12px;background:#333;color:#ffff;border-radius:8px;" href="/employer/login">Log In</a></li>
+    <% }else if(access==='common' || access === undefined){ %>
+        <li><a style="padding:8px 12px;background:#fff;color:#f44336;border-radius:8px;border:1px solid #f44336" href="/user/register">Sign Up</a></li>
+        <li><a style="padding:8px 12px;background:#333;color:#ffff;border-radius:8px;" href="/user/login">Log In</a></li>
+    <% } %>
+<% } %>

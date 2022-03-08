@@ -249,6 +249,9 @@ const setSearchState= new Vue({
             data.forEach((list)=>{
            
             })
+        },
+        alertHandler:()=>{
+            
         }
     }
 })
@@ -653,8 +656,35 @@ var options = {
   observer.observe(target_observe)
 
 
+  const jobautoSearch = ()=>{
+    fetch('/resources/alljobs.json').then(res => res.json())
+    .then(data =>{
+        for(let i = 0; i < data.length; i++ ){
+            autoCompleteJS.data.src.push(data[i].title)
+        }
+    })
+}
 
+const autoCompleteJS = new autoComplete({
+    placeholder: 'Search for food...',
+    data:{
+      src:[]
+    },
+    resultItem:{
+      highlight:{
+        render:true
+      }
+    },
+    submit:true,
 
+ });
+
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+    // "event.detail" carries the autoComplete.js "feedback" object
+    var detail = event.detail;
+    event.currentTarget.value = detail.selection.value;
+    window.location.href = `/main/seejobs?q=${detail.selection.value}&country=&sub_division=`
+});
 
 const setValid = (id)=>{
     var target = document.getElementById(`applicant${id}Input`);
@@ -767,9 +797,8 @@ const main = ()=>{
         $('.search-nav-links').show();
     })
 
-    $('#career-search').on('focus', ()=>{
+    $('#autoComplete').on('focus', ()=>{
         $('.focus___overlay').show();
-        $('#where-select').show();
         $('#searchJobsBtn').show();
         if($(window).width() <= 1020){
             $('#search-page-nav-logo').fadeOut();
@@ -778,36 +807,14 @@ const main = ()=>{
         var windowSize = $(window).width()
         var charCount = $('#career-search').val();
         $('.focus___overlay').hide();
-        $('#where-select').hide();
-        $('#searchJobsBtn').hide();
-
         if(windowSize <= 1020){
             $('#search-page-nav-logo').fadeIn();
             $('.search-nav-links').show();
             $('.search-field').hide();
             $('.focus___overlay').hide();
         }
-    }).on('keyup', (event)=>{
-        var charCount = $('#career-search').val();
-        if(charCount.length >= 3){
-            $('.career-search-auto-complete').show();
-            $('#searchJobs').show();
-        }else{
-            $('.career-search-auto-complete').hide();
-        }
-        if($(event.which)[0]===13){
-            var query = $('#career-search').val();
-            var country = "";
-            var sub_division = ""
-            window.location.href = `/main/seejobs?q=${query}&country=${country}&sub_division=${sub_division}`;     
-        }
     })
-    $('#where-select').on('click',()=>{
-        $('#where-select').show();
-        $('#searchJobsBtn').show();
-        $('.focus___overlay').show();
-    });
-
+  
     $('#searchJobsBtn').on('click', ()=>{
         var query = $('#career-search').val();
         var country = "Jamaica";
@@ -826,8 +833,6 @@ const main = ()=>{
             $('.navbar').addClass('fixed-top');
             $('nav').addClass('scroll-nav');
             if($(window).width() <= 1020){
-                $('#where-select').hide();
-                $('#searchJobsBtn').hide();
                 $('#search-page-nav-logo').fadeIn();
             }
         }else{
@@ -847,6 +852,8 @@ const main = ()=>{
             $('.job-show-display').removeClass('show-job-section')
         }        
     }).on('load', async ()=>{
+        setSearchState.setState();
+        setSearchState.setUserPref();
         var windowSize = $(window).width()
         var maxSize = 1020;
         if(windowSize > maxSize){
@@ -854,41 +861,7 @@ const main = ()=>{
             $('.search-nav-links').show();
             $('.search-field').show();
         }
-        setSearchState.setState();
-        setSearchState.setUserPref();
-        var url_state = await jobQueryParams();
-        if(url_state.referral !== undefined || url_state.referral !== null){
-            fetch('/analytics/share/fulfill',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    ref:url_state.referral
-                })
-            }).then(res=>res.json())
-            .then(data=>{
-
-            }).catch(err=>{
-
-            })
-            if(url_state.view !== null || url_state.view !== undefined){
-                setTimeout(()=>{
-                    setSearchState.changeFocus(parseInt(url_state.view))
-                },300);
-         if(parseInt(url_state.view) > 0){
-            setTimeout(()=>{
-                if($(window).width() <= 1020){
-                    $('.job-show-display').addClass('show-job-section');
-                    $('html').css('overflow','hidden')
-                }
-                $('#user__notif_toast').toast('show')
-            },1200)
-         }
-            }        
-        }else{
-
-        }
+        jobautoSearch()
     })
 
     $('#jobTypeButton').on('click',()=>{
@@ -1074,9 +1047,6 @@ const main = ()=>{
             $('#applicantRESUMEInput').removeClass('is-valid');
             applicationHandler.conditions.step_one.resume = false 
         }
-    })
-
-    $("#dismissAppProcess").on('click', ()=>{
     })
 
     $('#successDismiss').on('click', ()=>{

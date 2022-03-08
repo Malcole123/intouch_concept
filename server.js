@@ -7,8 +7,11 @@ const port = process.env.PORT
 const fs = require('fs')
 const http = require('http')
 const express = require('express');
+const cluster = require('os');
+const os = require('os');
+const numCpu = os.cpus().length
 const app = express();
-
+const compression = require('compression')
 const userRouter = require('./routes/user/auth.js');
 const userEditRouter = require('./routes/user/edit.js');
 const employerRouter = require('./routes/client_user/account/auth.js')
@@ -50,6 +53,17 @@ app.use(sessions({
     store:store,
 }));
 
+app.use(compression({
+    level:6,
+    threshold:0,
+    filter:(req,res)=>{
+        if(req.headers['x-no-compression']){
+            return false
+        }
+        return compression.filter(req,res)
+    }    
+}));
+
 
 
 app.use('/user', userRouter);
@@ -69,16 +83,26 @@ app.use('/company',companyRouter);
 
 
 app.get('*', function(req, res){
-    res.status(404).send('body')
+    res.redirect('/main/home')
 });
 
-app.get('/',(req,res)=>{
-    res.render('./main/index.ejs')
+
+app.get('/', (req,res)=>{
+   res.redirect('/main/home')
 })
 
+console.log(process.env.NODE_UNIQUE_ID);
 
-console.log(`port open on ${port}`)
-app.listen(port);
+if(cluster.isPrimary){
+    for(let i = 0; i < numCpu; i++){
+        cluster.fork();
+    }
+}else{
+    console.log(`port open on ${port} with ${process.pid}`)
+    app.listen(port); 
+}
+
+
 
 
 

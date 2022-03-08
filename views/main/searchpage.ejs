@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/searchstyles.css" />
     <!----Font Awesome CDN-->
     <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous"></script>
@@ -14,11 +13,10 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/resources/autoComplete.js-10.2.6/dist/css/autoComplete.css">
     <!----Boot-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!--<script async src="//jsfiddle.net/user2314737/h3k1amhp/embed/" defer></script>-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
-    <script type="module" src="/js/setSearch.js" defer></script>
     <script type="module" src="/js/searchscripts.js" defer></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
      crossorigin="anonymous"></script>
@@ -26,6 +24,7 @@
     <title>inTouch | Search</title>
   </head>
   <body>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js"></script>
     <div class="loader__overlay">
         <img src="../images/logo.svg" alt="Logo">
         <div class="loader"></div>
@@ -117,32 +116,6 @@
                       <label for="subdivInput">Parish/ State</label>
                     </div>
                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <div class="dropdown">
-                  <div class="filter__option" id="sortButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span>Sort by</span>
-                    <i class="fas fa-caret-down"></i>
-                  </div>
-                  <ul class="filter_option__menu" id="sortResultMenu" aria-labelledby="job type menu dropdown">
-                    <li>
-                      <div class="form-check d-flex justify-content-between w-100">
-                        <label class="form-check-label" for="fullTimeCheck">
-                          New to old
-                        </label>
-                        <input class="form-check-input" type="radio" name="fullTimeCheck" id="fullTimeCheck">
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check d-flex justify-content-between w-100">
-                        <label class="form-check-label" for="fullTimeCheck">
-                          A - Z
-                        </label>
-                        <input class="form-check-input" type="radio" name="fullTimeCheck" id="fullTimeCheck">
-                      </div>
-                    </li>
                   </ul>
                 </div>
               </li>
@@ -241,8 +214,9 @@
             <% }else{ %>
               <div class="w-100 d-flex justify-content-center align-items-center flex-column no-results">
                 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                <p>No results match your search</p>
-                <a href="#" class="btn btn-dark mt-2 mb-4">See All</a>
+                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                
+                <p>No results match your search</p>
+                <a href="/main/seejobs?q=&country=&sub_division=" class="btn btn-dark mt-2 mb-4">See All</a>
                 <div class="inline-ad-space" v-if="display.item_visible > 0">
                   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
                       crossorigin="anonymous"></script>
@@ -259,8 +233,9 @@
               <% } %>
               <div class="w-100 d-flex justify-content-center align-items-center flex-column no-results" v-if="display.item_visible === 0">
                 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                <p>No results match your search</p>
-                <a href="#" class="btn btn-dark mt-2 mb-4">See All</a>
+                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                
+                <p>No results match your search</p>
+                <a href="/main/seejobs?q=&country=&sub_division=" class="btn btn-dark mt-2 mb-4">See All</a>
                 <div class="inline-ad-space">
                   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
                       crossorigin="anonymous"></script>
@@ -279,7 +254,7 @@
             </div>
          </div>
          <% if(jData.items.length > 0 ){ %>
-        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display">
+        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display" v-if="display.item_visible > 0">
             <div class="job-show-banner">
               <div class="mb-3 return_to_home __mobile">
                 <div class="badge bg-dark">
@@ -359,13 +334,13 @@
             </div>  
           </div>   
           <% }else{ %>
-        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 empty-job">
-          <div class="vertical-ad-space">
-
-          </div>
-        </div>
+        
           <% } %>
-
+          <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 empty-job" v-if="display.item_visible=== 0">
+            <div class="vertical-ad-space">
+  
+            </div>
+          </div>
        </div>
      </div>
      </div>
@@ -535,7 +510,8 @@
       <h3>Notifications</h3>
       <span style="height:2px;flex:1;background:#ddd;border-radius:10x;"></span>
       <i style="cursor:pointer;" class="fas fa-times fs-3 text-dark _alert"></i>
-    </div>  
+    </div>
+    <h6 class="mt-3" v-if="notif.display.length === 0">No Notifications</h6>  
     <div class="__notif__holder">
         <div v-for="notif in notif.display" :key="notif.id" style="height:130px;width:100;display:flex;align-items:center;gap:10px;position:relative" v-bind:class="notif.noticed ? '__notif__card' : '__notif__card __unread_notif'">
           <div class="new__notif__ind" v-if="!notif.noticed" style="width:10px;height:10px;border-radius:50%;background:#f44336"></div>

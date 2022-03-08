@@ -24,15 +24,6 @@ const isAuth=(req,res,next)=>{
     }
 }
 
-const checkForLogin = (req, id)=>{
-    var session = req.session;
-    if(session.userID){
-        return true
-    }else{
-        return false
-    }
-}
-
 const idbyAuth = async (req, token)=>{
     var session = req.session;
     if(session.userID){
@@ -44,8 +35,8 @@ const idbyAuth = async (req, token)=>{
 }
 
 router.get('/login', isAuth, async (req,res)=>{
-    var loggedIn = await checkForLogin(req);
-    if(!loggedIn){
+    var session = req.session
+    if(!session.userID){
         res.render('./account/authentication/user_auth/login')
     }else{
         res.redirect('../main/home')
@@ -53,8 +44,8 @@ router.get('/login', isAuth, async (req,res)=>{
 })
 
 router.get('/register', isAuth, async (req,res)=>{
-    var loggedIn = await checkForLogin(req);
-    if(!loggedIn){
+    var session = req.session
+    if(!session.userID){
         res.render('./account/authentication/user_auth/register')
     }else{
         res.redirect('../main/home')
@@ -62,16 +53,16 @@ router.get('/register', isAuth, async (req,res)=>{
 })
 
 router.get('/recover', async (req,res)=>{
-    var loggedIn = await checkForLogin(req);
-    if(!loggedIn){
+    var session = req.session;
+    if(!session.userID){
         res.render('./account/recovery/verifyidentity')
     }else{
         res.render('../main/home')
     }
 })
 router.get('/recover/confirm', async (req,res)=>{
-    var loggedIn = await checkForLogin(req);
-    if(!loggedIn){
+    var session = req.session;
+    if(!session.userID){
         res.render('./account/recovery/confirmidentity')
     }else{
         res.render('../main/home')
@@ -99,21 +90,20 @@ router.post('/auth/signup', async (req,res)=>{
 router.post('/auth/login', async (req,res)=>{
     var session = req.session;
     var data = await fetchers.fetchloginAuth(req.body);
-    var red_path = urlHandler.definePath(req.body.sendTo);
     if(data.completed){
         session.userID = data.data.authToken;
         session.myID = data.data.id;
         session.userEmail = data.data.email;
         session.userType = data.data.role;
-        session.userFNAdata = data.data.first_name;
-        session.userLNAdata = data.data.last_name;
+        session.userFNAME = data.data.first_name;
+        session.userLNAME = data.data.last_name;
         session.companyID = data.data.verified_companies_id;
         session.fav_comp = data.data.following_companies;
         session.fav_jobs = data.data.favourite_jobs;  
         session.my_alerts = data.data.job_alerts  
         res.send({
             completed:true,
-            redPath:red_path
+            redPath:req.session.last_visit
         })
     }else{
         res.send({

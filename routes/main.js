@@ -16,21 +16,27 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get('/home', (req,res)=>{
     var session = req.session;
+    session.last_visit = req._parsedOriginalUrl.href
     if(session.userID){
         var button = "../components/buttons/logged_in_state"
         res.render('./main/index',{
-            lgBtn:button,
+            get_start:null,
+            access:'common',
+            user:{
+                fname:session.userFNAME
+            }
         })
     }else{
-        var button = "../components/buttons/login_signup_button"
         res.render('./main/index',{
-            lgBtn:button
+            get_start:true,
+            access:'common'
         })
     }
 })
 
 router.get('/seejobs', async (req,res)=>{
     var session = req.session;
+    session.last_visit = req._parsedOriginalUrl.href
     const jobQueryParams = (params)=>{
         var search, searchSan,searchObjValues
         searchObjValues = []
@@ -134,7 +140,16 @@ router.get('/jobview', async (req, res)=>{
 })
 
 router.get('/postajob/landing',(req,res)=>{
-    res.render('./main/postajoblanding')
+    var session = req.session;
+    session.last_visit = req._parsedOriginalUrl.href
+    if(session.userID && session.userType==='client'){
+        res.redirect('/dashboard/home')
+    }else{
+        res.render('./main/postajoblanding.ejs',{
+            get_start:true,
+            access:'client'
+        })
+    }
 })
 
 router.get('/user/favourites', async (req,res)=>{
@@ -159,6 +174,7 @@ router.get('/user/favourites', async (req,res)=>{
 
 router.get('/company/profile',async (req,res)=>{
     var session= req.session;
+    session.last_visit = req._parsedOriginalUrl.href
     var path = req._parsedOriginalUrl.query.replace('name=','')
     var result = await fetchers.getCompanyData(0,path.replaceAll('%20',' '))
     if(session.userID && result.data){

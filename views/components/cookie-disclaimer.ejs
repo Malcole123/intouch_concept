@@ -1,4 +1,14 @@
-<section class="cookie-declaration">
-    <p style="font-weight:400;font-size:1.05rem">This website uses cookies to offer a better user experience</p>
-    <button style="background:#0066FF;color:#fff;border:1px solid #fff" type="button" class="btn">Dismiss</button>
-</section>
+
+<div class="cookie-declaration">
+    <p>We use cookies to help make our website as well as your expierence better. You can manage these cookies at any time from settings.</p>
+  <div class="d-flex" style="gap:10px">
+      <button type="button" class="btn btn-dark" onclick="dismissCookie()">Dismiss</button>
+  </div>
+</div>
+
+  <script>
+      const dismissCookie = ()=>{
+          var element = document.querySelector('.cookie-declaration');
+          element.style.display="none"
+      }
+  </script>

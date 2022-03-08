@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.5.3",
     "@restpack/client": "^2.0.0",
     "axios": "^0.25.0",
+    "compression": "^1.7.4",
     "connect-mongodb-session": "^3.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^14.2.0",

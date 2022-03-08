@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
     <!----Font Awesome CDN-->
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    />
+    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,34 +22,7 @@
   </head>
   <body>
     <section class="header">
-        <nav>
-            <a href="/main/home"><img src="/images/logo.svg" alt="Search your favourite career with intouch" />
-            </a>
-          <div class="nav-links">
-            <ul class="main-list">
-              <li><a class="nav-link-hver" href='/main/seejobs?q=&country=&sub_division='>Browse jobs</a></li>
-              <li><a class="nav-link-hver" href="">Post a job</a></li>
-              <li><a class="nav-link-hver" href="">Resume builder</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  For Companies
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li><a class="dark-btn" id="gotoLogin" href="/user/login">Log In</a></li>
-              <li><a class="light-btn" id="gotoSignup" href="/user/register">Sign up</a></li>
-            </ul>
-          </div>
-          <div class="menu-toggle">
-            <span id="menu-top"></span>
-            <span id="menu-txt">MENU</span>
-            <span id="menu-btm"></span>
-          </div>
-        </nav>
+      <%-include('../components/regular_nav.ejs') -%>
         <div class="container">
             <div class="col-12 text-center mb-4">
                 <h1 class="mb-4">Choose your template</h1>

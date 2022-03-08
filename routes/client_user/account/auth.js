@@ -24,18 +24,18 @@ const isAuth=(req,res,next)=>{
     }
 }
 
-router.get('/register', isAuth, async (req, res)=>{
+router.get('/register', async (req, res)=>{
     var session = req.session
-    if(session.userID){
+    if(session.userID && session.userType==='client'){
         res.redirect('/dashboard/home')
     }else{
         res.render('./account/authentication/client_auth/register_client')
     }
 })
 
-router.get('/login', isAuth, async (req, res)=>{
+router.get('/login', async (req, res)=>{
     var session = req.session
-    if(session.userID){
+    if(session.userID && session.userType==='cient'){
         res.redirect('/dashboard/home')
     }else{
         res.render('./account/authentication/client_auth/login_client')

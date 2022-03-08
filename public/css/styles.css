@@ -16,16 +16,18 @@ html{
 }
 .cookie-declaration{
     position:fixed;
-    bottom:10px;
-    left:20%;
-    right:20%;
-    background:#2B32B2;
-    color:#fff;
-    border-radius: 8px;
+    bottom:0px;
+    left:0%;
+    right:0%;
+    background:#fff;
+    border-top:0.5px solid #ddd;
+    color:#333;
     display:flex;
     justify-content:space-between;
     align-items: center;
-    padding:20px 8px
+    padding:20px 8px;
+    z-index:1;
+    transition:0.2s ease-in-out;
 }
 .horizontal-ad-space{
     background:#333;
@@ -216,11 +218,8 @@ nav img{
       color:#fff;
   }
   .search-field{
-      border-radius:10px;
       width:100%;
       height:50px;
-      border:0.8px solid #dddd;
-      background:#fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -231,82 +230,8 @@ nav img{
       width:100%;
       height:100%;
       position:relative;
-      border-radius:10px 0px 0px 10px;
   }
-  .career-search-auto-complete{
-      position:absolute;
-      max-height:240px;
-      width:100%;
-      background:#fff;
-      box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
-      display:none;
-      overflow-y: scroll;
-      transition: 0.3s ease-in-out;
-  }
-  .career-search-auto-complete::-webkit-scrollbar{
-      width:5px;
-  }
-  .career-search-auto-complete::-webkit-scrollbar-track{
-    background:#ddd
-  }
-  .career-search-auto-complete::-webkit-scrollbar-thumb{
-    background:var(--secc-dark)
-  }
-  .career-search-auto-complete > *, .search-field select option {
-      display:flex;
-      justify-content: space-between;
-      font-size:1rem;
-      color:#333;
-      padding:12px 10px;
-      border-bottom:0.5px solid #ddd;
-  }
-  .career-search-auto-complete > *:hover,  .search-field select option:hover{
-    color:#fff;
-    background:var(--secc-dark)
-}
-  .search-field input{
-      height:100%;
-      width:100%;
-      border:none;
-      outline:none;
-      font-size:1.1rem;
-      font-weight:500;
-      padding-left:45px;
-      background:#fff url('/images/magnifier.png');
-      background-size:1em;
-      background-repeat: no-repeat;
-      background-position: top 12px left 5px;
-      border-radius:10px 0px 0px 10px;
-  }
-  .search-field select{
-      border:none;
-      outline:none;
-      width:35%;
-      height:100%;
-      padding-left:45px;
-      font-size:1.1rem;
-      font-weight:500;
-      border-left:0.5px solid #dddd;
-      background:#ffff url('/images/locationPin.png');
-      background-repeat: no-repeat;
-      background-size:1.1em;
-      background-position: top 12px left 5px;
-  }
-  .search-field button{
-      height:100%;
-      width:15%;
-      font-size:1.1rem;
-      background:var(--secc-dark);
-      border:2px solid var(--secc-dark);
-      outline: none;
-      color:#fff;
-      cursor:pointer;
-      border-radius:0px 10px 10px 0px;
-  }
-  .search-field button:hover{
-      background:var(--secc-dark)
-  }
-  .home-about{
+   .home-about{
       min-height:100vh;
       width:100%;
       padding:50px 20px;
@@ -422,17 +347,12 @@ nav img{
 
   @media(max-width:1020px) {
     .cookie-declaration{
-        position:fixed;
-        bottom:10px;
-        left:2%;
-        right:2%;
-        background:#2B32B2;
-        color:#ffff;
-        border-radius: 8px;
         display:flex;
+        flex-direction:column;
         justify-content:space-between;
         align-items: center;
-        padding:20px 8px
+        padding:20px 8px;
+        text-align:center;
     }
       nav{
           top:0;
@@ -518,53 +438,6 @@ nav img{
           width:60%;
           margin:0 auto
       }
-      .search-field{
-        width:100%;
-        min-height: 50px;
-        height:fit-content;
-        display:grid;
-        grid-template-columns: 1fr;
-        background:#fff;
-        border-radius:10px;
-    }
-    .search-field input{
-        height:50px;
-        width:100%;
-        background:transparent url('/images/magnifier.png');
-        background-repeat: no-repeat;
-        background-size:1.2rem;
-        background-position:top 14px left 5px;
-        z-index:0;
-    }
-    .search-field select{
-        display:none;
-        border:none;
-        outline:none;
-        padding-left: 45px;
-        width:100%;
-        height:50px;
-        border-left:none;
-        border-top:1px solid var(--prim-dark);
-        background:#ffff url('/images/locationPin.png');
-        background-size:1.4rem;
-        background-position:top 14px left 4px;
-        background-repeat: no-repeat;
-    }
-    .search-field select option{
-        padding-left:45px;
-    }
-    .search-field button{
-        height:50px;
-        width:100%;
-        font-size:1.1rem;
-        background:var(--secc-dark);
-        border:2px solid var(--secc-dark);
-        outline: none;
-        border:none;
-        color:#fff;
-        cursor:pointer;
-        border-radius: 0px 0px 10px 10px;
-    }
     .home-about{
         height: fit-content;
         padding:80px 0;

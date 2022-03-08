@@ -1,12 +1,11 @@
 
-
 function main(){
     var $menuBtn = $('.menu-toggle');
     var $menuTp = $('#menu-top');
     var $menuBtm = $('#menu-btm')
     var $menuTxt = $('#menu-txt')
     var $navMenu = $('.nav-links');
-    var $searchInput = $('#career-search');
+    var $searchInput = $('#autoComplete');
     var $filterBtn = $('.filter-toggle');
     var $filtermenu = $('.filter-search-card');
     var $suggestion = $('.career-auto-suggest');

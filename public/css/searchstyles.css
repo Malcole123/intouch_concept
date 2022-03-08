@@ -137,16 +137,6 @@ html{
     width:20%;
 
 }
-.horizontal-ad-space{
-    background:#333;
-    position: fixed;
-    bottom:0;
-    left:10%;
-    right:10%;
-    height:120px;
-    z-index:99;
-    transition: 0.7s ease-in-out;
-}
 .vertical-ad-space{
     height:540px;
     width:100%;
@@ -154,12 +144,6 @@ html{
 }
 .show-space{
     height:120px
-}
-.horizontal-top{
-    top:0
-}
-.horizontal-bottom{
-    bottom:0
 }
 nav{
     display:flex;
@@ -207,98 +191,17 @@ nav svg{
     border-radius:10px;
     width:100%;
     height:45px;
-    background:#fff;
     display:grid;
-    grid-template-columns:1fr;
+    grid-template-columns:5fr 1fr;
     z-index:0;
     transition:0.1s ease-in-out;
-    border-radius:10px 10px 0px 0px;
 }
 .search-input{
     width:100%;
     height:100%;
     position:relative;
-    border-radius:10px 10px 0px 0px;
-    border:1px solid #ddd
+    border-radius:10px 0px 0px 0px;
 }
-.career-search-auto-complete{
-    position:absolute;
-    max-height:240px;
-    width:100%;
-    background:#fff;
-    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
-    display:none;
-    bottom:-4px;
-    overflow-y: scroll;
-    transition: 0.3s ease-in-out;
-}
-.career-search-auto-complete::-webkit-scrollbar{
-    width:5px;
-}
-.career-search-auto-complete::-webkit-scrollbar-track{
-  background:#ddd
-}
-.career-search-auto-complete::-webkit-scrollbar-thumb{
-  background:var(--secc-dark)
-}
-.career-search-auto-complete > *, .search-field select option {
-    display:flex;
-    justify-content: space-between;
-    font-size:1rem;
-    color:#333;
-    padding:12px 10px;
-    border-bottom:0.5px solid #ddd;
-}
-.career-search-auto-complete > *:hover,  .search-field select option:hover{
-  color:#fff;
-  background:var(--secc-dark)
-}
-.search-field input{
-    height:45px;
-    width:100%;
-    border:none;
-    outline:none;
-    font-size:1.1rem;
-    font-weight:500;
-    padding-left:45px;
-    background:#fff url('/images/magnifier.png');
-    background-size:1em;
-    background-repeat: no-repeat;
-    background-position: top 12px left 5px;
-    border-radius:10px 0px 0px 10px;
-}
-.search-field select{
-    border:none;
-    outline:none;
-    width:100%;
-    height:45px;
-    padding-left:45px;
-    font-size:1.1rem;
-    font-weight:500;
-    border-left:0.5px solid #dddd;
-    background:#ffff url('/images/locationPin.png');
-    background-repeat: no-repeat;
-    background-size:1.1em;
-    background-position: top 12px left 5px;
-    display:none;
-}
-.search-field button{
-    height:45px;
-    width:100%;
-    font-size:1.1rem;
-    background:#f44336;
-    border:2px solid #fff;
-    outline: none;
-    color:#fff;
-    cursor:pointer;
-    border-radius:0px 0px 10px 10px;
-    display:none;
-}
-.search-field button:hover{
-    background:var(--secc-dark)
-}
-
-
 .search-header .search-field,.profile__header .search-field{
     width:40%;
     margin-right:auto;
@@ -322,7 +225,6 @@ nav svg{
     flex-direction: column;
     gap:2px;
 }
-
 .search-dropdown-menu{
     position:relative;
 }
@@ -380,7 +282,6 @@ nav svg{
     width:90%;
     margin:0 auto;
     background:#fff;
-    border:1px solid #ddd;
 }
 .__notif__holder::-webkit-scrollbar{
     width:8px;
@@ -710,23 +611,7 @@ nav svg{
     font-size:0.8rem;
     margin-right:8px;
 }
-.job-card .fa-chevron-double-right{
-    color:var(--secc-dark);
-    position:absolute;
-    right:10px;
-    bottom:5px;
-    font-size:1.1rem;
-}
-.new-listing-ind{
-    position:absolute;
-    top:0;
-    right:0;
-    background:var(--secc-dark);
-    color:#fff;
-    padding:4px 8px;
-    transition:0.5s ease-in-out;
 
-}
 .switch__outer{
     height:25px;
     width:50px;
@@ -848,6 +733,36 @@ nav svg{
     padding-right:55px;
     background:#fff;
 }
+.footer{
+    height:fit-content;
+    left:0;
+    right:0;
+    background:#FAFAFA;
+    border-bottom:1px solid #ddd;
+    padding:50px 20px;
+}
+.footer-body{
+    display:flex;
+    align-items:flex-start;
+    gap:25px;
+}
+.footer-nav-links{
+    display:flex;
+    gap:40px;
+}
+.footer__employers ul, .footer__intouch ul{
+    list-style-type:none;
+}
+.footer__employers ul li, .footer__intouch ul li{
+    margin:6px 0;
+}
+
+.footer__employers ul li a, .footer__intouch ul li a{
+    list-style-type:none;
+    color:#333;
+    text-decoration:none;
+
+}
 
 @media(max-width:1020px){
     .focus___overlay{
@@ -885,48 +800,8 @@ nav svg{
     }
     .search-field{
         display:none;
-        grid-template-columns:1fr;
         background:#fff;
-        border-radius:10px;
         flex:1;
-    }
-    .search-field input{
-        height:45px;
-        background:transparent url('/images/magnifier.png');
-        background-repeat: no-repeat;
-        background-size:1.2rem;
-        background-position:top 11px left 5px;
-        z-index:0;
-        border-radius:10px 10px 0px 0px
-    }
-    .search-field select{
-        display:none;
-        border:none;
-        outline:none;
-        padding-left: 45px;
-        width:100%;
-        height:45px;
-        border-left:none;
-        background:#ffff url('/images/locationPin.png');
-        background-size:1.4rem;
-        background-position:top 14px left 4px;
-        background-repeat: no-repeat;
-    }
-    .search-field select option{
-        padding-left:45px;
-    }
-    .search-field button{
-        height:45px;
-        width:100%;
-        font-size:1.1rem;
-        background:var(--secc-dark);
-        border:2px solid var(--secc-dark);
-        outline: none;
-        border:none;
-        color:#fff;
-        cursor:pointer;
-        border-radius: 0px 0px 10px 10px;
-        display:none;
     }
     .search-page-body{
         padding:20px 0;
@@ -1030,5 +905,17 @@ nav svg{
         height:80%;
         width:100%;
         margin:10px auto;
+    }
+    .footer-body{
+        display:flex;
+        align-items:flex-start;
+        justify-content:center;
+        flex-direction:column;
+        gap:25px;
+    }
+    .footer-nav-links{
+        display:flex;
+        justify-content:center;
+        gap:40px;
     }
 }

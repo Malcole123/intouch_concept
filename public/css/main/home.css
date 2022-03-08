@@ -39,10 +39,10 @@ html{
     color:#fff;
 }
 .why-us{
-    height:100vh;
+    height:fit-content;
     left:0;
     right:0;
-    padding:70px 0;
+    padding:40px 0;
     background:#FBFBFB;
 
 }
@@ -125,7 +125,7 @@ html{
     border-radius: 6px;
 }
 
-@media(max-width:1020px){
+@media(max-width:1086px){
     .home-header{
         background:linear-gradient(rgba(240, 6, 6, 0.671), rgba(187, 0, 0, 0.685)) ,url('/images/teambg.jpg');
         background-size:cover;

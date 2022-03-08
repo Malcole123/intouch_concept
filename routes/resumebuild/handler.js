@@ -16,7 +16,23 @@ router.use(express.urlencoded({ extended: true }));
 
 
 router.get('/create/templates', (req,res)=>{
-    res.render('./resume/choose-template')
+    var session = req.session;
+    session.last_visit = req._parsedOriginalUrl.href
+    if(session.userID){
+        res.render('./resume/choose-template',{
+            get_start:null,
+            access:'common',
+            user:{
+                fname:session.userFNAME,
+            }
+        })
+    }else{
+        res.render('./resume/choos-template',{
+            get_start:true,
+            access:'common'
+        })
+    }
+
 })
 
 router.get('/create/build', async (req,res)=>{
@@ -32,7 +48,22 @@ router.get('/create/build', async (req,res)=>{
 })
 
 router.get('/create/landing', async(req,res)=>{
-    res.render('./resume/resumelanding')
+    var session = req.session;
+    session.last_visit = req._parsedOriginalUrl.href
+    if(session.userID){
+        res.render('./resume/resumelanding',{
+            get_start:null,
+            access:'common',
+            user:{
+                fname:session.userFNAME,
+            }
+        })
+    }else{
+        res.render('./resume/resumelanding',{
+            get_start:true,
+            access:'common'
+        })
+    }
 })
 
 
