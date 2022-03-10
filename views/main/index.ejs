@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/css/main/home.css" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/min/styles.min.css"/>
+    <link rel="stylesheet" href="/css/main/home.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/resources/autoComplete.js-10.2.6/dist/css/autoComplete.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="/js/script.js" defer></script>
-    <script src="/js/setSearch.js" defer></script>
+    <script src="/js/min/script.min.js" defer></script>
+    <script src="/js/min/setSearch.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
     <title>Post Your Job Listing</title>
   </head>
@@ -45,102 +45,71 @@
 
       </div>        
     </section>
-    <section class="why-us">
-      <div class="why-us-points">
-        <div class="key-point-card">
-          <img src="../images/home/frequentupdates.svg" alt="">
-          <h3>FREQUENT UPDATES</h3>
-          <p>
-            Save time and speed up your job search by letting us match you with your dream job using a few keywords
-            search through our database so you only see jobs relevant to you
-          </p>
-        </div>
-        <div class="key-point-card">
-          <img src="../images/home/network.svg" alt="">
-          <h3>DIVERSE NETWORK</h3>
-          <p>Access employers in over 100 different industries. We scower the world for employers eager to find the perfect match to their team</p>
-        </div>
-        <div class="key-point-card">
-          <img
-          src="../images/home/easyapplication.svg"
-          alt="Curated results"
-        />
-          <h3>EASY APPLICATION</h3>
-          <p>
-            Whether you choose to save your resume or you upload one for every application, we ensure that your application process is as smooth as possible.
-          </p>
-        </div>
-      </div>
-    </section>
-    <section class="pricing">
-      <svg viewBox="0 0 1440 490" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_229_38)">
-        <path d="M-72 -0.000183105L1440 -0.000183105V183.19C1427.87 214.573 1403.87 224.956 1368 214.34C1335.08 255.535 1295.08 261.73 1248 232.925C1207.89 239.831 1183.89 225.738 1176 190.645C1140.68 229.74 1100.68 233.835 1056 202.93C1017.09 210.886 993.093 197.846 984 163.809C972.54 223.775 932.54 248.745 864 238.717C831.56 252.332 807.56 244.947 792 216.562C753.327 224.723 729.327 211.884 720 178.045C701.787 232.108 661.787 251.171 600 235.235C569.747 250.757 545.747 245.283 528 218.811C494.407 231.417 470.407 223.023 456 193.629C445.78 226.686 421.78 238.744 384 229.801C354.52 246.006 330.52 241.214 312 215.425C253.76 234.465 213.76 218.505 192 167.545C190.167 207.946 166.167 227.345 120 225.741C83.86 264.119 43.86 267.496 0 235.874C-38.0934 244.542 -62.0934 232.21 -72 198.879V-0.000183105Z" fill="#FF2323"/>
-        <path d="M-72 0.000244141L1440 0.000244141V159.145C1397.42 163.882 1373.42 147.621 1368 110.364C1356.29 142.121 1332.29 152.877 1296 142.634C1277.77 168.68 1253.77 173.726 1224 157.771C1206.52 184.476 1182.52 190.179 1152 174.878C1094.58 194.635 1054.58 179.393 1032 129.15C980.773 154.327 940.773 144.506 912 99.689C903.787 162.502 863.787 190.316 792 183.129C745.567 212.5 705.567 206.871 672 166.241C630.207 171.672 606.207 156.103 600 119.534C553.647 148.975 513.647 143.416 480 102.856C464.187 159.02 424.187 180.18 360 166.338C308.76 191.503 268.76 181.668 240 136.833C194.793 167.277 154.793 162.721 120 123.165C99.9467 175.619 59.9467 193.072 0 175.525C-34.0133 187.764 -58.0133 179.002 -72 149.24V0.000244141Z" fill="#25467D"/>
-        <path d="M-120 -0.000579834L1440 -0.000579834V72.9394C1417.13 94.9252 1393.13 95.9111 1368 75.8969C1318.5 102.584 1278.5 94.269 1248 50.9507C1237.03 83.349 1213.03 94.7473 1176 85.1457C1148.25 130.861 1108.25 141.577 1056 117.293C1024.31 131.567 1000.31 124.844 984 97.1244C930.353 120.184 890.353 108.243 864 61.3019C859.58 99.4344 835.58 116.567 792 112.699C745.727 142.21 705.727 136.721 672 96.2319C610.38 112.314 570.38 93.3969 552 39.4794C540.133 99.0961 500.133 123.716 432 113.338C384.267 141.571 344.267 134.805 312 93.0382C283.52 110.118 259.52 106.195 240 81.2694C192.093 109.351 152.093 102.433 120 60.5144C75.88 91.9094 35.88 88.3015 0 49.6907C-29.26 94.0882 -69.26 103.486 -120 77.8832V-0.000579834Z" fill="#356CB1"/>
-        <path d="M-48 -0.000297546L1440 -0.000297546V25.0422C1394.65 55.358 1354.65 50.671 1320 10.9809C1292.12 28.5859 1268.12 25.1939 1248 0.804687C1238.06 34.1072 1214.06 46.4097 1176 37.7122C1143.19 79.0005 1103.19 85.2918 1056 56.586C998.807 76.5418 958.807 61.4977 936 11.4535C922.673 41.7926 898.673 51.1318 864 39.4709C829.887 79.6218 789.887 84.7697 744 54.9147C684.813 73.1264 644.813 56.3381 624 4.54971C609.367 33.7456 585.367 41.9414 552 29.1372C507.66 60.3397 467.66 56.5422 432 17.7447C416.587 46.2581 392.587 53.7743 360 40.2934C332.64 58.3535 308.64 55.4134 288 31.4734C272.273 59.7126 248.273 66.9547 216 53.1997C178.473 62.3639 154.473 50.5309 144 17.7009C92.4266 42.5743 52.4266 32.4506 24 -12.6703C5.57996 13.2064 -18.42 18.086 -48 1.96845V-0.000297546Z" fill="#FBFBFB"/>
-        </g>
-        <defs>
-        <clipPath id="clip0_229_38">
-        <rect width="1440" height="490" fill="white" transform="translate(1440 490) rotate(-180)"/>
-        </clipPath>
-        </defs>
-        </svg>
-    </section>
-    <section class="contact-us">
+    <section class="suggest-search">
       <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-6">
-            <h2 class="text-white">NEED HELP DECIDING</h2>
-            <p class="text-white fs-5">We want to hear from you. Send us a message with your inquiry and our support  staff will get back to you promptly</p>
+          <div class="row">
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div style="height:5rem" class="mb-3">
+                  <h2 id="suggestText"></h2>
+                </div>
+                  <p>Quickly search for jobs using these popular categories</p>
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap" style="gap:3px">
+                  <a href="/main/seejobs?q=human&country=&sub_division=" class="quick_search">Human Resources</a>
+                  <a href="/main/seejobs?q=teacher&country=&sub_division=" class="quick_search">Teacher</a>
+                  <a href="/main/seejobs?q=security&country=&sub_dvision=" class="quick_search">Security</a>
+                  <a href="/main/seejobs?q=information%20technology&country=&sub_division=" class="quick_search">Information Technology</a>
+                  <a href="/main/seejobs?q=education&country=&sub_division=" class="quick_search">Education</a>
+                  <a href="/main/seejobs?q=security&country=&sub_division=" class="quick_search">Security</a>
+                  <a href="/main/seejobs?q=engineer&country=&sub_division=" class="quick_search">Engineering</a>
+                  <a href="/main/seejobs?q=legal&country=&sub_division=" class="quick_search">Legal</a>
+                  <a href="/main/seejobs?q=marketing&country=&sub_division=" class="quick_search">Marketing</a>
+                  <a href="/main/seejobs?q=business&country=&sub_division=" class="quick_search">Business</a>
+                  <a href="/main/seejobs?q=customer%20service&country=&sub_division=" class="quick_search">Customer Service</a>
+                  <a href="/main/seejobs?q=sales&country=&sub_division=" class="quick_search">Sales</a>
+                  <a href="/main/seejobs?q=real%20estate&country=&sub_division=" class="quick_search">Real Estate</a>
+                  <a href="" class="quick_search">Web development</a>
+                  <a href="#" class="quick_search">Construction</a>
+                  <a href="#" class="quick_search">Internship</a>
+                  <a href="#" class="quick_search">Consultation</a>
+                  <a href="#" class="quick_search">Assistant</a>
+
+              </div>
           </div>
-          <div class="col">
-            <div class="contact-body">
-              <form>
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group">
-                      <label class="text-dark" for="contactname">Name</label>
-                      <input type="email" class="form-control" id="contactname" aria-describedby="contName" placeholder="Enter name">
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="form-group">
-                      <label class="text-dark" for="contactEmail">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    </div>
-                  </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label class="text-dark" for="contactname">Phone number</label>
-                      <input type="text" class="form-control" id="contactPhone" aria-describedby="contPhone" placeholder="Enter phone">
-                    </div>
-                  </div>
-                </div>
-                <div class="row mt-3">
-                 <div class="col-12">
-                  <div class="form-group">
-                    <label for="messageInput">Message</label>
-                    <textarea class="form-control" id="messageInput" rows="3"></textarea>
-                  </div>
-                 </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-6">
-                    <button class="btn btn-primary" type="submit">Get in touch</button>
-                  </div>
-                </div>
-              </form>
-            </div>
+      </div>  
+  </section>
+  <section class="post-jobs">
+      <div class="container">
+          <div class="row" style="display:grid;grid-template-columns:1fr fr;">
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                  <h2 class="mb-3">Have an opening?<br>
+                  Let the world know
+                  </h2>
+                  <a href="/main/postajob/landing" class="mt-2" style="padding:10px 16px;background:#f44336;color:#fff;border-radius:10px;text-decoration:none;font-size:1.1rem">Post a job</a>
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap" style="display:flex;flex-wrap:wrap;gap:3px;">
+
+              </div>
           </div>
-        </div>
-      </div>
-    </section>
+      </div> 
+  </section>
   <%-include('../components/cookie-disclaimer.ejs') -%>
+  <%-include('../components/footer.ejs') -%>
+
   </body>
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script>
+    var typed = new Typed ('#suggestText',{
+      strings:["Begin your job hunt", "Find your dream career","Start a new career path"],
+      typespeed:4000,
+      backspeed:7000,
+      cursorChar: '',
+      backDelay: 6000,
+      startDelay: 100,
+      loop:true
+    })
+    console.log(typed)
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </html>

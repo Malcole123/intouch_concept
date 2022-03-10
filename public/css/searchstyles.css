@@ -165,7 +165,8 @@ nav{
 }
 
 nav img{
-    width:120px;
+    width:7em;
+    height:auto;
 }
 nav svg{
     width:20px;
@@ -187,28 +188,23 @@ nav svg{
 #menu-txt {
   transition: 0.4s ease-in-out;
 }
-.search-field{
-    border-radius:10px;
-    width:100%;
-    height:45px;
-    display:grid;
-    grid-template-columns:5fr 1fr;
-    z-index:0;
-    transition:0.1s ease-in-out;
-}
-.search-input{
-    width:100%;
-    height:100%;
-    position:relative;
-    border-radius:10px 0px 0px 0px;
-}
-.search-header .search-field,.profile__header .search-field{
-    width:40%;
-    margin-right:auto;
-}
+ .search-field{
+      width:100%;
+      height:50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index:0;
+      transition:0.4s ease-in-out;
+      flex:1
+  }
+  .search-input{
+      height:100%;
+      width:100%;
+  }
+
 .search-nav-links{
     display:flex;
-    flex:1;
     gap:24px;
     align-items:center;
     text-decoration:none;
@@ -267,6 +263,7 @@ nav svg{
 
 .show__notif__display{
     top:0;
+    transform:translateY(100%);
 }
 
 .notif__body{
@@ -440,6 +437,12 @@ nav svg{
     color:#3E3BE8;
     position:relative;
 }
+#filterClear{
+    color:#fff;
+    background:#333;
+    padding:8px 15px;
+    border-radius:8px;
+}
 .filter-list{
     list-style-type:none;
     display:flex;
@@ -536,7 +539,7 @@ nav svg{
 .results-body::-webkit-scrollbar-thumb,.job-show-body::-webkit-scrollbar-thumb{
     width:100%;
     border-radius:10px;
-    background:#3E3BE8
+    background:rgba(90,90,90)
 }
 
 .job-show__header_sec{
@@ -596,10 +599,10 @@ nav svg{
 .job-card img{
     width:100%;
 }
-.job-card p{
-    display:none;
-    transition:0.4s ease-in-out
+.job-card-content h6{
+    text-align: left;
 }
+
 .job-rel-info{
     display:flex;
     align-items: center;
@@ -803,6 +806,9 @@ nav svg{
         background:#fff;
         flex:1;
     }
+    .search-input{
+        width:100%
+    }
     .search-page-body{
         padding:20px 0;
         transition:0.1s ease-in-out
@@ -814,8 +820,33 @@ nav svg{
     }
 
     .job-card{
-        grid-template-columns: 1fr 7fr;
+        grid-template-columns: 1fr;
+        align-content: center;
+        justify-items:center;
     }
+ 
+    .inline-ad-space{
+        background:transparent;
+        width:100%;
+        height:130px;
+    }
+    .job-card img{
+        width:15vmin;
+        height:15vmin;
+        margin:0 auto;
+    }
+    .job-card h4{
+        text-align:center;
+    }
+    .job-card-content h6{
+        text-align: center;
+    }
+    .job-rel-info{
+        justify-content:center;
+        gap:15px;
+    }
+
+    
     .job-show-display{
         position:fixed;
         background:#fff;
@@ -823,7 +854,7 @@ nav svg{
         width:100%;
         z-index:3;
         right:-100%;
-        top:70px;
+        top:50px;
         transition:0.4s ease-in-out;
     }
     .show-job-section{
@@ -836,9 +867,6 @@ nav svg{
     }
     .job-show-scroll-body{
         height:1200px
-    }
-    .job-show-banner{
-        position:static
     }
     .job-show__header_sec{
         display:flex;
@@ -897,6 +925,16 @@ nav svg{
         right:0;
         width:100%;
         border:none;
+    }
+    .filter-list::-webkit-scrollbar{
+        width:7px;
+        background:#fff;
+    }
+    .filter-list::-webkit-scrollbar-thumb{
+        width:7px;
+        border-radius:12px;
+        background:rgba(90,90,90)
+
     }
     .show-filter-menu{
         transform: translateY(100vh);        

@@ -30,6 +30,9 @@ document.querySelector("#autoComplete").addEventListener("selection", function (
     window.location.href = `/main/seejobs?q=${detail.selection.value}&country=&sub_division=`
 });
 
+
+
+
  window.addEventListener('load', ()=>{
      jobautoSearch()
  })

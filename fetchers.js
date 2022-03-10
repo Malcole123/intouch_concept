@@ -161,17 +161,19 @@ const submitApplication = async (req)=>{
     name:req.name,
     phone:req.phone,
     email:req.email,
-    resume:req.resume,
+    resume_:req.resume,
     verified_companies_id:req.verified_companies_id,
     application_test_data:JSON.stringify(req.application_test_data)
   })
   .then(res => {
+    console.log(res)
     var retData = {
         completed:true,
     }
     return retData
   })
   .catch(err => {
+    console.log(err)
     var retData = {
       completed:false,
     }

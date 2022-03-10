@@ -42,6 +42,12 @@ router.get('/login', async (req, res)=>{
     }
 })
 
+router.get('/logout', isAuth, (req,res)=>{
+    req.session.destroy();
+    res.clearCookie('connect.sid');
+    res.redirect('/employer/login')
+})
+
 
 router.post('/auth/register/client', async (req,res)=>{
     var session = req.session;

@@ -22,9 +22,9 @@ const dashboardRouter = require('./routes/client_user/dashboard/dash_pages.js');
 const analyticRouter = require('./routes/analytics/analytics.js');
 const userAlertRouter = require('./routes/alerts/user.js');
 const companyRouter = require('./routes/client_user/account/company.js')
-
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
+
 var MongoDBSession = require('connect-mongodb-session')(sessions);
 const mongoose = require('mongoose');
 const mongoURI = 'mongodb+srv://malik123:passMalcoleman123@cluster0.wtnk5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
@@ -41,6 +41,17 @@ const store = new MongoDBSession({
     collection:'applicationSessions'
 })
 
+
+app.use(compression({
+    level:6,
+    threshold:0,
+    filter:(req,res)=>{
+        if(req.headers['x-no-compression']){
+            return false
+        }
+        return compression.filter(req,res)
+    }    
+}));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
@@ -53,16 +64,6 @@ app.use(sessions({
     store:store,
 }));
 
-app.use(compression({
-    level:6,
-    threshold:0,
-    filter:(req,res)=>{
-        if(req.headers['x-no-compression']){
-            return false
-        }
-        return compression.filter(req,res)
-    }    
-}));
 
 
 
@@ -81,7 +82,6 @@ app.use('/company',companyRouter);
 
 
 
-
 app.get('*', function(req, res){
     res.redirect('/main/home')
 });
@@ -91,7 +91,6 @@ app.get('/', (req,res)=>{
    res.redirect('/main/home')
 })
 
-console.log(process.env.NODE_UNIQUE_ID);
 
 if(cluster.isPrimary){
     for(let i = 0; i < numCpu; i++){

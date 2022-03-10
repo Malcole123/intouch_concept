@@ -9,7 +9,8 @@ const fetchers = require('../../../fetchers');
 const cookie = require('cookie');
 const sessions = require('express-session');
 const urlHandler = require('../../../urlHandlers');
-const getters = require('./fetchers_putters.js')
+const getters = require('./fetchers_putters.js');
+const res = require('express/lib/response');
 
 const router = express.Router();
 
@@ -204,6 +205,155 @@ router.get('/analytics',async (req,res)=>{
     }
 
 })
+
+router.get('/campaign/email', async (req, res)=>{
+    var session;
+    session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/campaign_email',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
+    }else{
+        res.redirect('/employer/login')
+    }
+})
+
+router.get('/campaign/sms', async (req, res)=>{
+    var session;
+    session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/campaign_sms',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
+    }else{
+        res.redirect('/employer/login')
+    }
+})
+
+router.get('/manage/profile', async (req, res)=>{
+    var session;
+    session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/manage_profile',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
+    }else{
+        res.redirect('/employer/login')
+    }
+})
+
+router.get('/manage/team', async (req, res)=>{
+    var session;
+    session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/manage_team',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
+    }else{
+        res.redirect('/employer/login')
+    }
+})
+
+router.get('/billing', async (req, res)=>{
+    var session;
+    session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/billing',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
+    }else{
+        res.redirect('/employer/login')
+    }
+})
+
+router.get('/support', async (req, res)=>{
+    var session;
+    session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/support',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
+    }else{
+        res.redirect('/employer/login')
+    }
+})
+
+
+
+
+
 
 
 

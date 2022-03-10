@@ -111,8 +111,6 @@ function main(){
         var maxSize = 1020;
         if(windowSize > maxSize){
             $('#search-page-nav-logo').show();
-            $('#where-select').show();
-            $('#searchJobsBtn').show();
             $('.search-field').show();
             $('.search-nav-links').show();
         }
@@ -123,36 +121,11 @@ function main(){
         var windowSize = $(window).width()
         var maxSize = 1020;
         if(windowSize > maxSize){
-            $('#where-select').show();
-            $('#searchJobsBtn').show();
             $('#search-page-nav-logo').show();
             $('.search-nav-links').show();
             $('.search-field').show();
         }
-    })
-
-    $searchInput.on('focus', ()=>{
-        $('#where-select').show();
-        $('#searchJobsBtn').show();
-    }).on('blur', (e)=>{
-    }).on('keyup', ()=>{
-        var charCount = $searchInput.val();
-        if(charCount.length >= 3){
-            $('.career-search-auto-complete').show();
-            $('#searchJobs').show();
-        }else{
-            $('.career-search-auto-complete').hide();
-        }
-    })
-
-    $('#searchJobsBtn').on('click', ()=>{
-        var query = $searchInput.val();
-        var country = "";
-        var sub_division = $('#where-select').val()
-        window.location.href = `/main/seejobs?q=${query}&country=${country}&sub_division=${sub_division}`;
-        $('#search-page-nav-logo').show()
-    })
-    
+    })  
 }
 
 $(document).ready(main)

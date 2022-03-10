@@ -1,0 +1,84 @@
+[
+    {
+      "title": "customer service representative",
+      "search_ranking":""
+    },
+    {
+        "title": "marketing",
+        "search_ranking":""
+    },
+    {
+        "title": "retail assosciate",
+        "search_ranking":""
+    },
+    {
+        "title": "business",
+        "search_ranking":""
+      },
+    {
+        "title": "finance",
+        "search_ranking":""
+    },
+    {
+        "title": "sales",
+        "search_ranking":""
+    },
+    {
+        "title": "social work",
+        "search_ranking":""
+    },
+    {
+        "title": "project manager",
+        "search_ranking":"",
+        "related_searches":[""]
+    },
+    {
+        "title": "legal",
+        "search_ranking":"",
+        "related_searches":["paralegal","lawyer","legal assistant"]
+    },
+    {
+        "title": "real estate",
+        "search_ranking":""
+    },
+    {
+        "title": "engineer",
+        "search_ranking":""
+    },
+    {
+        "title": "data scientist",
+        "search_ranking":""
+    },
+    {
+        "title": "administrative",
+        "search_ranking":""
+    },
+    {
+        "title": "military",
+        "search_ranking":""
+    },
+    {
+        "title": "media",
+        "search_ranking":""
+    },
+    {
+        "title": "human resources",
+        "search_ranking":"",
+        "related_searches":["human resources manager","recruiter"]
+    },
+    {
+        "title": "education",
+        "search_ranking":"",
+        "related_searches":["teacher","principal","teaching assistant"]
+    },
+    {
+        "title": "information technology",
+        "search_ranking":"",
+        "related_searches":["database manager","programmer"]
+    },
+    {
+        "title":"health care",
+        "search_ranking":"",
+        "related_searches":["nurse","health care assistant"]
+    }
+]

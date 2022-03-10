@@ -104,40 +104,6 @@ router.get('/seejobs', async (req,res)=>{
     }
 })
 
-router.get('/jobview', async (req, res)=>{
-    var relData = await jobCalls.jbSingleFetch(req._parsedOriginalUrl.query.replace('id=',''));
-    var d = relData.data;
-    var session = req.session;
-    if(session.userID){
-        var button = "../components/buttons/logged_in_state"
-        res.render('./main/jobinfo', {
-            data:d,
-            companyName:d.company_name_posted,
-            position:d.title,
-            pData:d.positionData,
-            links:{
-                applyRoute:`/main/job/apply?id=${d.id}`,
-                homeRoute:'/main/home',
-                logo:d.positionData.urls.company_logo || '/images/imageplaceholder.png'
-            },
-            lgBtn:button
-        })
-    }else{
-        var button = "../components/buttons/login_signup_button"
-        res.render('./main/jobinfo', {
-            data:d,
-            companyName:d.company_name_posted,
-            position:d.title,
-            pData:d.positionData,
-            links:{
-                applyRoute:`/main/job/apply?id=${d.id}`,
-                homeRoute:'/main/home',
-                logo:d.positionData.urls.company_logo || '/images/imageplaceholder.png'
-            },
-            lgBtn:button
-        }) 
-    }
-})
 
 router.get('/postajob/landing',(req,res)=>{
     var session = req.session;

@@ -1,159 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/user.css" />
-    <!----Font Awesome CDN-->
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <!----Boot-->
+    <link rel="stylesheet" href="../resources/autoComplete.js-10.2.6/dist/css/autoComplete.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
-    <script type="module" src="../js/user/former.js"></script>
-    <title>Intouch|Verify</title>
+    <script src="../js/min/script.min.js" defer></script>
+    <script src="../js/min/setSearch.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
+    <title>Post Your Job Listing</title>
+    <style>
+      *{
+        box-sizing:border-box;
+        margin:0;
+        padding:0;
+        font-family: 'Roboto', sans-serif;
+      }
+      body{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:20px 10px
+      }
+      .resume-template{
+        width:815px;
+        height:1080px;
+        border:0.2px solid #ddd
+      }
+      .template-header{
+        width:100%;
+        height:18.5%;
+        background:#c63f73;
+        display:grid;
+        grid-template-columns:1fr 2fr;
+        gap:5px;
+        color:#fff;
+        padding:6px 8px;
+      }
+      .template-header h1{
+        border-right:1px solid #fff;
+        height:80%;
+        padding-right:2px;
+      }
+      .about-me p{
+        padding:0 5px;
+      }
+      .about-me h4{
+        font-size:0.9rem;
+        color:#fff;
+      }
+      .about-me p{
+        color:#fff;
+      }
+      .template-body{
+        height:81.5%;
+        width:100%;
+        display:flex;
+        align-items:stretch;
+      }
+      .side-info{
+        width:34%;
+        height:100%;
+        background:#c63f73;
+        color:#fff;
+        display:flex;
+        flex-direction:column;
+      }
+      .side-info > *{
+          min-height:25%;
+      }
+      .side-info > * h6{
+        background:#fff;
+        color:#c63f73;
+        text-align:center;
+        padding:5px 0;
+        width:100%
+      }
+      .side-info > * ul li{
+        list-style-type:none;
+        color:#fff;
+      }
+      .main-info{
+        position:relative;
+        padding-top:10px;
+        padding-left:10px;
+        width:66%;
+      }
+      .main-info > *{
+        min-height:25%;
+        width:100%
+      }
+      .main-info > * h5{
+        color:#c63f73
+      }
+      .grid{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+      }
+      .info_card{
+        
+      }
+      .info_card em{
+        font-size:0.7rem;
+        font-weight:500;
+      }
+      .info_card span{
+        font-weight:600;
+      }
+
+
+    </style>
   </head>
   <body>
-    <section class="main">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-6">
-                    <h1>Register your company</h1>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 mt-3 mt-md-3" id="registerCompBody" style="z-index:99">
-                    <div class="row mb-2">
-                        <div class="step__indicator">
-                            <span class="indicator __active_step">1</span>
-                            <span class="progress">
-                                <div :class="current_step=== 2 || progress.step_one ? 'loader__bar' : '' ">
-                                </div>
-                            </span>
-                            <span :class="current_step === 2 || progress.step_two ? 'indicator __active_step' : 'indicator' ">2</span>
-                            <span class="progress">
-                                <div :class="current_step=== 3 || progress.step_three ? 'loader__bar' : '' ">
-                                </div>
-                            </span>
-                            <span :class="current_step === 3 || progress.step_three ? 'indicator __active_step' : 'indicator'">3</span>
-                        </div>
-                    </div>
-                <form @submit.prevent="submit">
-                    <div class="row g-3 mt-3" v-if="current_step === 1">
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="companyNameInput" placeholder="Business" value="Business" v-model.trim="info.name">
-                                <label for="floatingInputValue">Company name:</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <select class="form-select" id="companySizeInput" aria-label="Select your company size" v-model.trim="info.company_size">
-                                  <option value="1-1000 employees">1 -50 employees</option>
-                                  <option value="50-200 employees">50 - 200 employees</option>
-                                  <option value="200-1000 employees">200 - 1000 employees</option>
-                                  <option value="1000-2000 employees">1000 - 2000 employees</option>
-                                  <option value="2000-5000 employees">2000 - 5000 employees</option>
-                                  <option value="5000+ employees">500+ employees</option>
-                                </select>
-                                <label for="floatingSelect">Company size:</label>
-                              </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <select class="form-select" id="companyIndustryInput" aria-label="Select your industry" v-model.trim="info.industry">
-                                  <option value="Telecommunications">Telecommunication</option>
-                                  <option value="Insurance">Insurance</option>
-                                  <option value="200-1000 employees">Sales</option>
-                                  <option value="1000-2000 employees">Hospitality</option>
-                                  <option value="2000-5000 employees">Tourism</option>
-                                  <option value="5000+ employees">Construction</option>
-                                </select>
-                                <label for="floatingSelect">Industry</label>
-                              </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <select class="form-select" id="companyTypeInput" aria-label="Select your company type" v-model.trim="info.company_type">
-                                  <option value="Small Business">Small Business</option>
-                                  <option value="Startup">Startup</option>
-                                  <option value="Company/Enterprise">Company / Enterprise</option>
-                                </select>
-                                <label for="floatingSelect">Company type</label>
-                              </div>
-                        </div>
-                        <button type="button" class="btn btn-dark mt-3" @click="stepCheck(1)">Next</button>
-                    </div>
-                    <div class="row g-3 mt-3" v-if="current_step === 2">
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Company summary here" id="companyAboutInput" style="height: 100px;resize:none" v-model.trim="info.about"></textarea>
-                                <label for="floatingTextarea2">About company</label>
-                                <small>{{ 999 -info.about.length}} / 999 characters remaining</small>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input class="form-control" placeholder="Company summary here" id="companyMissionInput" v-model.trim.trim="info.mission_state">
-                                <label for="floatingTextarea2">About company</label>
-                                <small>{{ 300 -info.mission_state.length}} / 300 characters remaining</small>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-dark mt-3" @click="stepCheck(2)">Next</button>
-                    </div>
-                    <div class="row g-3 mt-3" v-if="current_step === 3">
-                        <div class="row g-2">
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="companyEmailInput" placeholder="name@example.com" v-model.trim="info.recruiter_email">
-                                    <label for="companyEmailInput">Company email</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="companyPhoneInput" placeholder="87688819999" v-model.trim="info.recruiter_phone">
-                                    <label for="companyPhoneInput">Phone</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="companyWebsiteInput" placeholder="www.example.com" v-model.trim="info.official_website">
-                                    <label for="companyEmailInput">Official website</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="companyCountryInput" placeholder="Jamaica" value="" v-model.trim="info.country">
-                                    <label for="companyCountryInput">Country</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-success mt-3" @click="stepCheck(3)">Success</button>
-                    </div>
-                </form>
-                </div>
-            </div>
+    <div class="resume-template">
+      <div class="template-header">
+        <h1>Hi I'm Malik</h1>
+        <div class="about-me">
+          <h4>About Me</h4>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis ut, sint ipsam consectetur ea repellat, natus aspernatur, impedit facilis minima eligendi magnam vitae? Eaque, quidem explicabo. Voluptates corrupti eos ut. Nesciunt eos incidunt officia tempore placeat qui dolorum, eius officiis.</p>
         </div>
-        <svg id="visual" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-            <path d="M0 467L137 407L274 411L411 434L549 412L686 475L823 417L960 480L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3e3be8"></path>
-            <path d="M0 486L137 453L274 453L411 471L549 479L686 449L823 483L960 452L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3fc4"></path>
-            <path d="M0 493L137 483L274 494L411 466L549 472L686 459L823 497L960 457L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#41409f"></path>
-            <path d="M0 480L137 510L274 474L411 503L549 498L686 474L823 510L960 488L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#413f7a"></path>
-            <path d="M0 520L137 519L274 518L411 507L549 498L686 516L823 507L960 514L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3d56"></path>
-        </svg>
-    </section>
+      </div>
+      <div class="template-body">
+        <div class="side-info">
+          <div>
+            <h6>Skills</h6>
+            <ul>
+              <li>Example</li>
+            </ul>
+          </div>
+          <div>
+            <h6>Interests</h6>
+            <ul>
+              <li>Example</li>
+            </ul>
+          </div>
+          <div>
+            <h6>Spoken languages</h6>
+            <ul>
+              <li>Example</li>
+            </ul>
+          </div>
+          <div>
+            <h6>Contact</h6>
+            <ul>
+              <li>Example</li>
+            </ul>
+          </div>
+        </div>
+        <div class="main-info">
+          <div>
+              <h5>Education</h5>
+              <div class="grid">
+                <div class="info_card">
+                  <em>January 2019 - September 2022</em> 
+                  <span>Bsc. Mechanical Engineering</span>
+                  <p>Knox College</p>
+                </div>
+                <div class="info_card">
+                  <em>January 2019 - September 2022</em> 
+                  <span>Bsc. Mechanical Engineering</span>
+                  <p>Knox College</p>
+                </div>
+                <div class="info_card">
+                  <em>January 2019 - September 2022</em> 
+                  <span>Bsc. Mechanical Engineering</span>
+                  <p>Knox College</p>
+                </div>
+              </div>
+          </div>
+          <div>
+            <h5>Employment History</h5>
+            <div class="grid">
+              <div class="info_card">
+                <em>January 2019 - September 2022</em> 
+                <span>Bsc. Mechanical Engineering</span>
+                <p>Knox College</p>
+              </div>
+              <div class="info_card">
+                <em>January 2019 - September 2022</em> 
+                <span>Bsc. Mechanical Engineering</span>
+                <p>Knox College</p>
+              </div>
+              <div class="info_card">
+                <em>January 2019 - September 2022</em> 
+                <span>Bsc. Mechanical Engineering</span>
+                <p>Knox College</p>
+              </div>
+            </div>
+        `</div>
+        <div>
+          <h5>References</h5>
+          <div class="grid">
+            <div class="info_card">
+              <em>January 2019 - September 2022</em> 
+              <span>Bsc. Mechanical Engineering</span>
+              <p>Knox College</p>
+            </div>
+            <div class="info_card">
+              <em>January 2019 - September 2022</em> 
+              <span>Bsc. Mechanical Engineering</span>
+              <p>Knox College</p>
+            </div>
+            <div class="info_card">
+              <em>January 2019 - September 2022</em> 
+              <span>Bsc. Mechanical Engineering</span>
+              <p>Knox College</p>
+            </div>
+          </div>
+      </div>
+        </div>
+      </div>
+    </div>
   </body>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </html>

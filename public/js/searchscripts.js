@@ -1,4 +1,6 @@
-import {validEmailCheck, phoneFormatter} from '/js/vFiers.js'
+import {validEmailCheck, phoneFormatter, imageEncode, relativeDate} from '/js/vFiers.js'
+
+
 
 const jobQueryParams = ()=>{
     var search, searchSan,searchObjValues
@@ -34,15 +36,16 @@ const setSearchState= new Vue({
                 next:null,
             },
             filter:{
-                job_Type:['full-time'],
+                filtered:false,
+                job_Type:['full-time','part-time','seasonal','contract'],
                 location:{
                     country:'',
                     s_div:''
                 },
-                company:'',
                 sort:{
-
+                    see_latest:999999999999
                 },
+                company:'',
                 matchArr:[]
             }
         },
@@ -76,6 +79,7 @@ const setSearchState= new Vue({
         },
         j_selected:true,
         all_jobs:[],
+        matched_filters:[]
     },
     methods:{
         setState:(id=0)=>{
@@ -87,6 +91,9 @@ const setSearchState= new Vue({
             var par_data = JSON.parse(str_data.value);
             if(par_data.items.length > id){
                 setSearchState.all_jobs = par_data.items;
+                par_data.items.forEach((list)=>{
+                    if(!companyAutoComplete.data.src.includes(list.company_name_posted)){companyAutoComplete.data.src.push(`${list.company_name_posted}`)}
+                })
                 setSearchState.display.item_count =par_data.itemsTotal;
                 setSearchState.display.page.total = par_data.pageTotal;
                 setSearchState.display.current= par_data.curPage,
@@ -120,7 +127,10 @@ const setSearchState= new Vue({
             setTimeout(()=>{
                 var parent = str_data.parentNode;
                 parent.removeChild(str_data);
-            },3000)
+            },3000);
+            setTimeout(()=>{
+                setSearchState.adHandler();
+            },900)
         
          
         },
@@ -155,51 +165,8 @@ const setSearchState= new Vue({
             });
 
         },
-        relativeDate:(unix)=>{
-            var posted_date = new Date(unix);
-            var today_date = new Date();
-            var p_day, p_date, p_month,p_hours,p_mins;
-            var t_day,t_date,t_month,t_hours,t_mins;
-            p_month = posted_date.getMonth();
-            t_month = today_date.getMonth();
-            p_date =posted_date.getDate()
-            t_date = today_date.getDate()
-            p_hours =posted_date.getHours()
-            t_hours = today_date.getHours()
-            p_mins = posted_date.getMinutes()
-            t_mins = today_date.getMinutes()
-            var rel_month = parseInt(t_month) - parseInt(p_month);
-            var rel_date = parseInt(t_date+1) - parseInt(p_date+1);
-            var rel_hours = parseInt(t_hours) - parseInt(p_hours);
-            var rel_mins = parseInt(t_mins) - parseInt(p_mins);
-            //Cal Month
-            if(rel_month === 0){
-                if(rel_date === 0){
-                    if(rel_hours === 0){
-                        if(rel_mins === 1){
-                            return 'posted 1 minute ago.'
-                        }else{
-                            return 'posted ' + rel_mins + ' minutes ago.'
-                        }
-                    }else if(rel_hours === 1){
-                        return 'posted 1 hour ago'
-                    }else{
-                        return 'posted ' + rel_hours + ' hours ago.'
-                    }
-                }else if(rel_date === 1){
-                    return 'posted 1 day ago.'
-                }else{
-                    return 'posted ' + rel_date + ' days ago'
-                }
-            }else if(rel_month === 1){
-                if(p_date < 20 && t_date > 10){
-                    return 'posted ' + rel_month + ' month ago'
-                }else{
-                    return 'posted ' + Math.abs(rel_date) + ' days ago'
-                }
-            }else{
-                return 'posted ' + rel_month + ' months ago'
-            }
+        relativeDate:(unix)=>{         
+            return relativeDate(unix);
         },
         setUserPref:async ()=>{
             const getPref = await fetch('/main/user/favourites').then(res=>res.json())
@@ -244,13 +211,89 @@ const setSearchState= new Vue({
         setCompUrl:(company_name)=>{
             return  `/main/company/profile?name=${company_name}`
         },
-        fiter__jobs:()=>{
-            var data = setSearchState.all_jobs;
-            data.forEach((list)=>{
-           
-            })
-        },
         alertHandler:()=>{
+            
+        },
+        filterHandler:()=>{
+            // Filter by job type, posted date, company name,
+            setSearchState.display.filter.filtered = true
+            setSearchState.matched_filters = []
+            var ref_data = setSearchState.display.filter;
+            var check_data = setSearchState.all_jobs;
+            check_data.forEach((job)=>{
+                var trueCount = 0 //Tracks reqs.
+                if(ref_data.job_Type.includes(job.type)){
+                    trueCount += 1
+                }
+
+                if(ref_data.sort.see_latest <= job.created_at){
+                    trueCount +=1
+                }
+
+                if(job.loc_country.toLowerCase().includes(ref_data.location.country.toLowerCase()) || ref_data.location.country.length === 0){
+                    trueCount +=1
+                }
+
+                if(job.loc_sub_division.toLowerCase().includes(ref_data.location.s_div.toLowerCase()) || ref_data.location.s_div.length === 0){
+                    trueCount +=1;
+                }
+
+                if(job.company_name_posted.toLowerCase().includes(ref_data.company.toLowerCase()) || ref_data.company.length === 0){
+                    trueCount +=1
+                }
+
+                if(trueCount === 5){
+                    setSearchState.matched_filters.push(job.id)
+                    return true
+                }else{
+                    return false
+                }
+            })
+            setTimeout(()=>{
+                var ads = document.getElementsByClassName('inline-ad-space');
+                var parent = document.querySelector('.result-scroll-body');
+                for(let i = 0; i < ads.length; i++){
+                    parent.removeChild(ads[i])
+                }
+                setSearchState.adHandler()
+            },700)
+        },
+        adHandler:()=>{
+            var listCount = setSearchState.display.filter.filtered ? setSearchState.matched_filters.length : setSearchState.all_jobs.length;
+            var ads = document.getElementsByClassName('inline-ad-space');
+            var parent = document.querySelector('.result-scroll-body');
+            var dom_kids = parent.children
+            var kids = document.querySelectorAll('.job-card');
+            var adTemp = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"crossorigin="anonymous"></script><ins class="adsbygoogle"style="display:block"data-ad-format="fluid"data-ad-layout-key="-ed+6k-30-ac+ty"data-ad-client="ca-pub-9149531285371942"data-ad-slot="1909465585"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>'
+            if(kids.length >= 8){
+                var count = 1;
+                kids.forEach((kid,index)=>{
+                    var template = document.createElement('div');
+                    template.className = "inline-ad-space";
+                    template.innerHTML = adTemp;
+                    if(count%4===0 && kid.previousSibling.className !=='inline-ad-space' && kid.previousSibling.previousSibling.className !== 'inline-ad-space'){
+                        parent.insertBefore(template,kid)
+                    }
+                    count +=1
+                })
+            }else if(kids.length < 8 && kids.length > 0){
+                var template = document.createElement('div');
+                template.className = "inline-ad-space";
+                template.innerHTML = adTemp;
+                parent.append(template);
+                console.log('added')
+            }
+
+
+        },
+        clearFilter:()=>{
+            setSearchState.display.filter.filtered = false;
+            setSearchState.display.filter.job_Type = ['full-time','part-time','seasonal','contract'];
+            setSearchState.display.filter.location.country ="";
+            setSearchState.display.filter.location.s_div = "";
+            setSearchState.display.filter.company = "";
+            setSearchState.adHandler();
+            setSearchState.display.filter.fitered = false
             
         }
     }
@@ -406,6 +449,21 @@ const applicationHandler = new Vue({
                 }
             }
         },
+        fileHandler:async (event)=>{
+            var inputID = event.currentTarget.id
+            let base64String = "";
+            const setter = (dt_64)=>{
+                applicationHandler.u_Data.resume = dt_64;
+            }
+            var file = document.querySelector(`#${inputID}`)['files'][0];
+            console.log(file.size)
+            var reader = new FileReader();      
+            reader.onload = async()=>{
+                base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+                var d64 = await setter(base64String);
+            };
+            reader.readAsDataURL(file);
+        },
         goBack:()=>{
             var int = applicationHandler.current_step;
             var new_int = int -=1;
@@ -422,7 +480,7 @@ const applicationHandler = new Vue({
                 }
                 pre_int.push(pre_int_temp)
             })
-
+            console.log(applicationHandler.u_Data.resume)
             const result = await fetch('/main/application/submit',{
                 method:'POST',
                 headers:{
@@ -468,7 +526,8 @@ const applicationHandler = new Vue({
             applicationHandler.state.rejected = false;
             applicationHandler.current_step = 1;
             $('#applicationModal').modal('hide');
-        }
+        },
+
 
     }
 })
@@ -585,50 +644,13 @@ const notificationHandler = new Vue({
             }
         },
         setRelative:(unix)=>{
-            var posted_date = new Date(unix);
-            var today_date = new Date();
-            var p_day, p_date, p_month,p_hours,p_mins;
-            var t_day,t_date,t_month,t_hours,t_mins;
-            p_month = posted_date.getMonth();
-            t_month = today_date.getMonth();
-            p_date =posted_date.getDate()
-            t_date = today_date.getDate()
-            p_hours =posted_date.getHours()
-            t_hours = today_date.getHours()
-            p_mins = posted_date.getMinutes()
-            t_mins = today_date.getMinutes()
-            var rel_month = Math.abs(parseInt(t_month) - parseInt(p_month));
-            var rel_date = Math.abs(parseInt(t_date+1) - parseInt(p_date+1));
-            var rel_hours = Math.abs(parseInt(t_hours) - parseInt(p_hours));
-            var rel_mins = Math.abs(parseInt(t_mins) - parseInt(p_mins));
-            //Cal Month
-            if(rel_month === 0){
-                if(rel_date === 0){
-                    if(rel_hours === 0){
-                        if(rel_mins === 1){
-                            return '1 minute ago.'
-                        }else{
-                            return rel_mins + ' minutes ago.'
-                        }
-                    }else if(rel_hours === 1){
-                        return '1 hour ago'
-                    }else{
-                        return rel_hours + ' hours ago.'
-                    }
-                }else if(rel_date === 1){
-                    return '1 day ago.'
-                }else{
-                    return rel_date + ' days ago'
-                }
-            }else if(rel_month === 1){
-                return rel_month + ' month ago'
-            }else{
-                return rel_month + ' months ago'
-            }
+            return relativeDate(unix);
         }
 
     }
 })
+
+
 
 var target_observe = document.querySelector(".notif__display")
 var options = {
@@ -678,12 +700,33 @@ const autoCompleteJS = new autoComplete({
     submit:true,
 
  });
+ const companyAutoComplete = new autoComplete({
+    placeholder:'Search by company',
+    selector:'#filterCompanyInput',
+    data:{
+        src:[]
+    },
+    resultItem:{
+        highlight:{
+            render:true
+        }
+    },
+    submit:true,
+  })
 
 document.querySelector("#autoComplete").addEventListener("selection", function (event) {
     // "event.detail" carries the autoComplete.js "feedback" object
     var detail = event.detail;
     event.currentTarget.value = detail.selection.value;
     window.location.href = `/main/seejobs?q=${detail.selection.value}&country=&sub_division=`
+});
+
+document.querySelector("#filterCompanyInput").addEventListener("selection", function (event) {
+    // "event.detail" carries the autoComplete.js "feedback" object
+    var detail = event.detail;
+    event.currentTarget.value = detail.selection.value;
+    setSearchState.display.filter.company = detail.selection.value;
+    event.currentTarget.blur()
 });
 
 const setValid = (id)=>{
@@ -782,8 +825,9 @@ const main = ()=>{
         $('#nav_me').show()
     })
     $('#nav-search_button').on('click',()=>{
-        $('.search-field').toggle();
-        $('.search-nav-links').toggle();
+        $('.search-field').show();
+        $('#autoComplete').focus()
+        $('.search-nav-links').hide();
         $('#search-page-nav-logo').toggle();
         $('.focus___overlay').show()
     })
@@ -799,27 +843,19 @@ const main = ()=>{
 
     $('#autoComplete').on('focus', ()=>{
         $('.focus___overlay').show();
-        $('#searchJobsBtn').show();
         if($(window).width() <= 1020){
             $('#search-page-nav-logo').fadeOut();
+            $('.search-nav-links').hide();
         }
     }).on('blur', (e)=>{
         var windowSize = $(window).width()
-        var charCount = $('#career-search').val();
         $('.focus___overlay').hide();
+        $('.search-nav-links').show();
         if(windowSize <= 1020){
             $('#search-page-nav-logo').fadeIn();
-            $('.search-nav-links').show();
             $('.search-field').hide();
             $('.focus___overlay').hide();
         }
-    })
-  
-    $('#searchJobsBtn').on('click', ()=>{
-        var query = $('#career-search').val();
-        var country = "Jamaica";
-        var sub_division = $('#where-select').val()
-        window.location.href = `/main/seejobs?q=${query}&country=${country}&sub_division=${sub_division}`;
     })
   
     $(window).on('scroll', ()=>{
@@ -850,6 +886,9 @@ const main = ()=>{
             $('.search-field').show();
             $('.search-nav-links').show();
             $('.job-show-display').removeClass('show-job-section')
+        }else{
+            $('.search-field').hide();
+            $('.search-nav-links').show();
         }        
     }).on('load', async ()=>{
         setSearchState.setState();
@@ -860,6 +899,8 @@ const main = ()=>{
             $('#search-page-nav-logo').show();
             $('.search-nav-links').show();
             $('.search-field').show();
+        }else{
+            $('.search-field').hide(); 
         }
         jobautoSearch()
     })

@@ -236,7 +236,7 @@ const getMyCompanyDetail = async (id=0,name)=>{
         return{
             ok:false,
             message:err.message,
-            stats:res.status
+            stats:err.status
         }
     });
     return data

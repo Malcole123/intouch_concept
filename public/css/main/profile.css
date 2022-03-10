@@ -172,6 +172,7 @@ html{
 }
 .__carousel__inner{
     width:2100px;
+    min-height:200px;
     display:flex;
     gap:20px;
     align-items:center;

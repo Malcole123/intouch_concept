@@ -27,7 +27,7 @@ router.get('/create/templates', (req,res)=>{
             }
         })
     }else{
-        res.render('./resume/choos-template',{
+        res.render('./resume/choose-template',{
             get_start:true,
             access:'common'
         })
@@ -41,7 +41,7 @@ router.get('/create/build', async (req,res)=>{
     var result = await buildFunc.tSorter(san);
 
     if(result.ok){
-        res.render('./resume/builder', {templatePath:`../resume/_templates/${result.path}`});
+        res.render('./resume/builder', {templatePath:`../resume/_templates/${result.path}`, cssPath:`/css/resume/__templates/template1.css`});
     }else{
         res.redirect('/main/home')
     }

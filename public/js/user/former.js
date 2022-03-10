@@ -9,7 +9,7 @@ const rApp = new Vue({
         phoneNumber:'',
         password:'',
         passConfirm:'',
-        tosAgree:false,
+        tosAgree:true,
         errors:{
             firstname:false,
             lastname:false,
@@ -33,7 +33,6 @@ const rApp = new Vue({
         processForm:()=>{
             var form = document.getElementById('register-form');
             var ePoint = form.getAttribute('action');
-            rApp.processing = true
             var userType;
             if(window.location.href.includes('employer')){
                 userType = 'client'
@@ -60,7 +59,12 @@ const rApp = new Vue({
                     setInvalid('emailInput');
                 }            
             }
-            processor()
+            if(rApp.formReady){
+                rApp.processing = true
+                processor()
+            }else{
+                rApp.checkForErrors()
+            }
 
         },
         checkFirst:()=>{

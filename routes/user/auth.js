@@ -113,6 +113,13 @@ router.post('/auth/login', async (req,res)=>{
     }
 })
 
+router.get('/logout',(req,res)=>{
+    req.session.destroy();
+    res.clearCookie('connect.sid');
+    res.redirect('/user/login')
+})
+
+
 router.post('/auth/me', async(req,res)=>{
     var session = req.session;
 })

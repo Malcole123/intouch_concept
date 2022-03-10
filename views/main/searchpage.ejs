@@ -4,27 +4,112 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/searchstyles.css" />
+    <link rel="stylesheet as="style" href="/css/searchstyles.css"/>
     <!----Font Awesome CDN-->
-    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
+ 
     <link rel="stylesheet" href="/resources/autoComplete.js-10.2.6/dist/css/autoComplete.css">
     <!----Boot-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
     <script type="module" src="/js/searchscripts.js" defer></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
+    <script defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
      crossorigin="anonymous"></script>
      <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
     <title>inTouch | Search</title>
+    <style>
+.search-field {
+    border-radius: 10px;
+    width: 100%;
+    height: 45px;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    z-index: 0;
+    transition: 0.1s ease-in-out;
+}
+
+.search-input {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.search-header .search-field,.profile__header .search-field {
+    width: 40%;
+    margin-right: auto;
+}
+
+.search-nav-links {
+    display: flex;
+    flex: 1;
+    gap: 24px;
+    align-items: center;
+    text-decoration: none;
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
+.search-nav-links > * {
+    cursor: pointer
+}
+
+.single-menu,.search-dropdown-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.search-dropdown-menu {
+    position: relative;
+}
+
+.menu-options__display {
+    position: absolute;
+    width: 340px;
+    height: 250px;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    bottom: -268px;
+    right: 20%;
+    display: none;
+    padding: 20px 10px;
+    border: 0.3px solid #ddd;
+}
+
+.menu-options__display::before {
+    content: '';
+    position: inherit;
+    display: block;
+    height: 20px;
+    width: 20px;
+    border-bottom: 20px solid #f44336;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    top: 0;
+    right: 0%;
+    transform: translate(0%,-100%);
+}
+
+.notif__display {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -100vh;
+    width: 100%;
+    height: 100vh;
+    padding-top: 90px;
+    background: #fff;
+    transition: 0.4s ease-in-out;
+}
+
+    </style>
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js"></script>
+    <script src="/resources/autocomplete.js-10.2.6/dist/autoComplete.min.js"></script>
     <div class="loader__overlay">
         <img src="../images/logo.svg" alt="Logo">
         <div class="loader"></div>
@@ -35,7 +120,7 @@
     </section>
     <section class="search-page-body" id="searchBody">
       <div class="container bg-white">
-        <form @change="fiter__jobs" @submit.prevent="fiter__jobs">
+        <form @change="filterHandler" @submit.prevent="filterHandler">
           <div class="filter__body">
             <div id="filter__init-call" class="filter__option __mobile" aria-expanded="false">
               <span>Filter</span>
@@ -43,6 +128,7 @@
             </div>
             <ul class="filter-list">
               <i id="filter__init-dismiss" class="d-sm-block d-md-block d-lg-none fas fa-times-circle fs-4 mb-2"></i>
+              <span style="cursor:pointer" id="filterClear" v-if="display.filter.filtered" @click="clearFilter"><i class="fa-solid fa-times"></i>&nbsp Clear Filters</span>
               <li>
                 <div class="dropdown">
                   <div class="filter__option" id="jobTypeButton">
@@ -55,7 +141,7 @@
                         <label class="form-check-label" for="fullTimeCheck">
                           Full Time
                         </label>
-                        <input class="form-check-input" type="checkbox" name="fullTimeCheck" id="fullTimeCheck" checked @click="filter__jobType('full-time')">
+                        <input class="form-check-input" type="checkbox" name="fullTimeCheck" id="fullTimeCheck" :checked=" display.filter.job_Type.includes('full-time') ? true : false"  @click="filter__jobType('full-time')">
                       </div>
                     </li>
                     <li>
@@ -63,7 +149,7 @@
                         <label class="form-check-label" for="partTimeCheck">
                           Part Time
                         </label>
-                        <input class="form-check-input" type="checkbox" name="partTimeCheck" id="partTimeCheck" @click="filter__jobType('part-time')">
+                        <input class="form-check-input" type="checkbox" name="partTimeCheck" id="partTimeCheck" :checked=" display.filter.job_Type.includes('part-time') ? true : false"  @click="filter__jobType('part-time')">
                       </div>
                     </li>
                     <li>
@@ -71,7 +157,7 @@
                         <label class="form-check-label" for="seasonalCheck">
                           Seasonal
                         </label>
-                        <input class="form-check-input" type="checkbox" name="seasonalCheck" id="seasonalCheck" @click="filter__jobType('seasonal')">
+                        <input class="form-check-input" type="checkbox" name="seasonalCheck" id="seasonalCheck" :checked=" display.filter.job_Type.includes('seasonal') ? true : false" @click="filter__jobType('seasonal')">
                       </div>
                     </li>
                     <li>
@@ -79,7 +165,7 @@
                         <label class="form-check-label" for="contractCheck">
                           Contract
                         </label>
-                        <input class="form-check-input" type="checkbox" name="contractCheck" id="contractCheck" @click="filter__jobType('contract')">
+                        <input class="form-check-input" type="checkbox" name="contractCheck" id="contractCheck" :checked=" display.filter.job_Type.includes('contract') ? true : false" @click="filter__jobType('contract')">
                       </div>
                     </li>
                   </ul>
@@ -119,6 +205,20 @@
                   </ul>
                 </div>
               </li>
+              <li>
+                <div class="dropdown">
+                  <div class="filter__option" id="companyButton">
+                    <span>Company Search</span>
+                    <i class="fas fa-caret-down"></i>
+                  </div>
+                  <ul class="filter_option__menu" id="companyMenu" aria-labelledby="company menu dropdown">
+                    <li>
+                      <label for="filterCompanyInput">Search companies</label>
+                      <input type="text" class="form-floating mt-3" id="filterCompanyInput" autocomplete="off" v-model.trim="display.filter.company">
+                    </li>
+                  </ul>
+                </div>
+              </li>
             </ul>
           <div style="display:flex;gap:8px;justify-content:end;margin-left:auto">
             <span style="font-weight:400">Set Alerts</span>
@@ -138,123 +238,41 @@
               <div class="bg-white result-scroll-body">
             <% if(jData.items.length > 0){ %>
               <% jData.items.forEach((listing, index)=>{ %>
-                <% if(index%3 === 0 && index > 0){ %>
-                  <div class="inline-ad-space" v-if="display.item_visible > 0">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
-                        crossorigin="anonymous"></script>
-                    <ins class="adsbygoogle"
-                        style="display:block"
-                        data-ad-format="fluid"
-                        data-ad-layout-key="-ed+6k-30-ac+ty"
-                        data-ad-client="ca-pub-9149531285371942"
-                        data-ad-slot="1909465585"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                  </div>     
-                  <div class="job-card" @click="changeFocus(<%= listing.id %>)" v-if="display.filter.job_Type.includes('<%= listing.type %>')">
-                    <% if(listing.data.urls.company_logo.length >= 1){ %>
-                      <img src="<%= listing.data.urls.company_logo %>" alt="<%= listing.title %>">                        
-                    <% }else{ %>
-                      <img src="../images/imageplaceholder.png" alt="<%= listing.title %>">
-                    <% } %>                    <div class="job-card-content">
-                      <h4 style="color:rgb(90,90,90);font-size:1.02rem"><%= listing.title %></h4>
-                      <h6 style="color:rgb(90,90,90);font-size:0.8rem;"><%= listing.company_name_posted %></h6>
-                      <div class="job-rel-info">
-                        <div class="rel-info-loc badge bg-transparent text-dark">
-                          <i class="fas fa-map-pin"></i>
-                          <span><%= listing.sub_division %> , <%=listing.loc_country %></span>
-                        </div>
-                        <div class="badge bg-transparent text-dark rel-info-time">
-                          <i class="fas fa-clock"></i>
-                          <span style="text-transform:capitalize;"><%= listing.type.replaceAll('-',' ') %></span>
-                        </div>
+                <div class="job-card" @click="changeFocus(<%= listing.id %>)" v-if="matched_filters.includes(<%=listing.id%>) || !display.filter.filtered">
+                  <% if(listing.data.urls.company_logo.length >= 1){ %>
+                    <img src="<%= listing.data.urls.company_logo %>" alt="<%= listing.title %>">                        
+                  <% }else{ %>
+                    <img src="../images/imageplaceholder.png" alt="<%= listing.title %>">
+                  <% } %>                    
+                  <div class="job-card-content">
+                    <h4 style="color:rgb(90,90,90);font-size:1.02rem"><%= listing.title %></h4>
+                    <h6 style="color:rgb(90,90,90);font-size:0.8rem;font-weight:600;"><%= listing.company_name_posted %></h6>
+                    <div class="job-rel-info">
+                      <div class="rel-info-loc badge bg-transparent text-dark">
+                        <i class="fas fa-map-pin"></i>
+                        <span><%= listing.loc_sub_division %> , <%=listing.loc_country %></span>
                       </div>
-                      <i class="fa-solid fa-chevron-right" style="position:absolute;right:6px;bottom:6px"></i>
-                    </div>
-                  </div>
-                <% }else{ %>
-                  <div class="job-card" @click="changeFocus(<%= listing.id %>)" v-if="display.filter.job_Type.includes('<%= listing.type %>')">
-                    <% if(listing.data.urls.company_logo.length >= 1){ %>
-                      <img src="<%= listing.data.urls.company_logo %>" alt="<%= listing.title %>">                        
-                    <% }else{ %>
-                      <img src="../images/imageplaceholder.png" alt="<%= listing.title %>">
-                    <% } %>
-                    <div class="job-card-content">
-                      <h4 style="color:rgb(90,90,90);font-size:1.02rem"><%= listing.title %></h4>
-                      <h6 style="color:rgb(90,90,90);font-size:0.8rem"><%= listing.company_name_posted %></h6>
-                      <div class="job-rel-info">
-                        <div class="rel-info-loc badge bg-transparent text-dark">
-                          <i class="fas fa-map-pin"></i>
-                          <span><%= listing.sub_division %> , <%=listing.loc_country %></span>
-                        </div>
-                        <div class="rel-info-time badge bg-transparent text-dark">
-                          <i class="fas fa-clock"></i>
-                          <span style="text-transform: capitalize;"><%= listing.type.replaceAll('-',' ') %></span>
-                        </div>
+                      <div class="badge bg-transparent text-dark rel-info-time">
+                        <i class="fas fa-clock"></i>
+                        <span style="text-transform:capitalize;"><%= listing.type.replaceAll('-',' ') %></span>
                       </div>
-                      <i class="fa-solid fa-chevron-right" style="position:absolute;right:6px;bottom:6px"></i>
                     </div>
+                    <span style="position:absolute;top:6px;right:6px;color:rgba(90,90,90);font-size:0.75rem">{{relativeDate(<%=listing.created_at %>)}}</span>
+                    <i class="fa-solid fa-chevron-right" style="position:absolute;right:6px;bottom:6px"></i>
                   </div>
-                  <% } %>             
-              <% }) %>
-              <div class="inline-ad-space" v-if="display.item_visible < 2 && display.item_visible > 0">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
-                    crossorigin="anonymous"></script>
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-format="fluid"
-                    data-ad-layout-key="-ed+6k-30-ac+ty"
-                    data-ad-client="ca-pub-9149531285371942"
-                    data-ad-slot="1909465585"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-              </div>         
-            <% }else{ %>
-              <div class="w-100 d-flex justify-content-center align-items-center flex-column no-results">
+                </div>            
+              <% }) %>        
+            <% }%>
+              <div class="w-100 d-flex justify-content-start align-items-center flex-column no-results" style="position:absolute;top:50px" v-if="(matched_filters.length === 0 && display.filter.filtered) || all_jobs.length === 0">
                 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
                 <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                
                 <p>No results match your search</p>
                 <a href="/main/seejobs?q=&country=&sub_division=" class="btn btn-dark mt-2 mb-4">See All</a>
-                <div class="inline-ad-space" v-if="display.item_visible > 0">
-                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
-                      crossorigin="anonymous"></script>
-                  <ins class="adsbygoogle"
-                      style="display:block"
-                      data-ad-format="fluid"
-                      data-ad-layout-key="-ed+6k-30-ac+ty"
-                      data-ad-client="ca-pub-9149531285371942"
-                      data-ad-slot="1909465585"></ins>
-                  <script>
-                      (adsbygoogle = window.adsbygoogle || []).push({});
-                  </script>
-              </div>
-              <% } %>
-              <div class="w-100 d-flex justify-content-center align-items-center flex-column no-results" v-if="display.item_visible === 0">
-                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                
-                <p>No results match your search</p>
-                <a href="/main/seejobs?q=&country=&sub_division=" class="btn btn-dark mt-2 mb-4">See All</a>
-                <div class="inline-ad-space">
-                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"
-                      crossorigin="anonymous"></script>
-                  <ins class="adsbygoogle"
-                      style="display:block"
-                      data-ad-format="fluid"
-                      data-ad-layout-key="-ed+6k-30-ac+ty"
-                      data-ad-client="ca-pub-9149531285371942"
-                      data-ad-slot="1909465585"></ins>
-                  <script>
-                      (adsbygoogle = window.adsbygoogle || []).push({});
-                  </script>
-              </div>
-              </div>
               </div>
             </div>
          </div>
-         <% if(jData.items.length > 0 ){ %>
-        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display" v-if="display.item_visible > 0">
+         </div>
+        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display">
             <div class="job-show-banner">
               <div class="mb-3 return_to_home __mobile">
                 <div class="badge bg-dark">
@@ -303,25 +321,25 @@
                   <p>{{ focus.pos_det.summary }}</p>
                 </div>
                 <div class="about__responsibilities __section">
-                  <h6>Responsibilities</h6>
+                  <span style="font-weight:600;">Responsibilities</span>
                   <ul>
                     <li v-for="r in focus.pos_det.resp" :key="r.id">{{r}}</li>
                   </ul>
                 </div>
                 <div class="about__qualifications __section">
-                  <h6>Qualifications</h6>
+                  <span style="font-weight:600">Qualifications</span>
                   <ul>
                     <li v-for="q in focus.pos_det.d_qual" :key="q.id">{{q}}</li>
                   </ul>
                 </div>
                 <div class="about__benefits __section">
-                  <h6>Benefits</h6>
+                  <span style="font-weight:600;">Benefits</span>
                   <ul>
                     <li v-for="b in focus.pos_det.ben" :key="b.id">{{b}}</li>
                   </ul>
                 </div>
                 <div class="about__company __section">
-                  <h6>About Company</h6>
+                  <span>About Company</span>
                   <div class="d-flex justify-content-between align-items-start mt-3">
                     <img style="height:60px;" src="../images/imageplaceholder.png" alt="">
                     <div class="ms-2">
@@ -332,15 +350,8 @@
                 </div>
               </div>
             </div>  
-          </div>   
-          <% }else{ %>
-        
-          <% } %>
-          <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 empty-job" v-if="display.item_visible=== 0">
-            <div class="vertical-ad-space">
-  
-            </div>
-          </div>
+          </div>           
+      
        </div>
      </div>
      </div>
@@ -397,7 +408,7 @@
               <div class="col-12 mt-3">
                 <span>Resume (optional)</span>
                 <div class="mb-3 mt-2">
-                  <input type="file" class="form-control" aria-label="file example" id="applicantRESUMEInput" required>
+                  <input type="file" class="form-control" aria-label="file example" id="applicantRESUMEInput" required @change="fileHandler">
                   <div class="invalid-feedback">Invalid file type.</div>
                   <div class="invalid-feedback">
                     Please upload a pdf,docx, doc, txt file no greater than 10mb.
@@ -532,10 +543,8 @@
     </div>  
   </div>   
   </div>
-<!--Off Can-->
-<%-include( '../components/side_nav' ) -%>
   </body>
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
   </html>

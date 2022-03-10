@@ -47,22 +47,6 @@ html{
     bottom:0
 }
 
-.home-header{
-    height:100vh;
-    left:0;
-    right:0;
-    background:linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)) ,url('/images/home/heroBack.jpg');
-    background-position: center;
-    background-size:cover;
-    background-repeat: no-repeat;
-    transition: 0.1s ease-in-out;
-    position:relative;
-}
-.home-header svg{
-    position:absolute;
-    bottom:0;
-    width: calc(100% + 1.3px);
-}
 nav{
     display:flex;
     gap:15px;
@@ -81,7 +65,8 @@ nav{
     z-index:99;
 }
 nav img{
-    width:120px;
+    width:7em;
+    height:auto;
 }
 
 
@@ -122,32 +107,14 @@ nav img{
     background:var(--secc-dark);
     color:#fff;
   }
-.light-btn{
-    padding:12px 20px;
-    border:1px solid #fff;
-    background:#f44336;
-    color:#fff
-}
-.dark-btn{
-  padding:12px 20px;
-  border:1px solid #fff;
-  background:var(--secc-dark);
-  color:#fff;
-}
 
-.scroll-nav .nav-links ul li a{
+  .scroll-nav .nav-links ul li a{
     color:#333
 }
 .scroll-nav .nav-links .dark-btn{
     color:#fff;
 }
-.nav-social-links{
-    display:flex;
-    gap:15px;
-    padding:5px 12px;
-    border-left:1px solid #fff
-}
-  .menu-toggle {
+.menu-toggle {
     color: var(--prim-dark);
     margin-right: 0px;
     margin-left:auto;
@@ -178,26 +145,6 @@ nav img{
     transform: rotate(-44deg) translate(3px, -18px);
     width: 30px;
   }
-.auth-btn{
-    padding:12px 18px;
-    border:1px solid #fff;
-    border-radius:5px;
-    text-decoration: none;
-    font-weight:700;
-    color:#fff;
-    width:35%;
-    background:var(--secc-dark);
-    text-align:center;
-}
-.auth-btn:hover{
-    color:#fff;
-}
-.user-actions{
-    display:flex;
-    align-items: center;
-    gap:12px;
-    margin:20px auto;
-}
   .head-content{
    width:90%;
    margin:70px auto;
@@ -224,14 +171,15 @@ nav img{
       align-items: center;
       justify-content: space-between;
       z-index:0;
-      transition:0.4s ease-in-out;
   }
   .search-input{
-      width:100%;
       height:100%;
-      position:relative;
+      width:100%;
   }
-   .home-about{
+  .search-field input{
+      width:100%
+  }
+  .home-about{
       min-height:100vh;
       width:100%;
       padding:50px 20px;
@@ -354,9 +302,6 @@ nav img{
         padding:20px 8px;
         text-align:center;
     }
-      nav{
-          top:0;
-      }
       .nav-links{
           position:fixed;
           height:100vh;
@@ -377,18 +322,9 @@ nav img{
           height:100%;
       }
       .nav-links ul li a{
-          font-size:2rem;
+          font-size:1.3rem;
           text-transform: uppercase;
       }
-      .nav-social-links{
-        position:absolute;
-        display:flex;
-        gap:12px;
-        bottom:8px;
-        right:12px;
-        width:fit-content;
-    }
-
       .open-menu{
           transform:translateX(-100%);
           z-index:97;
@@ -409,57 +345,9 @@ nav img{
           display:block;
           z-index:99;
       }
-      .head-content{
-          margin:30px auto;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap:25px;
-      }
-      .head-text{
-            font-size:2.5rem;
-            text-align: center;
-      }
-      .head-text h1{
-          font-size:2.8rem;
-          text-align: center;
-          margin:10px auto;
-      }
-      .head-text p{
-          font-size:1.2rem;
-          margin:25px auto;
-      }
-      .head-ill{
+      .search-field{
           width:100%;
-          display:flex;
-          justify-content:center;
       }
-      .head-ill img{
-          width:60%;
-          margin:0 auto
-      }
-    .home-about{
-        height: fit-content;
-        padding:80px 0;
-    }
-    .home-about h2{
-        text-align: center;
-    }
-    .about-key-points{
-        width:90%;
-        margin:0 auto;
-        grid-template-columns: 1fr;
-        gap:30px;
-    }
-    .about-key-points > * {
-        width:90%;
-        height:fit-content;
-        padding:30px 5px;
-    }
-    .about-key-points h3{
-        font-size:1.2rem;
-        margin:18px 0;
-    }
     .footer-body{
         display:flex;
         align-items:flex-start;
