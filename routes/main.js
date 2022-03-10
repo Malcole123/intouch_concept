@@ -122,15 +122,19 @@ router.get('/user/favourites', async (req,res)=>{
     var session = req.session;
     if(session.userID){
         var userData = await fetchers.fetchAuthMe(session.userID);
-        res.send({
-            ok:true,
-            data:{
-                job_alerts:userData.data.job_alerts,
-                fav_jobs:userData.data.favourite_jobs,
-                fav_comp:userData.data.following_companies,
-                me:userData.data.id
-            }
-        })
+        try{
+            res.send({
+                ok:true,
+                data:{
+                    job_alerts:userData.data.job_alerts,
+                    fav_jobs:userData.data.favourite_jobs,
+                    fav_comp:userData.data.following_companies,
+                    me:userData.data.id
+                }
+            })
+        }catch(error){
+            console.log(error)
+        }
     }else{
         res.send({
             ok:false
