@@ -10,7 +10,12 @@ const profControll = new Vue({
     }
 })
 
-
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+    // "event.detail" carries the autoComplete.js "feedback" object
+    var detail = event.detail;
+    event.currentTarget.value = detail.selection.value;
+    window.location.href = `/main/seejobs?q=${detail.selection.value}&country=&sub_division=`
+});
 
 const page =()=>{
     $(window).on('scroll',()=>{

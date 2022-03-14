@@ -1,219 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/user.css" />
+    <!----Font Awesome CDN-->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="../resources/autoComplete.js-10.2.6/dist/css/autoComplete.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!----Boot-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="../js/min/script.min.js" defer></script>
-    <script src="../js/min/setSearch.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
-    <title>Post Your Job Listing</title>
-    <style>
-      *{
-        box-sizing:border-box;
-        margin:0;
-        padding:0;
-        font-family: 'Roboto', sans-serif;
-      }
-      body{
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        padding:20px 10px
-      }
-      .resume-template{
-        width:815px;
-        height:1080px;
-        border:0.2px solid #ddd
-      }
-      .template-header{
-        width:100%;
-        height:18.5%;
-        background:#c63f73;
-        display:grid;
-        grid-template-columns:1fr 2fr;
-        gap:5px;
-        color:#fff;
-        padding:6px 8px;
-      }
-      .template-header h1{
-        border-right:1px solid #fff;
-        height:80%;
-        padding-right:2px;
-      }
-      .about-me p{
-        padding:0 5px;
-      }
-      .about-me h4{
-        font-size:0.9rem;
-        color:#fff;
-      }
-      .about-me p{
-        color:#fff;
-      }
-      .template-body{
-        height:81.5%;
-        width:100%;
-        display:flex;
-        align-items:stretch;
-      }
-      .side-info{
-        width:34%;
-        height:100%;
-        background:#c63f73;
-        color:#fff;
-        display:flex;
-        flex-direction:column;
-      }
-      .side-info > *{
-          min-height:25%;
-      }
-      .side-info > * h6{
-        background:#fff;
-        color:#c63f73;
-        text-align:center;
-        padding:5px 0;
-        width:100%
-      }
-      .side-info > * ul li{
-        list-style-type:none;
-        color:#fff;
-      }
-      .main-info{
-        position:relative;
-        padding-top:10px;
-        padding-left:10px;
-        width:66%;
-      }
-      .main-info > *{
-        min-height:25%;
-        width:100%
-      }
-      .main-info > * h5{
-        color:#c63f73
-      }
-      .grid{
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-      }
-      .info_card{
-        
-      }
-      .info_card em{
-        font-size:0.7rem;
-        font-weight:500;
-      }
-      .info_card span{
-        font-weight:600;
-      }
-
-
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
+    <title>Intouch|Verify</title>
   </head>
   <body>
-    <div class="resume-template">
-      <div class="template-header">
-        <h1>Hi I'm Malik</h1>
-        <div class="about-me">
-          <h4>About Me</h4>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis ut, sint ipsam consectetur ea repellat, natus aspernatur, impedit facilis minima eligendi magnam vitae? Eaque, quidem explicabo. Voluptates corrupti eos ut. Nesciunt eos incidunt officia tempore placeat qui dolorum, eius officiis.</p>
-        </div>
-      </div>
-      <div class="template-body">
-        <div class="side-info">
-          <div>
-            <h6>Skills</h6>
-            <ul>
-              <li>Example</li>
-            </ul>
-          </div>
-          <div>
-            <h6>Interests</h6>
-            <ul>
-              <li>Example</li>
-            </ul>
-          </div>
-          <div>
-            <h6>Spoken languages</h6>
-            <ul>
-              <li>Example</li>
-            </ul>
-          </div>
-          <div>
-            <h6>Contact</h6>
-            <ul>
-              <li>Example</li>
-            </ul>
-          </div>
-        </div>
-        <div class="main-info">
-          <div>
-              <h5>Education</h5>
-              <div class="grid">
-                <div class="info_card">
-                  <em>January 2019 - September 2022</em> 
-                  <span>Bsc. Mechanical Engineering</span>
-                  <p>Knox College</p>
+    <section class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sign-up-form">
+                      <h1 class="text-center">Verify your account</h1>
+                        <form class="needs-validation" id="verify-form" method="POST" @submit.prevent="processForm" novalidate>
+                          <p class="mt-4 mb-4 text-center">Please enter the verification code sent or click the link in your email to continue</p>
+                              <div class="row g-2 mt-4">
+                                <div class="col">
+                                  <div class="form-floating">
+                                    <input type="text" class="form-control text-success text-center fs-2" id="verify0" maxlength="1" placeholder="*" v-model="one" @keyup="auto">
+                                    <label for="verify1"></label>
+                                  </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify1" maxlength="1" placeholder="*" v-model="two" @keyup="auto">
+                                      <label for="verify2"></label>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <div class="form-floating">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify2" maxlength="1" placeholder="*" v-model="three" @keyup="auto">
+                                      <label for="verify3"></label>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <div class="form-floating">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify3" maxlength="1" placeholder="*" v-model="four" @keyup="auto">
+                                      <label for="verify4"></label>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <div class="form-floating">
+                                      <input type="text" class="form-control text-success text-center fs-2" id="verify4" maxlength="1" placeholder="*" v-model="five">
+                                      <label for="verify5"></label>
+                                    </div>
+                                  </div>
+                              </div>
+                                <div class="col-12 mb-2 mt-4">
+                                    <button class="sendLoginBtn ready-send" type="submit">
+                                        Next
+                                    </button>
+                                </div>
+                                <div class="col-12 mt-4">
+                                  <span class="text-center">Don't see an email? Resend email in 3:00</span>
+                                </div>                                      
+                        </form>
+                    </div>
                 </div>
-                <div class="info_card">
-                  <em>January 2019 - September 2022</em> 
-                  <span>Bsc. Mechanical Engineering</span>
-                  <p>Knox College</p>
-                </div>
-                <div class="info_card">
-                  <em>January 2019 - September 2022</em> 
-                  <span>Bsc. Mechanical Engineering</span>
-                  <p>Knox College</p>
-                </div>
-              </div>
-          </div>
-          <div>
-            <h5>Employment History</h5>
-            <div class="grid">
-              <div class="info_card">
-                <em>January 2019 - September 2022</em> 
-                <span>Bsc. Mechanical Engineering</span>
-                <p>Knox College</p>
-              </div>
-              <div class="info_card">
-                <em>January 2019 - September 2022</em> 
-                <span>Bsc. Mechanical Engineering</span>
-                <p>Knox College</p>
-              </div>
-              <div class="info_card">
-                <em>January 2019 - September 2022</em> 
-                <span>Bsc. Mechanical Engineering</span>
-                <p>Knox College</p>
-              </div>
             </div>
-        `</div>
-        <div>
-          <h5>References</h5>
-          <div class="grid">
-            <div class="info_card">
-              <em>January 2019 - September 2022</em> 
-              <span>Bsc. Mechanical Engineering</span>
-              <p>Knox College</p>
-            </div>
-            <div class="info_card">
-              <em>January 2019 - September 2022</em> 
-              <span>Bsc. Mechanical Engineering</span>
-              <p>Knox College</p>
-            </div>
-            <div class="info_card">
-              <em>January 2019 - September 2022</em> 
-              <span>Bsc. Mechanical Engineering</span>
-              <p>Knox College</p>
-            </div>
-          </div>
-      </div>
         </div>
-      </div>
-    </div>
+        <svg id="visual" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+            <path d="M0 467L137 407L274 411L411 434L549 412L686 475L823 417L960 480L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3e3be8"></path>
+            <path d="M0 486L137 453L274 453L411 471L549 479L686 449L823 483L960 452L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3fc4"></path>
+            <path d="M0 493L137 483L274 494L411 466L549 472L686 459L823 497L960 457L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#41409f"></path>
+            <path d="M0 480L137 510L274 474L411 503L549 498L686 474L823 510L960 488L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#413f7a"></path>
+            <path d="M0 520L137 519L274 518L411 507L549 498L686 516L823 507L960 514L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3d56"></path>
+        </svg>
+    </section>
+
+    <script type="module">
+      const verifyCode = new Vue({
+    el:'#verify-form',
+    data:{
+        one:'',
+        two:'',
+        three:'',
+        four:'',
+        five:'',
+    },
+    methods:{
+        auto:(e)=>{
+            var currID, currPlace, currInt, nextSpot, keyPress
+            keyPress=e.which;
+            currID = e.currentTarget.id;
+            currPlace = currID.replace('verify','');
+            currInt = parseInt(currPlace);
+            nextSpot = document.getElementById(`verify${currInt + 1 }`);
+            if(keyPress < 58 && keyPress > 48){
+                nextSpot.focus();
+            }else{
+                event.currentTarget.value=""
+            }
+        },
+        processForm:async ()=>{
+            var eCode = `${verifyCode.one}${verifyCode.two}${verifyCode.three}${verifyCode.four}${verifyCode.five}`;
+            const s =  await fetch('/employer/auth/identity/verify',{
+                method:'POST',
+                headers:{
+                  'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                  code:eCode
+                })
+            }).then(res=>res.json())
+            .then(data=>{
+              console.log(data)
+              return data
+            })
+
+            if(s.ok){
+              window.location.href='/onboarding/employer/company/register'
+            }else{
+                var inputs = document.querySelectorAll('input');
+                inputs.forEach((item)=>{
+                  setInvalid(item.id)
+                })
+            }
+        }
+    }
+})
+const setInvalid = (id)=>{
+    var target = document.getElementById(id);
+    target.classList ="form-control is-invalid"
+}
+
+const setvalid = (id)=>{
+    var target = document.getElementById(id);
+    target.classList ="form-control is-valid"
+}
+
+    </script>
   </body>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </html>

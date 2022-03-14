@@ -310,7 +310,8 @@ nav img{
           right:-100%;
           padding:50px 0;
           background:#f44336;
-          transition:0.4s ease-in-out
+          transition:0.4s ease-in-out;
+          color:#fff;
       }
       .main-list{
           display:flex;
@@ -324,6 +325,7 @@ nav img{
       .nav-links ul li a{
           font-size:1.3rem;
           text-transform: uppercase;
+          color:#fff
       }
       .open-menu{
           transform:translateX(-100%);
@@ -332,12 +334,18 @@ nav img{
       #menu-txt{
           color:#fff;
       }
+      .scroll-nav{
+          color:#fff
+      }
       .scroll-nav #menu-txt{
           color:#333
       }
       .scroll-nav #menu-top, .scroll-nav #menu-btm{
           background:#333;
       }
+      .scroll-nav .nav-links ul li a{
+        color: #fff !important;
+    }
       .menu-toggle #menu-top, .menu-toggle #menu-btm{
           background:#333;
       }

@@ -69,7 +69,6 @@ const getSubmittedApplications = async (id,status)=>{
 }
 
 const createMyListing = async (info,id)=>{
-    const company_data = await getMyCompanyDetail(id);
     const s_data = await  axios.post(`${addMyListing}`, {
         "title":info.l_d.title,
         "description": info.l_d.position_summary,
@@ -79,7 +78,10 @@ const createMyListing = async (info,id)=>{
         "loc_country":info.l_d.employment_location,
         "loc_sub_division":info.l_d.employment_location,
         "company_name_posted":info.l_d.name,
-        //
+        "benefits":JSON.stringify(info.l_d.benefits),
+        "responsibilites":JSON.stringify(info.l_d.responsibilities),
+        "qualifications":JSON.stringify(info.l_d.desired_qual),
+        //Backup
         "data.company_name":info.c_d.name,
         "data.company_id":parseInt(id),
         "data.company_details.contact.phone":info.c_d.recruiter_phone,

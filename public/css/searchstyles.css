@@ -165,7 +165,7 @@ nav{
 }
 
 nav img{
-    width:7em;
+    width:5em;
     height:auto;
 }
 nav svg{
@@ -189,14 +189,10 @@ nav svg{
   transition: 0.4s ease-in-out;
 }
  .search-field{
-      width:100%;
+      width:40%;
       height:50px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       z-index:0;
       transition:0.4s ease-in-out;
-      flex:1
   }
   .search-input{
       height:100%;
@@ -262,7 +258,6 @@ nav svg{
 }
 
 .show__notif__display{
-    top:0;
     transform:translateY(100%);
 }
 
@@ -413,7 +408,7 @@ nav svg{
     background-size:cover;
     background-position:center;
     width:100%;
-    padding:20px 0;
+    padding:20px 0 50px 0;
 }
 .filter__body{
     height:60px;
@@ -507,8 +502,6 @@ nav svg{
     border-top:1px solid #ddd;
     border-bottom:1px solid #ddd;
     padding:20px 10px;
-    position:sticky;
-    top:45px;
     left:0;
     right:0;
 }
@@ -789,13 +782,15 @@ nav svg{
         height:100vh;
         background:#fff;
         box-shadow:none;
-        top:72px;
+        top:-100vh;
         left:0;
         right:0;
         z-index:99;
+        transition:0.2s;
     }
     .open__dropdown{
-        display:block
+        display:block;
+        transform:translateY(100%);
     }
     .menu-options__display::before{
         display:none;

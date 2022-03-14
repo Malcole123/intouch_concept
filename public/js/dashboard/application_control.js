@@ -97,7 +97,29 @@ const fullScreenHandler = new Vue({
             scroll_cntrl.scrollLeft = 0;
             p_area.classList="__app__view __view__open";
             fullScreenHandler.focus.data = fullScreenHandler.applications[id];
-            clearInterval(scroll_auto);            
+            fullScreenHandler.focus.data.download_link = fullScreenHandler.applications[id].resume_reference.length > 0  ? "/" + fullScreenHandler.applications[id].resume_reference.replace('\','/'') : "/dashboard/applications";
+            console.log(fullScreenHandler.focus.data.download_link)
+            clearInterval(scroll_auto);
+            console.log(fullScreenHandler.focus.data)            
+        },
+        download_cv:async(event)=>{
+            var dwnload = await fetch(`/api/files/download/resume`,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    ref_id:"622c57deef0471060865c6da",
+                    email:"",
+                })
+            }).then(res=>res.json()).then(data=>{
+                console.log('Hello world');
+                return data
+            }).catch(error=>{
+                console.log(error);
+                return error
+            });
+            console.log(dwnload)
         },
         regularScroll:async (type,interval)=>{
             clearInterval(scroll_auto);

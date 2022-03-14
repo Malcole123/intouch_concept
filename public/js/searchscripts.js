@@ -49,27 +49,7 @@ const setSearchState= new Vue({
                 matchArr:[]
             }
         },
-        focus_data:null,
-        focus:{
-            id:'',
-            created:1,
-            app_count:0,
-            title:'',
-            type:'',
-            sub_div:'',
-            country:'',
-            comp_size:'',
-            company_name:'',
-            pos_det:{
-                resp:[],
-                ben:[],
-                d_qual:[],
-                summary:''
-            },
-            posted:{
-                m_type:'days',              
-            },
-        },
+        focus_data:{},
         pref:{
             f_comp:[],
             f_jobs:[],
@@ -93,27 +73,13 @@ const setSearchState= new Vue({
                 setSearchState.all_jobs = par_data.items;
                 par_data.items.forEach((list)=>{
                     if(!companyAutoComplete.data.src.includes(list.company_name_posted)){companyAutoComplete.data.src.push(`${list.company_name_posted}`)}
+                    setSearchState.matched_filters.push(list.id)
                 })
                 setSearchState.display.item_count =par_data.itemsTotal;
                 setSearchState.display.page.total = par_data.pageTotal;
                 setSearchState.display.current= par_data.curPage,
                 setSearchState.display.next= par_data.nextPage,
-                setSearchState.focus.title = par_data.items[id].title;
                 setSearchState.focus_data = par_data.items[id];
-                setSearchState.focus.company_name = par_data.items[id].company_name_posted;
-                setSearchState.focus.type = par_data.items[id].type;
-                setSearchState.focus.sub_div = par_data.items[id].loc_sub_division;
-                setSearchState.focus.country = par_data.items[id].loc_country;
-                setSearchState.focus.title = par_data.items[id].title;
-                setSearchState.focus.id = par_data.items[id].id;
-                setSearchState.focus.comp_size = par_data.items[id].data.company_details.company_size;
-                setSearchState.focus.created = par_data.items[id].created_at;
-                setSearchState.focus.app_count = par_data.items[id].application_id.length;
-                setSearchState.focus.pos_det.resp = par_data.items[id].data.position_details.responsibilities;
-                setSearchState.focus.pos_det.ben = par_data.items[id].data.position_details.benefits;
-                setSearchState.focus.pos_det.d_qual = par_data.items[id].data.position_details.desired_qual;
-                setSearchState.focus.pos_det.summary = par_data.items[id].data.position_details.position_summary;
-                setSearchState.display.item_visible = par_data.items.length;
                 var url = window.location.href;
                 var targ_url
                 if(url.includes('&view')){
@@ -122,7 +88,7 @@ const setSearchState= new Vue({
                 }else{
                     targ_url = window.location.href.replace('#','')
                 }
-                shareHandler.link = `${targ_url}&view=${setSearchState.focus.id}&referral=${shareHandler.ref_generator()}&source=intouch`            }else{
+                shareHandler.link = `${targ_url}&view=${setSearchState.focus_data.id}&referral=${shareHandler.ref_generator()}&source=intouch`}else{
             }
             setTimeout(()=>{
                 var parent = str_data.parentNode;
@@ -139,19 +105,6 @@ const setSearchState= new Vue({
             arr.forEach((item) => {
                 if(item.id === id){
                     setSearchState.focus_data = item;
-                    setSearchState.focus.title = item.title;
-                    setSearchState.focus.type = item.type;
-                    setSearchState.focus.sub_div = item.loc_sub_division;
-                    setSearchState.focus.country = item.loc_country;
-                    setSearchState.focus.company_name= item.company_name_posted
-                    setSearchState.focus.title = item.title;
-                    setSearchState.focus.id = item.id;
-                    setSearchState.focus.created = item.created_at;
-                    setSearchState.focus.app_count = item.application_id.length;
-                    setSearchState.focus.pos_det.resp = item.data.position_details.responsibilities;
-                    setSearchState.focus.pos_det.ben = item.data.position_details.benefits;
-                    setSearchState.focus.pos_det.d_qual = item.data.position_details.desired_qual;
-                    setSearchState.focus.pos_det.summary = item.data.position_details.position_summary;
                     var url = window.location.href;
                     var targ_url
                     if(url.includes('&view')){
@@ -281,20 +234,53 @@ const setSearchState= new Vue({
                 template.className = "inline-ad-space";
                 template.innerHTML = adTemp;
                 parent.append(template);
-                console.log('added')
             }
 
 
         },
         clearFilter:()=>{
-            setSearchState.display.filter.filtered = false;
             setSearchState.display.filter.job_Type = ['full-time','part-time','seasonal','contract'];
             setSearchState.display.filter.location.country ="";
             setSearchState.display.filter.location.s_div = "";
             setSearchState.display.filter.company = "";
+            setSearchState.filterHandler()
             setSearchState.adHandler();
-            setSearchState.display.filter.fitered = false
+            setSearchState.display.filter.filtered = false;
             
+        },
+        setFavourite:async ()=>{
+            var result = await fetch('/me/edit/preferences',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    update_Type:"fav_jobs_add",
+                    f_comp:"",
+                    f_jobs:setSearchState.focus_data.id,
+                    job_alerts:""
+                })
+            }).then(res=>res.json())
+            .then(data=>{
+                if(data.ok){
+                    setSearchState.pref.f_jobs = data.data.favourite_jobs
+                }else{
+                }
+            }).catch(error=>{
+            })
+        },
+        openApply:()=>{
+            applicationHandler.setState()
+            $('#applicationModal').modal('show');
+            $('html').css('overflowY','hidden')
+        },
+        openShare:()=>{
+            $('#shareModalCenter').modal('show');
+            shareHandler.urlGen('fb');
+            shareHandler.urlGen('tw');
+            shareHandler.urlGen('wtp');
+            console.log('button works')
+            $('html').css('overflow','hidden');
         }
     }
 })
@@ -450,19 +436,21 @@ const applicationHandler = new Vue({
             }
         },
         fileHandler:async (event)=>{
-            var inputID = event.currentTarget.id
-            let base64String = "";
-            const setter = (dt_64)=>{
-                applicationHandler.u_Data.resume = dt_64;
-            }
-            var file = document.querySelector(`#${inputID}`)['files'][0];
-            console.log(file.size)
-            var reader = new FileReader();      
-            reader.onload = async()=>{
-                base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-                var d64 = await setter(base64String);
-            };
-            reader.readAsDataURL(file);
+            var file = document.getElementById('applicantRESUMEInput');
+            var resume = new FormData();
+            resume.append('resume',file.files[0]);
+            fetch('../api/files/resume',{
+                method:'POST',
+                body:resume
+            }).then(res=>res.json()).then(data=>{
+                if(data.status === 200){
+                    applicationHandler.u_Data.resume = data.file.filePath.replace('//','/')
+                }else{
+                    setInvalid(file.id)
+                }
+            }).catch(error=>{
+                setInvalid(file.id)
+            })
         },
         goBack:()=>{
             var int = applicationHandler.current_step;
@@ -480,8 +468,7 @@ const applicationHandler = new Vue({
                 }
                 pre_int.push(pre_int_temp)
             })
-            console.log(applicationHandler.u_Data.resume)
-            const result = await fetch('/main/application/submit',{
+            const send = await fetch('/main/application/submit',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
@@ -492,7 +479,7 @@ const applicationHandler = new Vue({
                     phone:applicationHandler.u_Data.phone,
                     email:applicationHandler.u_Data.email,
                     resume:applicationHandler.u_Data.resume,
-                    verified_companies_id:setSearchState.focus.id,
+                    verified_companies_id:setSearchState.focus_data.id,
                     application_test_data:JSON.stringify(pre_int)
                 })
             }).then(res=>res.json())
@@ -500,13 +487,14 @@ const applicationHandler = new Vue({
                 if(data.completed){
                     applicationHandler.state.complete = true;
                     applicationHandler.state.processing = false;
-                    applicationHandler.state.rejected = false
+                    applicationHandler.state.rejected = false;
                 }else{
                     applicationHandler.state.complete = false;
                     applicationHandler.state.processing = false;
                     applicationHandler.state.rejected = true                
                 }
             })
+            
         },
         resetState:()=>{
             applicationHandler.u_Data.name="";
@@ -546,7 +534,7 @@ const shareHandler = new Vue({
             email:''
         },
         ref:'',
-        description:`Someone thinks you would be interested in this job as a ${setSearchState.focus.title} at ${setSearchState.focus.company_name_posted}`,
+        description:`Someone thinks you would be interested in this job as a ${setSearchState.focus_data.title} at ${setSearchState.focus_data.company_name_posted}`,
     },
     methods:{
         copyLink:()=>{
@@ -568,6 +556,7 @@ const shareHandler = new Vue({
             return ref
         },
         urlGen:(type)=>{
+            console.log('ran')
             switch(type){
                 case "fb":
                     shareHandler.links.facebook = `https://www.facebook.com/sharer.php?u=${shareHandler.link}`
@@ -587,7 +576,7 @@ const shareHandler = new Vue({
                     'Content-Type':'application/json'
                 },
                 body:JSON.stringify({
-                    job_id:setSearchState.focus.id,
+                    job_id:setSearchState.focus_data.id,
                     share_method:type,
                     referral:shareHandler.ref
                 })
@@ -721,13 +710,15 @@ document.querySelector("#autoComplete").addEventListener("selection", function (
     window.location.href = `/main/seejobs?q=${detail.selection.value}&country=&sub_division=`
 });
 
-document.querySelector("#filterCompanyInput").addEventListener("selection", function (event) {
-    // "event.detail" carries the autoComplete.js "feedback" object
-    var detail = event.detail;
-    event.currentTarget.value = detail.selection.value;
-    setSearchState.display.filter.company = detail.selection.value;
-    event.currentTarget.blur()
-});
+if(!window.location.href.includes('/company/profile')){
+    document.querySelector("#filterCompanyInput").addEventListener("selection", function (event) {
+        // "event.detail" carries the autoComplete.js "feedback" object
+        var detail = event.detail;
+        event.currentTarget.value = detail.selection.value;
+        setSearchState.display.filter.company = detail.selection.value;
+        event.currentTarget.blur()
+    });
+}
 
 const setValid = (id)=>{
     var target = document.getElementById(`applicant${id}Input`);
@@ -739,62 +730,25 @@ const setInvalid = (id)=>{
 }
 
 const main = ()=>{
-       $('.act-btn').on('click',(e)=>{
+    $('.act-btn').on('click',(e)=>{
         $(e.currentTarget).toggleClass('button-active')
     })
-
     $('.switch__outer').on('click',(e)=>{
         $(e.currentTarget).toggleClass('toggled');
     })
-
-
-    $('#favourite__handle').on('click',async ()=>{
-        console.log(setSearchState.focus.id)
-        var result = await fetch('/me/edit/preferences',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                update_Type:"fav_jobs_add",
-                f_comp:"",
-                f_jobs:setSearchState.focus.id,
-                job_alerts:""
-            })
-        }).then(res=>res.json())
-        .then(data=>{
-            if(data.ok){
-                setSearchState.pref.f_jobs = data.data.favourite_jobs
-            }else{
-            }
-        }).catch(error=>{
-        })
-    });
-
-    $('#share__handle').on('click',()=>{
-        $('#shareModalCenter').modal('show');
-        shareHandler.urlGen('fb');
-        shareHandler.urlGen('tw');
-        shareHandler.urlGen('wtp');
-        $('html').css('overflow','hidden');
-    })
-
+ 
     $('#closeShareModal').on('click',()=>{
         $('#shareModalCenter').modal('hide');
         $('html').css('overflowY','scroll');
-    })
-    
+    })  
     $('#shareModalCenter').on('hide.bs.modal',()=>{
         $('html').css('overflowY','scroll');  
     }).on('hidden.bs.modal',()=>{
         $('#share__handle').removeClass('button-active')
     })
-
-
     $('#whatsappShare').on('click',()=>{
         shareHandler.shareType = 'whatsapp'
     })
-
     $('#filter__init-call').on('click', ()=>{
         $('.filter-list').toggleClass('show-filter-menu')
     })
@@ -815,8 +769,7 @@ const main = ()=>{
 
     $('._me').on('click', (event)=>{
         $('#nav_me').toggle()
-    }).on('mouseenter',()=>{
-        $('#nav_me').fadeIn();
+        $('#nav_me').toggleClass('open__dropdown')
     })
 
     $('#nav_me').on('mouseleave',()=>{
@@ -881,6 +834,7 @@ const main = ()=>{
     }).on('resize', async ()=>{
         var windowSize = $(window).width()
         var maxSize = 1020;
+        $('html').css('overflowY','scroll')
         if(windowSize >= maxSize){
             $('#search-page-nav-logo').show();
             $('.search-field').show();
@@ -889,6 +843,12 @@ const main = ()=>{
         }else{
             $('.search-field').hide();
             $('.search-nav-links').show();
+            $('#nav');
+            $('#locationMenu').show(); 
+            $('#companyMenu').show();        
+            $('#jobTypeMenu').show();        
+       
+
         }        
     }).on('load', async ()=>{
         setSearchState.setState();
@@ -902,7 +862,7 @@ const main = ()=>{
         }else{
             $('.search-field').hide(); 
         }
-        jobautoSearch()
+        jobautoSearch();
     })
 
     $('#jobTypeButton').on('click',()=>{
@@ -972,7 +932,7 @@ const main = ()=>{
 
     $('#companyButton').on('click', ()=>{
         if($(window).width() >= 1020){
-            $('#companyMenu').show();
+            $('#companyMenu').toggle();
             $('#sortResultMenu').hide();
             $('#locationMenu').hide();
             $('#jobTypeMenu').hide();
@@ -998,12 +958,6 @@ const main = ()=>{
             $('.job-show-display').removeClass('show-job-section');
             $('html').css('overflowY','scroll')
         }
-    })
-
-    $('#applyButtonInit').on('click',async()=>{
-        applicationHandler.setState();
-        $('#applicationModal').modal('show');
-        $('html').css('overflowY','hidden')
     })
 
     $('#applicationModal').on('hidden.bs.modal',()=>{
@@ -1032,7 +986,6 @@ const main = ()=>{
 
     $('#applicantEMAILInput').on('change', async()=>{
         var email = $('#applicantEMAILInput').val();
-        console.log('works')
         var email_result = await validEmailCheck(email);
         if(email_result.ok){
             $('#applicantEMAILInput').addClass('is-valid');

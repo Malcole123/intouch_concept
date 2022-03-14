@@ -21,25 +21,18 @@ const onBoardingRouter = require('./routes/user_onboarding.js');
 const dashboardRouter = require('./routes/client_user/dashboard/dash_pages.js');
 const analyticRouter = require('./routes/analytics/analytics.js');
 const userAlertRouter = require('./routes/alerts/user.js');
-const companyRouter = require('./routes/client_user/account/company.js')
+const companyRouter = require('./routes/client_user/account/company.js');
+const communicatonRouter = require('./routes/communication/account_emails.js');
+const fileRouter = require('./routes/file-route.js');
+
 const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require('path')
 const sessions = require('express-session');
+const database = require('./database.js')
+database.initialize()
 
-var MongoDBSession = require('connect-mongodb-session')(sessions);
-const mongoose = require('mongoose');
-const mongoURI = 'mongodb+srv://malik123:passMalcoleman123@cluster0.wtnk5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-mongoose.connect(mongoURI,{
-    useUnifiedTopology:true,
-}).then((res)=>{
-    console.log('Connected')
-}).catch(error=>{
-    console.log('something went wrong',error)
-})
-
-const store = new MongoDBSession({
-    uri:mongoURI,
-    collection:'applicationSessions'
-})
 
 
 app.use(compression({
@@ -55,14 +48,19 @@ app.use(compression({
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
+app.use(bodyParser.json());
+app.use('/ResumeUploads',express.static('ResumeUploads'));
+
 app.use(express.urlencoded({extended:false}));
+
 app.use(sessions({
     secret: sessionKey,
     saveUninitialized:false,
     cookie: { maxAge: 1000 * 60 * 60 * 24 },
     resave: false,
-    store:store,
+    store:database.session_store,
 }));
+
 
 
 
@@ -77,9 +75,8 @@ app.use('/dashboard',dashboardRouter);
 app.use('/analytics',analyticRouter);
 app.use('/alerts',userAlertRouter);
 app.use('/company',companyRouter);
-
-
-
+app.use('/communicate', communicatonRouter)
+app.use('/api/files',fileRouter);
 
 
 app.get('*', function(req, res){

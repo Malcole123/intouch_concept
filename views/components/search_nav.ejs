@@ -37,20 +37,19 @@
           </div>
           <div class="menu-options__display _me" id="nav_me">
             <% if(loggedIn){ %>
-              <span class="w-100 text-center text-dark"><%= user.fname %>&nbsp <%=user.lname%></span>
-              <a href="#" class="btn btn-dark w-100 mt-2 mb-2">View Profile</a>
+              <span class="w-100 text-center text-dark" style="margin-bottom:8px;font-weight:600"><%= user.fname %>&nbsp <%=user.lname%></span>
               <div style="padding:2px 0">
-              <a style="text-decoration:none;color:#333" href="#">Settings</a>
+              <a style="text-decoration:none;color:#333" href="/me/profile/edit">Settings</a>
               </div>
               <div style="padding:2px 0;">
-                <a style="text-decoration:none;color:#333" href="#">Manage</a>
+                <a style="text-decoration:none;color:#333" href="#">Manage Applications</a>
               </div>
               <div style="padding:5px 0;border-top:0.5px solid #ddd" class="mt-3">
                 <a style="text-decoration:none;color:#333" href="/user/logout">Sign Out</a>
                 </div>
             <% }else{ %>
               <div class="d-flex flex-column align-items-center justify-content-center">
-                <span clas="ms-auto text-center">Nothing to see here</span>
+                <span clas="ms-auto text-center mb-5">Please log in to continue</span>
                 <a href="/user/login?sendTo=search" class="btn btn-dark mt-1">Log In</a>
                 <a href="/user/register" class="btn btn-dark mt-2">Sign Up</a>
               </div>
@@ -64,3 +63,12 @@
 
     </div>
   </nav>
+
+  <script>
+    var input = document.getElementById('autoComplete');
+    input.addEventListener('keyup',(e)=>{
+      if(e.which === 13){
+        window.location.href = `/main/seejobs?q=${input.value}&country=&sub_divison=`
+      }
+    })
+  </script>

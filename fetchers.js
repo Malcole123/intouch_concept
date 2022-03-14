@@ -161,19 +161,17 @@ const submitApplication = async (req)=>{
     name:req.name,
     phone:req.phone,
     email:req.email,
-    resume_:req.resume,
+    resume_reference:req.resume,
     verified_companies_id:req.verified_companies_id,
     application_test_data:JSON.stringify(req.application_test_data)
   })
   .then(res => {
-    console.log(res)
     var retData = {
         completed:true,
     }
     return retData
   })
   .catch(err => {
-    console.log(err)
     var retData = {
       completed:false,
     }
@@ -296,6 +294,70 @@ const getCompanyInfo = async(id=0, name)=>{
   return response
 }
 
+/*Communication Start */
+const verifyEmailCreate = async (email,name,code)=>{
+  var sender_email = 'intouchjamaica1@gmail.com';
+  var sender_name ='Intouch Jamaica';
+  var reciever_email = email;
+  var reciever_name = name;
+  var logoURL,salutation,greeting,instructions,opt_instructions,signature,tagline;
+  var subject = "Verify your account"
+  const response = await  axios.post(`https://adastacks.app.n8n.cloud/webhook/email-verify?subject=${subject}&from_email=${sender_email}&to_email=${reciever_email}logo_url=${logoURL}&greeting=${greeting}&instructions=${instructions}&code=${code}&opt_instructions=${opt_instructions}&salutation=${salutation}&signature=${signature}&company_name=${sender_name}&company_tagline=${tagline}`,{
+    "api_key":"Ew5OVulWU7t2OzrgdfXV",
+    "Content-Type":'application/json',
+},      
+  {
+    headers:{
+      'Content-Type':'application/json',
+      "api_key":"Ew5OVulWU7t2OzrgdfXV"
+    }
+  })
+  .then(res => {
+    var retData = {
+        ok:true,
+        data:res.data
+    }
+    return retData
+  })
+  .catch(err => {
+    var retData = {
+      ok:false,
+    }
+    return retData
+  });
+  return response
+}
+
+const verifySmsCreate = async (to,message)=>{
+  const response = await  axios.post(`https://adastacks.app.n8n.cloud/webhook/send-sms`,{
+    to:to,
+    body:message
+},      
+  {
+    headers:{
+      'Content-Type':'application/json',
+      "api_key":"Ew5OVulWU7t2OzrgdfXV"
+    }
+  })
+  .then(res => {
+    var retData = {
+        ok:true,
+        data:res.data
+    }
+    return retData
+  })
+  .catch(err => {
+    var retData = {
+      ok:false,
+      data:err
+    }
+    return retData
+  });
+  return response
+}
+
+
+/*Communication end */
 
 
 
@@ -314,4 +376,6 @@ module.exports = {
   removeNotif:removeNotification,
   getCompanyData:getCompanyInfo,
   createCompany:createNewCompany,
+  v_email_create:verifyEmailCreate,
+  v_sms_create:verifySmsCreate,
 }

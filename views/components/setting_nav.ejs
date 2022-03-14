@@ -1,0 +1,30 @@
+<div class="settings-menu">
+    <div class="setting-option" data-menu-type="edit">
+      <i class="fa-solid fa-gear"></i>
+      <a href="/me/profile/edit">Edit Profile</a>
+    </div>
+    <div class="setting-option" data-menu-type="notification">
+      <i class="fa-solid fa-bell"></i>
+      <a href="/me/profile/notification">Notifications</a>
+    </div>
+    <div class="setting-option" data-menu-type="applications">
+        <i class="fa-solid fa-file-lines"></i>
+        <a href="/me/profile/applications">Applications</a>
+      </div>
+    <div class="setting-option" data-menu-type="cookie">
+      <i class="fa-solid fa-cookie-bite"></i>
+      <a href="/me/profile/cookies">Cookie Settings</a>
+    </div>
+    <script>
+      window.addEventListener('load',()=>{
+        var ind = document.createElement('div');
+        ind.className="setting-option-indicator"
+        var settings = document.querySelectorAll('.setting-option');
+        var path = window.location.href;
+        settings.forEach((menu)=>{
+          var type = menu.getAttribute('data-menu-type');
+          if(path.toLowerCase().includes(type)){menu.append(ind)}        
+        })
+      })  
+    </script>
+ </div> 

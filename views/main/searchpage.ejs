@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Search job openings near you using our easy to use filtering options"/>
     <link rel="stylesheet as="style" href="/css/searchstyles.css"/>
     <!----Font Awesome CDN-->
     <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous" defer></script>
@@ -18,94 +19,6 @@
      crossorigin="anonymous"></script>
      <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
     <title>inTouch | Search</title>
-    <style>
-.search-field {
-    border-radius: 10px;
-    width: 100%;
-    height: 45px;
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-    z-index: 0;
-    transition: 0.1s ease-in-out;
-}
-
-.search-input {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.search-header .search-field,.profile__header .search-field {
-    width: 40%;
-    margin-right: auto;
-}
-
-.search-nav-links {
-    display: flex;
-    flex: 1;
-    gap: 24px;
-    align-items: center;
-    text-decoration: none;
-    margin-left: auto;
-    justify-content: flex-end;
-}
-
-.search-nav-links > * {
-    cursor: pointer
-}
-
-.single-menu,.search-dropdown-menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.search-dropdown-menu {
-    position: relative;
-}
-
-.menu-options__display {
-    position: absolute;
-    width: 340px;
-    height: 250px;
-    background: #fff;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-    bottom: -268px;
-    right: 20%;
-    display: none;
-    padding: 20px 10px;
-    border: 0.3px solid #ddd;
-}
-
-.menu-options__display::before {
-    content: '';
-    position: inherit;
-    display: block;
-    height: 20px;
-    width: 20px;
-    border-bottom: 20px solid #f44336;
-    border-right: 12px solid transparent;
-    border-left: 12px solid transparent;
-    top: 0;
-    right: 0%;
-    transform: translate(0%,-100%);
-}
-
-.notif__display {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: -100vh;
-    width: 100%;
-    height: 100vh;
-    padding-top: 90px;
-    background: #fff;
-    transition: 0.4s ease-in-out;
-}
-
-    </style>
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js"></script>
@@ -214,6 +127,7 @@
                     <li>
                       <label for="filterCompanyInput">Search companies</label>
                       <input type="text" class="form-floating mt-3" id="filterCompanyInput" autocomplete="off" v-model.trim="display.filter.company">
+                      <button type="submit" class="btn btn-outline-dark mt-3">Search</button>
                     </li>
                   </ul>
                 </div>
@@ -232,14 +146,14 @@
      <div class="container bg-white">
        <input type="hidden" id="job__intermed"value="<%= JSON.stringify(jData) %>">
        <div class="row">
-         <div class="col-sm-12 col-md-12 col-lg-5 position-relative bg-white h-100 results-display">      
+         <div :class="matched_filters.length > 0 && all_jobs.length > 0 ? 'col-sm-12 col-md-12 col-lg-5 position-relative bg-white h-100 results-display' : 'col-sm-12 col-md-12 col-lg-12 position-relative bg-white h-100 results-display'">      
             <div class="bg-white results-body">
               <div class="bg-white result-scroll-body">
             <% if(jData.items.length > 0){ %>
               <% jData.items.forEach((listing, index)=>{ %>
                 <div class="job-card" @click="changeFocus(<%= listing.id %>)" v-if="matched_filters.includes(<%=listing.id%>) || !display.filter.filtered">
-                  <% if(listing.data.urls.company_logo.length >= 1){ %>
-                    <img src="<%= listing.data.urls.company_logo %>" alt="<%= listing.title %>">                        
+                  <% if(listing.company_logo_url.length >= 1){ %>
+                    <img src="<%= listing.company_logo_url %>" alt="<%= listing.title %>">                        
                   <% }else{ %>
                     <img src="../images/imageplaceholder.png" alt="<%= listing.title %>">
                   <% } %>                    
@@ -265,13 +179,13 @@
               <div class="w-100 d-flex justify-content-start align-items-center flex-column no-results" style="position:absolute;top:50px" v-if="(matched_filters.length === 0 && display.filter.filtered) || all_jobs.length === 0">
                 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
                 <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                
-                <p>No results match your search</p>
-                <a href="/main/seejobs?q=&country=&sub_division=" class="btn btn-dark mt-2 mb-4">See All</a>
+                <p>No results match your search, try changing your filters or query</p>
+                <button type="button" class="btn btn-dark mt-2 mb-4" @click="clearFilter">Clear filters</button>
               </div>
             </div>
          </div>
          </div>
-        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display">
+        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display" v-if="matched_filters.length > 0 && all_jobs.length > 0">
             <div class="job-show-banner">
               <div class="mb-3 return_to_home __mobile">
                 <div class="badge bg-dark">
@@ -280,25 +194,23 @@
                 </div>
               </div>
               <div class="d-flex justify-content-between flex-wrap mb-2 job-show__header">
-                <h4>{{focus.title}}</h4>
+                <h4>{{focus_data.title}}</h4>
                 <div>
+                  <i class="fas fa-share dis-act-btn" id="share__handle" @click="openShare"></i>
                   <% if(user.id > 0){%>
-                    <i class="fas fa-share act-btn" id="share__handle"></i>
-                    <i id="favourite__handle" class="fas fa-heart act-btn" v-if="!pref.f_jobs.includes(focus.id)"></i>
-                    <i id="favourite__handle" class="fas fa-heart act-btn button-active" v-if="pref.f_jobs.includes(focus.id)"></i>  
+                    <i id="favourite__handle" :class="pref.f_jobs.includes(focus_data.id) ? 'fas fa-heart act-btn button-active' : 'fas fa-heart act-btn'" @click="setFavourite"></i>
                   <% }else{ %>
-                    <i class="fas fa-share dis-act-btn" id="share__handle"></i>
                     <a href="/user/login?sendTo=search"><i id="register__handle" class="fas fa-heart dis-act-btn"></i></a>
                   <% } %>
                 </div>
               </div>
               <div class="job-show__header_sec">
-                  <span>{{focus.company_name}}</span>
-                  <span>| {{focus.loc_sub_division}}, {{focus.loc_country}} |</span>
-                  <span>{{ relativeDate(focus.created) }} |</span>
-                  <span style="font-weight:600;color:#2B32B2">{{ focus.app_count }} applicants</span>
+                  <span>{{focus_data.company_name_posted}}</span>
+                  <span>| {{focus_data.loc_sub_division}}, {{focus.loc_country}} |</span>
+                  <span>{{ relativeDate(focus_data.created_at) }} |</span>
+                  <span style="font-weight:600;color:#2B32B2">{{ focus_data.application_id.length }} applicants</span>
                   <% if(user.id > 0){ %>
-                    <button style="margin-left:auto" type="button" class="btn btn-primary" id="applyButtonInit">Apply</button>
+                    <button style="margin-left:auto" type="button" class="btn btn-primary" id="applyButtonInit" @click="openApply">Apply</button>
                   <% }else{ %>
                     <a style="margin-left:auto"href="/user/login?sendTo=search" class="btn btn-primary">Apply</a>
                   <% } %>
@@ -306,51 +218,51 @@
               <div class="job-show__header_ter">
                   <div style="min-width:95px">
                     <i class="fas fa-building"></i>
-                    <span>{{focus.comp_size}}</span>
+                    <span>{{focus_data.company_size}}</span>
                   </div> 
                   <div>
                     <i class="fas fa-briefcase"></i>
-                    <span style="text-transform:capitalize;">{{focus.type.replaceAll('-',' ')}}</span>
+                    <span style="text-transform:capitalize;">{{focus_data.type.replaceAll('-',' ')}}</span>
                   </div>                  
               </div>
             </div>
             <div class="job-show-body">
               <div class="job-show-scroll-body">
                 <div class="about__position __section">
-                  <p>{{ focus.pos_det.summary }}</p>
+                  <p>{{ focus_data.description }}</p>
                 </div>
                 <div class="about__responsibilities __section">
                   <span style="font-weight:600;">Responsibilities</span>
                   <ul>
-                    <li v-for="r in focus.pos_det.resp" :key="r.id">{{r}}</li>
+                    <li v-for="r in focus_data.responsibilities" :key="r.id">{{r}}</li>
                   </ul>
                 </div>
                 <div class="about__qualifications __section">
                   <span style="font-weight:600">Qualifications</span>
                   <ul>
-                    <li v-for="q in focus.pos_det.d_qual" :key="q.id">{{q}}</li>
+                    <li v-for="q in focus_data.qualifications" :key="q.id">{{q}}</li>
                   </ul>
                 </div>
                 <div class="about__benefits __section">
                   <span style="font-weight:600;">Benefits</span>
                   <ul>
-                    <li v-for="b in focus.pos_det.ben" :key="b.id">{{b}}</li>
+                    <li v-for="b in focus_data.benefits" :key="b.id">{{b}}</li>
                   </ul>
                 </div>
                 <div class="about__company __section">
-                  <span>About Company</span>
+                  <strong>About Company</strong>
                   <div class="d-flex justify-content-between align-items-start mt-3">
-                    <img style="height:60px;" src="../images/imageplaceholder.png" alt="">
+                    <img style="height:60px;" :src="focus_data.company_logo_url" alt="">
                     <div class="ms-2">
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est culpa consequatur dolores quam ad delectus perspiciatis molestiae fugit, iste atque iure omnis enim distinctio vitae maiores debitis laboriosam illo voluptate.</p>
-                      <a style="margin-left:auto" class="btn btn-dark" :href="setCompUrl(focus.company_name)">See Company Profile</a>
+                      <p>{{focus_data.about_company}}</p>
+                      <a style="margin-left:auto" class="btn btn-dark" :href="setCompUrl(focus_data.company_name_posted)">See Company Profile</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>  
-          </div>           
-      
+          </div> 
+     
        </div>
      </div>
      </div>
@@ -362,15 +274,16 @@
     <div class="modal-content">
       <div class="application__submit">
         <!--form starts here -->
-        <div class="pt-2 pb-4 __submit_step" v-if="current_step===1">
+        <form method="POST" action="/main/application/submit" @submit.prevent="submit" id="application_form" style="width:100%">
+          <div class="pt-2 pb-4 __submit_step" v-if="current_step===1">
             <div class="p-3 mb-2 __step_header">
               <h5>{{listing.title}}</h5>
-              <p>{{listing.company}}</p>
+              <p>{{listing.company_name_posted}}</p>
             </div>
             <div class="container">
               <div class="col-12">
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="applicantNAMEInput" placeholder="Bob Builder" v-model="u_Data.name">
+                  <input type="text" class="form-control" id="applicantNAMEInput" name="name" placeholder="Bob Builder" v-model.trim="u_Data.name">
                   <label for="applicantNAMEInput">Enter name</label>
                   <div class="invalid-feedback">
                     Please enter your name
@@ -379,7 +292,7 @@
               </div>
               <div class="col-12 mt-3">
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="applicantEMAILInput" placeholder="m@example.com" v-model="u_Data.email">
+                  <input type="email" class="form-control" id="applicantEMAILInput" name="email" placeholder="m@example.com" v-model="u_Data.email">
                   <label for="applicantEMAILInput">Enter email</label>
                   <div class="invalid-feedback">
                     Please enter a valid email
@@ -397,7 +310,7 @@
               </div>
               <div class="col-12 mt-3">
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="applicantCOUNTRYInput" placeholder="Jamaica" value="Jamaica" v-model="u_Data.country">
+                  <input type="text" class="form-control" id="applicantCOUNTRYInput" name="country" placeholder="Jamaica" value="Jamaica" v-model="u_Data.country">
                   <label for="applicantCOUNTRYInput">Enter country</label>
                   <div class="invalid-feedback">
                     Please enter your country
@@ -405,14 +318,16 @@
                 </div>
               </div>
               <div class="col-12 mt-3">
-                <span>Resume (optional)</span>
-                <div class="mb-3 mt-2">
-                  <input type="file" class="form-control" aria-label="file example" id="applicantRESUMEInput" required @change="fileHandler">
-                  <div class="invalid-feedback">Invalid file type.</div>
-                  <div class="invalid-feedback">
-                    Please upload a pdf,docx, doc, txt file no greater than 10mb.
-                  </div>
-                </div>
+                <form action="/api/files/resume" @submit.prevent="fileHandler" enctype="multi-part/form-data">
+                  <span>Resume</span>
+                  <div class="mb-3 mt-2">
+                    <input type="file" class="form-control" aria-label="file example" name="resume" id="applicantRESUMEInput" @change="fileHandler" required>
+                    <div class="invalid-feedback">Invalid file type.</div>
+                    <div class="invalid-feedback">
+                      Please upload a pdf,docx, doc, txt file no greater than 10mb.
+                    </div>
+                  </div>  
+                </form>
               </div>
               <div class="col-12 mt-3">
                 <div class="w-100 act__form">
@@ -428,12 +343,12 @@
         <div class="pt-2 pb-4 __submit_step" v-if="current_step===2">
           <div class="p-3 mb-2 __step_header">
             <h5>{{listing.title}}</h5>
-            <p>{{listing.company}}</p>
+            <p>{{listing.company_name_posted}}</p>
           </div>
           <div class="container"> 
             <div class="col-12 mb-3 application_question" v-for="quest in listing.questions" :key="quest.id">
               <div>
-                <label for="questionInput" name="" class="form-label">{{quest.question}}</label>
+                <label for="questionInput" name="answer" class="form-label">{{quest.question}}</label>
                 <input type="text" class="form-control" id="applicantQUESTIONANSWERInput" placeholder="What color is the sky" @blur="questionHandler">
               </div>
             </div>    
@@ -469,6 +384,7 @@
           </div>        
         </div>
       </div> 
+        </form>
         <!--form ends here-->
       </div>
   </div>

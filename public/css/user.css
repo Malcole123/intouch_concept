@@ -24,8 +24,8 @@
     padding:100px 0;
 }
 .main h1{
-    width:75%;
-    font-size:3rem;
+    width:100%;
+    font-size:2rem;
     color: var(--prim-dark);
     
 }
@@ -34,6 +34,18 @@
     position:relative;
     z-index:3;
     transform: translateX(20%);
+}
+.main input{
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--prim-dark);
+    border-radius:0px;
+}
+
+.main select{
+    border:none;
+    border-radius:0px;
+    border-bottom:1px solid var(--prim-dark);
 }
 
 #visual{
@@ -47,6 +59,8 @@
 .sign-up-form{
     position:relative;
     z-index:3;
+    width:60%;
+    margin:0 auto;
 }
 .sign-up-form span{
     cursor:pointer;
@@ -69,6 +83,7 @@
     width:fit-content;
     display:flex;
     align-items: center;
+    margin:0 auto;
     gap:5px;
 }
 .sendBtn i, .sendLoginBtn i{

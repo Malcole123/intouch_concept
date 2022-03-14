@@ -2,17 +2,23 @@ if(process.env.NODE_ENV !== "production"){
     require('dotenv').config()
 }
 
-const sessionKey = process.env.SESSION_SECRET
 const jobCalls = require('../jobFetchers.js');
 const urlHandlers = require('../urlHandlers.js');
 const qHandler = urlHandlers.qHandler;
 const express = require('express');
+const formidable = require('express-formidable');
 const sessions = require('express-session');
 const fetchers = require('../fetchers.js');
 const router = express.Router();
+const bodyParser = require('body-parser');
 
+const path = require('path');
+const fs = require("fs");
+const multer = require("multer");
+const database = require('../database.js');
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
+
 
 router.get('/home', (req,res)=>{
     var session = req.session;
@@ -36,7 +42,7 @@ router.get('/home', (req,res)=>{
 
 router.get('/seejobs', async (req,res)=>{
     var session = req.session;
-    session.last_visit = req._parsedOriginalUrl.href
+    session.last_visit = req._parsedOriginalUrl.href;
     const jobQueryParams = (params)=>{
         var search, searchSan,searchObjValues
         searchObjValues = []
@@ -207,13 +213,19 @@ router.post('/seejobs/id', (req,res)=>{
 })
 
 
-router.post('/application/submit',async (req,res)=>{
-    var ret_Data = await fetchers.postApplication(req.body);
-    res.send(ret_Data)
+router.post('/application/submit', async (req,res,next)=>{
+    var session = req.session;
+    const result = await fetchers.postApplication(req.body);
+    if(result.completed){
+        res.send({
+            completed:true,
+        })
+    }else{
+        res.send({
+            completed:false,
+        })
+    }
 })
-
-
-
 
 
 module.exports = router

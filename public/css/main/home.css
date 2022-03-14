@@ -116,6 +116,9 @@ html{
     .home-header p{
         color:#fff;
     }
+    .nav-links ul li a{
+        color:#fff
+    }
     .why-us{
         height:fit-content
     }

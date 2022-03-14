@@ -14,6 +14,80 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 
+const isAuth = (req,res,next)=>{
+    var session = req.session;
+    if(session.userID){
+        next()
+    }else{
+        res.redirect('/main/home')
+    }
+}
+
+router.get('/profile/edit',isAuth,(req,res)=>{
+    var session = req.session;
+    var user = {
+        fname:session.userFNAME,
+        lname:session.userLNAME,
+        email:session.userEmail,
+        phone:session.userPhone
+    }
+    res.render('./account/profile/edit_profile.ejs',{
+        user:user,
+        loggedIn:true,
+        get_start:null,
+        type:'edit'
+    })
+})
+
+router.get('/profile/notification',isAuth,(req,res)=>{
+    var session = req.session;
+    var user = {
+        fname:session.userFNAME,
+        lname:session.userLNAME,
+        email:session.userEmail,
+        phone:session.userPhone
+    }
+    res.render('./account/profile/edit_profile.ejs',{
+        user:user,
+        loggedIn:true,
+        get_start:null,
+        type:'notification'
+    })
+})
+
+router.get('/profile/cookies',isAuth,(req,res)=>{
+    var session = req.session;
+    var user = {
+        fname:session.userFNAME,
+        lname:session.userLNAME,
+        email:session.userEmail,
+        phone:session.userPhone
+    }
+    res.render('./account/profile/edit_profile.ejs',{
+        user:user,
+        loggedIn:true,
+        get_start:null,
+        type:'cookies'
+    })
+})
+
+router.get('/profile/applications',isAuth,(req,res)=>{
+    var session = req.session;
+    var user = {
+        fname:session.userFNAME,
+        lname:session.userLNAME,
+        email:session.userEmail,
+        phone:session.userPhone
+    }
+    res.render('./account/profile/edit_profile.ejs',{
+        user:user,
+        loggedIn:true,
+        get_start:null,
+        type:'applications'
+    })
+})
+
+
 router.post('/edit/preferences', async (req,res)=>{
     var session = req.session;
     if(session.userID !== null || session.userID !== undefined){

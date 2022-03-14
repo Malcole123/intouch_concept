@@ -35,11 +35,13 @@ const idbyAuth = async (req, token)=>{
 }
 
 router.get('/login', isAuth, async (req,res)=>{
-    var session = req.session
+    var session = req.session;
+    var last_visit = session.last_visit;
+    session.last_visit = last_visit
     if(!session.userID){
         res.render('./account/authentication/user_auth/login')
     }else{
-        res.redirect('../main/home')
+        res.redirect(session.last_visit)
     }
 })
 
@@ -69,16 +71,16 @@ router.get('/recover/confirm', async (req,res)=>{
     }
 })
 
-router.post('/auth/signup', async (req,res)=>{
+router.post('/auth/register', async (req,res)=>{
     var session = req.session;
     var data = await fetchers.fetchsignAuth(req.body);
     if(data.completed){
-        session.userID = data.response.authToken;
-        session.myID = data.response.user.id,
-        session.userFNAME = data.response.user.first_name,
-        session.userLNAME = data.response.user.last_name,
-        session.userEmail = data.response.user.email,
-        session.userType = data.response.user.type
+        session.userID = data.auth;
+        session.userEmail = data.user.email;
+        session.userFNAME = data.user.first_name;
+        session.userLNAME = data.user.last_name;
+        session.userType = data.user.role;
+        session.myID = data.user.id;
         res.send({
             completed:true
         })
@@ -97,18 +99,19 @@ router.post('/auth/login', async (req,res)=>{
         session.userType = data.data.role;
         session.userFNAME = data.data.first_name;
         session.userLNAME = data.data.last_name;
+        session.userPHONE = data.data.phone;
         session.companyID = data.data.verified_companies_id;
         session.fav_comp = data.data.following_companies;
         session.fav_jobs = data.data.favourite_jobs;  
         session.my_alerts = data.data.job_alerts  
         res.send({
             completed:true,
-            redPath:req.session.last_visit
+            redPath:session.last_visitWW
         })
     }else{
         res.send({
             completed:false,
-            redPath:`/user/auth/login?sendTo=${req.body.sendTo}`
+            redPath:`${session.last_visit}`
         })
     }
 })
@@ -116,7 +119,7 @@ router.post('/auth/login', async (req,res)=>{
 router.get('/logout',(req,res)=>{
     req.session.destroy();
     res.clearCookie('connect.sid');
-    res.redirect('/user/login')
+    res.redirect('/main/home')
 })
 
 
