@@ -219,7 +219,7 @@ const setSearchState= new Vue({
             var dom_kids = parent.children
             var kids = document.querySelectorAll('.job-card');
             var adTemp = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9149531285371942"crossorigin="anonymous"></script><ins class="adsbygoogle"style="display:block"data-ad-format="fluid"data-ad-layout-key="-ed+6k-30-ac+ty"data-ad-client="ca-pub-9149531285371942"data-ad-slot="1909465585"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>'
-            if(kids.length >= 8){
+            if(kids.length >= 6){
                 var count = 1;
                 kids.forEach((kid,index)=>{
                     var template = document.createElement('div');
@@ -230,7 +230,7 @@ const setSearchState= new Vue({
                     }
                     count +=1
                 })
-            }else if(kids.length < 8 && kids.length > 0){
+            }else if(kids.length < 6 && kids.length > 0){
                 var template = document.createElement('div');
                 template.className = "inline-ad-space";
                 template.innerHTML = adTemp;
