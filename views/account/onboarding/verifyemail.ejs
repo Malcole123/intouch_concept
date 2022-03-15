@@ -68,8 +68,10 @@
                                         Next
                                     </button>
                                 </div>
-                                <div class="col-12 mt-4">
-                                  <span class="text-center">Don't see an email? Resend email in 3:00</span>
+                                <div class="col-12 mt-4 d-flex align-items-center justify-content-center">
+                                  <span v-if="!event.resend_active"class="text-center">Don't see an email? Resend email in &nbsp<strong>{{timer.minutes}} : {{timer.seconds >= 10 ? timer.seconds : '0' + timer.seconds}}</strong></span>
+                                  <button type="button" class="btn btn-outline-dark" v-if="event.resend_active">Resend Email</button>
+                                  <button type="button" class="btn btn-outline-danger" v-if="event.max_resend">Contact Support</button>
                                 </div>                                      
                         </form>
                     </div>
@@ -86,6 +88,7 @@
     </section>
 
     <script type="module">
+      var keeper;
       const verifyCode = new Vue({
     el:'#verify-form',
     data:{
@@ -94,6 +97,15 @@
         three:'',
         four:'',
         five:'',
+        timer:{
+          minutes:2,
+          seconds:59,
+        },
+        event:{
+          resend_active:false,
+          resend_count:0,
+          max_resend:false,
+        }
     },
     methods:{
         auto:(e)=>{
@@ -111,7 +123,7 @@
         },
         processForm:async ()=>{
             var eCode = `${verifyCode.one}${verifyCode.two}${verifyCode.three}${verifyCode.four}${verifyCode.five}`;
-            const s =  await fetch('/employer/auth/identity/verify',{
+            const s =  await fetch('/onboarding/auth/identity/verify',{
                 method:'POST',
                 headers:{
                   'Content-Type':'application/json'
@@ -121,18 +133,35 @@
                 })
             }).then(res=>res.json())
             .then(data=>{
-              console.log(data)
               return data
             })
 
             if(s.ok){
-              window.location.href='/onboarding/employer/company/register'
+              window.location.href = s.redirect
             }else{
                 var inputs = document.querySelectorAll('input');
                 inputs.forEach((item)=>{
                   setInvalid(item.id)
                 })
             }
+        },
+        resend_Timer:()=>{
+          verifyCode.timer.seconds -= 1;
+          if(verifyCode.timer.seconds === 0 && verifyCode.timer.minutes > 0){
+            verifyCode.timer.minutes -=1;
+            verifyCode.timer.seconds = 59
+          }
+          if(verifyCode.timer.minutes === 0 && verifyCode.timer.seconds == 0 ){
+            clearInterval(keeper);
+            verifyCode.event.resend_active = true
+          }
+        },
+        resend_email:()=>{
+          if(verifyCode.event.resend_count < 4){
+            //Do resend here 
+          }else{
+
+          }
         }
     }
 })
@@ -145,6 +174,12 @@ const setvalid = (id)=>{
     var target = document.getElementById(id);
     target.classList ="form-control is-valid"
 }
+
+window.addEventListener('load', ()=>{
+  keeper = setInterval(()=>{
+    verifyCode.resend_Timer();
+  }, 1000)
+})
 
     </script>
   </body>

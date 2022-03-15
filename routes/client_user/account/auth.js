@@ -93,26 +93,7 @@ router.post('/auth/login/client', async (req,res)=>{
     }
 })
 
-router.post('/auth/identity/verify', async (req,res)=>{
-    var session = req.session;
-    var data = await fetchers.fetchAuthMe(session.userID);
-    var codeMatch;
-    if(parseInt(data.data.v_code) === parseInt(req.body.code)){
-        codeMatch=true
-    }else{
-        codeMatch = false
-    }
-    if(data.ok && codeMatch){
-        res.send({
-            ok:true,
-            redirect:'/onboarding/company/register',
-        })
-    }else{
-        res.send({
-            ok:false,
-        })
-    }
-})
+
 
 
 module.exports = router

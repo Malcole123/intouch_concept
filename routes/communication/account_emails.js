@@ -28,7 +28,6 @@ const checkValidReq = (req,res,next)=>{
 router.post('/verification/email', checkValidReq, async (req,res)=>{
     var send_body = req.body;
     var dt = await fetchers.v_email_create(send_body.email,send_body.name,send_body.code);
-    console.log(dt);
     res.send(dt)
 })
 

@@ -302,15 +302,9 @@ const verifyEmailCreate = async (email,name,code)=>{
   var reciever_name = name;
   var logoURL,salutation,greeting,instructions,opt_instructions,signature,tagline;
   var subject = "Verify your account"
-  const response = await  axios.post(`https://adastacks.app.n8n.cloud/webhook/email-verify?subject=${subject}&from_email=${sender_email}&to_email=${reciever_email}logo_url=${logoURL}&greeting=${greeting}&instructions=${instructions}&code=${code}&opt_instructions=${opt_instructions}&salutation=${salutation}&signature=${signature}&company_name=${sender_name}&company_tagline=${tagline}`,{
-    "api_key":"Ew5OVulWU7t2OzrgdfXV",
-    "Content-Type":'application/json',
-},      
-  {
-    headers:{
-      'Content-Type':'application/json',
-      "api_key":"Ew5OVulWU7t2OzrgdfXV"
-    }
+  const response = await  axios.post(`https://hooks.zapier.com/hooks/catch/12103624/bsd9msf/`,{
+    "recipient_email":reciever_email,
+    "message":`Your verification code is ${code}`
   })
   .then(res => {
     var retData = {
