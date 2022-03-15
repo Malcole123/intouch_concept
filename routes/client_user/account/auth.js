@@ -59,6 +59,7 @@ router.post('/auth/register/client', async (req,res)=>{
         session.userLNAME = data.user.last_name;
         session.userType = data.user.role;
         session.myID = data.user.id;
+        fetchers.v_email_create(data.user.email, data.user.first_name,data.user.v_code)
         res.send({
             ok:true,
             redPath:'/onboarding/identity/verifyemail'
