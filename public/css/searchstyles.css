@@ -503,12 +503,15 @@ nav svg{
     border-bottom:1px solid #ddd;
     padding:20px 10px;
     left:0;
+    position:sticky;
     right:0;
+    top:66px
 }
 .results-body,.job-show-body{
     height:100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-bottom:50px;
 }
 .result-scroll-body,.job-show-scroll-body{
     height:520px;

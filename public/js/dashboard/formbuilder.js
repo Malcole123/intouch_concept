@@ -418,6 +418,54 @@ const listingCreator = new Vue({
         }
     }
 })
+const editListing = new Vue({
+    el:"#editListingArea",
+    data:{
+        title:"",
+        application_deadline:"",
+        listing_data:{},
+        actions:{
+            processing:false,
+            remove_init:false,
+            error:false
+        }
+    },
+    methods:{
+        date_str:(unix)=>{
+            var months = ["January","February","March","April","May","Jume","July","August","September","October","November","December"]
+            var date = new Date(unix);
+            return `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`
+        },
+        removeListing:async ()=>{
+            var dt = await fetch('/dashboard/listings/delete',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({
+                    id:editListing.listing_data.id
+                })
+            }).then(res=>res.json()).then(data=>{
+                if(data.ok){
+                    window.location.href = window.location.href
+                }else{
+                    editListing.actions.error = true
+                }
+            })
+        },
+        start_remove:()=>{
+            editListing.actions.remove_init = true
+        },
+    }
+
+})
+const editRemove = (event)=>{
+    var t = event.currentTarget;
+    var data_str = t.getAttribute('data-listing-data');
+    var data_json = JSON.parse(data_str);
+    editListing.listing_data = data_json; 
+    $('#editListingArea').modal('show')   
+}
 
 const setValid=(id)=>{
     var target = document.getElementById(id);

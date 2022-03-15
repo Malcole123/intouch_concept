@@ -115,12 +115,12 @@
                                 </div> 
                             </div>
                         </div>            
-                    <div class="row">
-                        <section class="company__profile__main" style="background:transparent" data-company-data="<%=JSON.stringify(companyData)%>" >
+                  
+
+                        <section class="company__profile__main bg-transparent" data-company-data="<%=JSON.stringify(companyData)%>">
                             <div class="container h-100">
-                              <div class="mb-3 company__intro">
-                                  <img class="__intro__banner" src="/images/test/test__banner.jfif" alt="">
-                                  <div class="__company__identity">
+                              <div class="mb-3 company__intro" style="background:rgba(0,0,0,0.3) url('<%=companyData.profile_banner.url %>');background-size:cover;background-position:center;">
+                                  <div class="__company__identity bg-white">
                                     <img class="__intro__profile" src="<%= companyData.company_logo.url %>" alt="">
                                     <div>
                                       <h4 style="text-transform: capitalize;"><%= companyData.name %></h4>
@@ -128,17 +128,44 @@
                                       <small style="text-transform:capitalize;"><%= companyData.headquarter %> - <%= companyData.industry %></small>
                                     </div>
                                   </div>
-                                  <span id="editCompanyInfo" style="position:absolute;bottom:4px;right:4px;cursor:pointer;">Edit &nbsp<i class="fa-solid fa-pen-alt"></i></span>
                               </div>
                               <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-8">
+                                  <div class="company__profile__nav">
+                                    <div class="__scroll__company__info" style="width:50%">
+                                      <img class="__scroll__profile_pic" src="<%=companyData.company_logo.url%>" alt="">
+                                      <div class="d-sm-none d-md-none d-lg-flex align-items-center" style="gap:8px;">
+                                        <strong class="__hide__mobile" style="text-transform: capitalize;"><%=companyData.name %></strong>
+                                        <button type="button" class="__hide__mobile" style="padding:6px 10px;background:#333;color:#fff;outline:none;border:none;border-radius:5px">Follow &nbsp<i class="fas fa-plus"></i></button>
+                                      </div>
+                                    </div>
+                                    <ul class="__profile__nav__links">
+                                      <li class="__p__nav_link __active">
+                                        <i class="fa-solid fa-book-open-reader"></i>
+                                        <a href="#about__">About</a>
+                                      </li>
+                                      <li class="__p__nav_link" data-link-to="jobs">
+                                        <i class="fa-solid fa-user-tie"></i>
+                                        <a href="#jobs__">Jobs</a>
+                                      </li>
+                                      <li class="__p__nav_link" data-link-to="media__">
+                                        <i class="fa-solid fa-images"></i>
+                                        <a href="#media__">Media</a>
+                                      </li>
+                                      <li class="__p__nav_link" data-link-to="locations">
+                                        <i class="fa-solid fa-map-pin"></i>
+                                        <a href="#locations">Locations</a>
+                                      </li>
+                                    </ul>
+                                  </div>
                                   <div class="col-12 mt-3">
-                                    <div class="__about__company __card" id="about__" style="position:relative">
-                                        <span id="editCompanyInfo" style="position:absolute;top:4px;right:4px;cursor:pointer;">Edit &nbsp<i class="fa-solid fa-pen-alt"></i></span>
+                                    <div class="__about__company __card" id="about__">
                                         <h5>About Company</h5>
                                         <p class="mt-2 mb-3"><%= companyData.about_company %></p>
-                                        <strong class="mt-2 mb-2">Mission Statement</strong>
-                                        <p class="mt-2 mb-3"><%= companyData.mission_statement %></p>
+                                        <% if(companyData.mission_statement.length > 0 ){ %>
+                                          <strong class="mt-2 mb-2">Mission Statement</strong>
+                                          <p class="mt-2 mb-3"><%= companyData.mission_statement %></p>  
+                                         <% }%>
                                         <strong class="mb-2">Company size</strong>
                                         <p><%= companyData.company_size %></p>
                                     </div>
@@ -150,12 +177,14 @@
                                   <div class="__gallery__company __card" id="media__">
                                       <h5>Gallery</h5>
                                       <div class="row mt-3 __carousel__outer" id="galleryCarousel">
-                                        <div class="__carousel__inner" style=>
+                                        <div class="__carousel__inner">
                                           <% companyData.company_images.forEach((image)=>{ %>
                                             <div class="col-6 col-md-4 col-lg-4">
-                                                <div class="w-100">
-                                                    <img style="width:100%" src="<%= image.url %>" alt="<%= companyData.name %> image">
+                                              <div class="card">
+                                                <div class="card-body">
+                                                  <img style="width:100%" src="<%= image.url %>" alt="<%= companyData.name %> image">
                                                 </div>
+                                              </div>
                                             </div>                
                                           <% })%>
                                        
@@ -171,7 +200,6 @@
                               </div>
                             
                         </section>
-                    </div>
                     </div>
                     <div class="app-wrapper-footer">
                         <div class="app-footer">

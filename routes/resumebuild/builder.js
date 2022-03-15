@@ -26,14 +26,17 @@ const templateSorter = (index)=>{
         }
 }
 
-var html2pdf = restpack.html2pdf("DuuLYVBlkJNY4HXbg3QFFhEBAIvPOxfkybZrwcR9HkRBC99F");
+var html2pdf = restpack.html2pdf("P6W0XZ0XoU34KHqoATDt6XUuoF0KYIM7PMgpG4jFNVGpMQOO");
 
 const pdfGenerator = async (html)=>{
     const response = html2pdf.convertHTML(html, {
         pdf_height: "1026px",
         pdf_width:'816px' /* , other options */,
       }).then(res=>{ 
+          console.log(res)
           return res
+        }).catch(error=>{
+            console.log(error)
         })
       return response
 }

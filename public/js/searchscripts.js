@@ -46,7 +46,8 @@ const setSearchState= new Vue({
                     see_latest:999999999999
                 },
                 company:'',
-                matchArr:[]
+                matchArr:[],
+                sub_division_arr:[]
             }
         },
         focus_data:{},
@@ -281,6 +282,24 @@ const setSearchState= new Vue({
             shareHandler.urlGen('wtp');
             console.log('button works')
             $('html').css('overflow','hidden');
+        },
+        set_subdivision:async()=>{
+            var cntry = setSearchState.display.filter.location.country;
+            var s_data = await fetch('/resources/countries.json').then(res=>res.json()).then(data=>{
+                data.forEach((country)=>{
+                    if(country.country.toLowerCase() === cntry.toLowerCase() ){
+                        setSearchState.display.filter.sub_division_arr = country.sub_divisions
+                    }
+                })
+                return data
+            });
+            console.log(s_data)
+        },
+        mobile__view:()=>{
+            if($(window).width() <= 1020){
+                $('.job-show-display').removeClass('show-job-section');
+                $('html').css('overflowY','scroll')
+            }
         }
     }
 })
@@ -949,7 +968,6 @@ const main = ()=>{
     $('.job-card').on('click',()=>{
         if($(window).width() <= 1020){
             $('.job-show-display').addClass('show-job-section');
-            $('html').css('overflow','hidden')
         }
     })
  

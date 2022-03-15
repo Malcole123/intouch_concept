@@ -60,5 +60,46 @@
                 "id":"STT"
             }
         ]
+    },
+    {
+        "country":"Trinidad & Tobago",
+        "sub_divisions":[
+            {
+                "name":"Siparia",
+                "id":"Sip"
+            },
+            {
+                "name":"Penal-Debe",
+                "id":""
+            },
+            {
+                "name":"Princess Town",
+                "id":""
+            },
+            {
+                "name":"Mayaro-Rio Claro",
+                "id":""
+            },
+            {
+                "name":"Couva-Tabaquite-Talparo",
+                "id":""
+            },
+            {
+                "name":"Sangre Grande",
+                "id":""
+            },
+            {
+                "name":"Tunapuna-Piacro",
+                "id":""
+            },
+            {
+                "name":"San Juan-Laventile",
+                "id":""
+            },
+            {
+                "name":"Diego Martin",
+                "id":""
+            }
+        ]
     }        
 ]

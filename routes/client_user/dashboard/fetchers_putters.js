@@ -9,6 +9,7 @@ const changeMyListing = process.env.EDIT_MY_LISTING;
 const getCompInfoURL = process.env.GET_COMPANY_INFO
 const getPendingListings =process.env.GET_MY_PENDING_LISTINGS
 const getSubmittedApplicationsURL = process.env.GET_SUBMITTED_APPLICATIONS
+const deleteListingUrl = process.env.DELETE_LISTING
 //Urls end
 const fs = require('fs')
 const axios = require('axios').default
@@ -221,6 +222,25 @@ const editMyListing = async (info,id,comp_id)=>{
     return data
 }
 
+const deleteListing = async (id,user_id)=>{
+    const data = await  axios.post(`${deleteListingUrl}${id}`, {
+        job_id:id,
+        user_id:user_id
+    })
+    .then(res => {
+     return {
+         error:false,
+        }
+    })
+    .catch(err => {
+        return {
+            error:true,
+            message:"Something went wrong. Please try again later or contact us for more help."
+        }
+    });
+    return data
+}
+
 const getMyCompanyDetail = async (id=0,name)=>{
     const data = await  axios.get(`${getCompInfoURL}?company_name=${name}&company_id=${id}`, {
         headers:{
@@ -253,4 +273,5 @@ module.exports = {
     editListing:editMyListing,
     getCompInfo:getMyCompanyDetail,
     submittedApplications:getSubmittedApplications,
+    deleteListing:deleteListing,
 }

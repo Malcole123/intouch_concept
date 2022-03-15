@@ -382,5 +382,21 @@ router.post('/listings/edit', async (req,res)=>{
     })
 })
 
+router.post('/listings/delete', async (req,res)=>{
+    var session = req.session;
+    var result = await getters.deleteListing(req.body.id, session.myID);
+    if(!result.error){
+        res.send({
+            ok:true,
+            message:'Listing has been deleted '
+        })
+    }else{
+        res.send({
+            ok:false,
+            message:'Something went wrong please try again later.'
+        })
+    }
+})
+
 
 module.exports = router

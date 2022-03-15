@@ -69,7 +69,7 @@ router.get('/create/landing', async(req,res)=>{
 
 router.post('/create/build/complete', async (req,res)=>{
     var result = await buildFunc.pdfGen(req.body.html);
-    res.send(result.file)
+    res.download(result.file)
 })
 
 

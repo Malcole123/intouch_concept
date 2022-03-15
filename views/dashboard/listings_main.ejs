@@ -21,7 +21,6 @@
     <link href="/css/dashboard/listings.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
 </head>
-
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
@@ -133,7 +132,7 @@
                                         <input type="hidden" value="<%= JSON.stringify(item) %>"> <!--item id-->
                                         <h5 class="card-title text-center"><%= item.title %></h5>
                                         <p class="text-center desc_para"><%=item.description %> </p>
-                                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="editListing.setEditState(event)">Edit</button>
+                                        <button class="btn btn-primary mt-3" data-listing-data="<%= JSON.stringify(item) %>" onclick="editRemove(event)">Edit</button>
                                         </div>
                                     </div>
                                 <% }) %>   
@@ -402,6 +401,44 @@
             </div>           
         </div>
   </section>
+  <!-- Full screen modal -->
+  <div class="modal fade" id="editListingArea" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-white border-0">
+          <h5 class="modal-title" id="editListingAreaHead">{{listing_data.title}} - {{listing_data.type}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <strong>About</strong>
+                    <p>{{listing_data.description}}</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <strong>Applications submitted</strong>
+                    <p>{{listing_data.application_id.length}} applications submitted</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <strong>Application deadline</strong>
+                    <p>{{date_str(listing_data.application_deadline)}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer bg-white border-0">
+            <div class="d-flex align-items-center" v-if="actions.remove_init">
+                <p>This action is permanent are you sure you want to continue?</p>
+                <button type="button" class="btn btn-danger ml-2" @click="removeListing">Remove</button>
+            </div>
+          <button type="button" class="btn btn-outline-danger" v-if="!actions.remove_init" @click="start_remove">Remove Listing</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

@@ -16,7 +16,9 @@ const fs = require("fs");
 const multer = require("multer");
 const database = require('../database.js');
 const upload = require('../helpers/filehelper.js')
-const singleFileUpload = require('../controllers/fileHandler.js')
+const singleFileUpload = require('../controllers/fileHandler.js');
+const resumeFile = require('../models/resume.js');
+
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
@@ -31,9 +33,7 @@ const checkAllowed = (req, res, next)=>{
         })
     }
 }
-var test_id = '622c57deef0471060865c6da'
 
-const resumeFile = require('../models/resume.js');
 
 router.post('/resume',upload.r_upload.single('resume'), singleFileUpload.resumeUpload);
 

@@ -70,18 +70,18 @@
         <div class="container">
             <div class="edit-name">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="editnameInput" placeholder="May Sue" v-model="userName.input" @keyup="nameCheck" maxlength="24">
+                <input type="text" class="form-control" id="editnameInput" placeholder="May Sue" v-model="userName.input" maxlength="44">
                 <label for="floatingInput">Name</label>
               </div>
             </div>
             <div class="edit-about">
               <div class="form-floating">
-                <textarea id="aboutInput"class="form-control" placeholder="Edit your bio here" id="floatingTextarea2" style="height: 180px" v-model="userBio.input" @keyup="aboutCheck" maxlength="165" cols="4" wrap="hard" ></textarea>
+                <textarea id="aboutInput"class="form-control" placeholder="Edit your bio here" id="floatingTextarea2" style="height: 180px" v-model="userBio.input" maxlength="300" cols="4" wrap="hard" ></textarea>
                 <label for="floatingTextarea2">About Me</label>
               </div>
-              <small>{{userBio.remaining}} out of 165 characters remaining</small>
+              <small>{{300 - userBio.input.length}} out of 300 characters remaining</small>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-5">
               <h6>Contact information</h6>
               <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-floating mb-3">
@@ -114,7 +114,7 @@
                   <div class="skills-preview"v-if="skills.userSkills">
                       <h6>Your skills</h6>
                       <div class="skills-preview-display">
-                        <div class="skills-preview-card edit" v-for="skill in skills.userSkills" :key="skill">
+                        <div class="skills-preview-card edit" v-for="skill in skills.userSkills" :key="skill.id">
                           <span>{{skill}}</span>
                           <i class="fas fa-minus" @click="skillRemove"></i>
                         </div>

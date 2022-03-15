@@ -45,12 +45,10 @@ const builder = new Vue({
     el:'.editor-body',  
     data:{
         userBio:{
-            input:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas volutpat blandit aliquam etiam.',
-            remaining:1,
+            input:"",
         },
         userName:{
-            input:"Mary Sue",
-            remaining:16,
+            input:"",
         },
         skills:{
             input:'',
@@ -113,9 +111,9 @@ const builder = new Vue({
             maxEnter:3        
         },
         contact:{
-            email:'test@example.com',
-            phone:'+1(876)555-5678',
-            address:'7 Imaginary Way, Imaginary Town, Imaginary'
+            email:'',
+            phone:'',
+            address:''
         },
         printSizes:{
             letter_A4:{
@@ -161,23 +159,6 @@ const builder = new Vue({
             }
             if(reset){
                 el.className = 'form-control' 
-            }
-        },
-        nameCheck:async ()=>{
-            var result = await builder.strCheck(builder.userName.input, 22, 3);
-            if(result.ok){
-                builder.validateInput('editnameInput',true)
-            }else{
-                builder.validateInput('editnameInput',false)
-            }
-        },
-        aboutCheck: async()=>{
-            var result = await builder.strCheck(builder.userBio.input, 165, 10)
-            if(result.ok){
-                builder.userBio.remaining = result.rem
-                builder.validateInput('aboutInput',true)
-            }else{
-                builder.validateInput('aboutInput',false)
             }
         },
         skillAdd:async ()=>{
@@ -443,7 +424,7 @@ const builder = new Vue({
 
         },
         print:()=>{
-            var print = document.getElementsByClassName('zoom-control')[0];
+            var print = document.getElementsByClassName('resume-template')[0];
             var html = print.innerHTML;
             fetch('/resume/create/build/complete', {
                 method:'POST',
