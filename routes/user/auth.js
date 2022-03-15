@@ -107,12 +107,11 @@ router.post('/auth/login', async (req,res)=>{
         session.my_alerts = data.data.job_alerts  
         res.send({
             completed:true,
-            redPath:session.last_visitWW
+            redPath:session.last_visit
         })
     }else{
         res.send({
             completed:false,
-            redPath:`${session.last_visit}`
         })
     }
 })
