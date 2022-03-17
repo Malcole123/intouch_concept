@@ -30,7 +30,6 @@ function main(){
       $('#nav_alert').toggle();
       $('#nav_me').hide()
     }).on('mouseenter', ()=>{
-        $('#nav_alert').fadeIn();
         $('#nav_me').hide()
     })
     $('._me').on('click', (event)=>{
@@ -115,9 +114,6 @@ function main(){
             $('.search-nav-links').show();
         }
     }).on('load', ()=>{
-        if(!window.location.href.includes('postajob')){
-            fetchSubdivisions("Jamaica");
-        }
         var windowSize = $(window).width()
         var maxSize = 1020;
         if(windowSize > maxSize){

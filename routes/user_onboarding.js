@@ -61,7 +61,7 @@ router.post('/auth/identity/verify', async (req,res)=>{
       }else{
         res.send({
             ok:true,
-            redirect:'/main/seejobs?q=&country=&sub_division=',
+            redirect:'/main/seejobs?q=&country=&sub_div',
         })
       }
     }else{

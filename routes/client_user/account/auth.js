@@ -65,7 +65,10 @@ router.post('/auth/register/client', async (req,res)=>{
             redPath:'/onboarding/identity/verifyemail'
         })
     }else{
-        res.send(data) 
+        res.send({
+            ok:false,
+            message:'Something went wrong, please try again later.'
+        }) 
     }
 })
 router.post('/auth/login/client', async (req,res)=>{
@@ -80,17 +83,16 @@ router.post('/auth/login/client', async (req,res)=>{
         session.userFNAME =  data.data.first_name;
         session.userLNAME =  data.data.last_name;
         session.companyID =  data.data.verified_companies_id;
-        if( data.data.role === 'client'){
-            redPath = '/dashboard/home'
-        }else{
-            redPath='/main/seejobs?q=&country=&sub_division='
-        }
+        redPath='/dashboard/home'
         res.send({
             completed:true,
             redPath:redPath,
         })
     }else{
-        res.send(data)
+        res.send({
+            completed:false,
+            message:'Something went wrong'
+        })
     }
 })
 

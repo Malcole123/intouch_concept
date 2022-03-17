@@ -674,9 +674,9 @@ var options = {
               notificationHandler.setState(setSearchState.pref.ref)
           }
           if(entry.isIntersecting){
-              $('html').css('overflow','hidden')
+             // $('html').css('overflow','hidden')
           }else{
-            $('html').css('overflowY','scroll') 
+            //$('html').css('overflowY','scroll') 
           }
       })
   };
@@ -769,10 +769,12 @@ const main = ()=>{
         shareHandler.shareType = 'whatsapp'
     })
     $('#filter__init-call').on('click', ()=>{
-        $('.filter-list').toggleClass('show-filter-menu')
+        $('.filter-list').toggleClass('show-filter-menu');
+        $('html').css('overflowY','hidden')
     })
     $('#filter__init-dismiss').on('click', ()=>{
         $('.filter-list').toggleClass('show-filter-menu')
+        $('html').css('overflowY','scroll')
     })
 
     $('._alert').on('click', (event)=>{
@@ -968,6 +970,7 @@ const main = ()=>{
     $('.job-card').on('click',()=>{
         if($(window).width() <= 1020){
             $('.job-show-display').addClass('show-job-section');
+            $('html').css('overflowY','hidden')
         }
     })
  

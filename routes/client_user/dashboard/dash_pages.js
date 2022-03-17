@@ -206,7 +206,7 @@ router.get('/analytics',async (req,res)=>{
 
 })
 
-router.get('/campaign/email', async (req, res)=>{
+router.get('/campaign', async (req, res)=>{
     var session;
     session = req.session;
     var userData = {
@@ -217,7 +217,7 @@ router.get('/campaign/email', async (req, res)=>{
     var company_data = await getters.getCompInfo(req.session.companyID,"");
     if(session.userID && session.userType === 'client'){
         if(company_data.ok && company_data.status === 200){
-            res.render('./dashboard/campaign_email',{
+            res.render('./dashboard/campaign',{
                 active_list:company_data.data.listings,
                 userDetails:userData,
                 companyData:company_data.data.company_data

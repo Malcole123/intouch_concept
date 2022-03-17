@@ -63,7 +63,6 @@
                         <button class="close"></button>
                     </div>       
                 </div>
-            <%-include('../components/dashboard_components/user_actions.ejs')-%>
             </div>
         </div>            
         <div class="app-main">
@@ -123,8 +122,26 @@
                             </div>
                         </div>            
                         <div class="app-page-body">
-                            <h5>Active Listings</h5>
+                            <% if(pending_list.length > 0){ %>
+                                <div class="row mt-2">
+                                    <h5 class="mb-4">Pending Listings</h5>
+                                    <% pending_list.forEach(function(item,index){ %>
+                                        <div class="col-sm-12 col-md-6 col-lg-4">
+                                            <div style="min-height:170px" class="mb-3 card card-body text-center"
+                                            >
+                                            <h5 class="card-title text-center"><%= item.title %></h5>
+                                            <p class="text-center desc_para"> <%=item.description %> </p>
+                                            <button class="btn btn-dark">Under Review</button>
+                                            </div>
+                                        </div>
+                                    <% }) %> 
+                                    <%  if(pending_list.length === 0 ){ %>
+                                        <span style="font-weight:600;">No listings currently pending</span>
+                                    <% } %>
+                                </div>
+                            <% } %>
                             <div class="row mt-2">
+                                <h5 class="mb-4">Active Listings</h5>
                                 <% active_list.forEach(function(item,index){ %>
                                     <div class="col-sm-12 col-md-6 col-lg-4">
                                         <div style="min-height:170px" class="mb-3 card card-body text-center"
@@ -136,22 +153,6 @@
                                         </div>
                                     </div>
                                 <% }) %>   
-                            </div>
-                            <h5>Pending Listings</h5>
-                            <div class="row mt-2">
-                                <% pending_list.forEach(function(item,index){ %>
-                                    <div class="col-sm-12 col-md-6 col-lg-4">
-                                        <div style="min-height:170px" class="mb-3 card card-body text-center"
-                                        >
-                                        <h5 class="card-title text-center"><%= item.title %></h5>
-                                        <p class="text-center desc_para"> <%=item.description %> </p>
-                                        <button class="btn btn-dark">Under Review</button>
-                                        </div>
-                                    </div>
-                                <% }) %> 
-                                <%  if(pending_list.length === 0 ){ %>
-                                    <span style="font-weight:600;">No listings currently pending</span>
-                                <% } %>
                             </div>
                         </div>
                    

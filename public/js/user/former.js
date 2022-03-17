@@ -308,7 +308,7 @@ const lApp = new Vue({
                     setInvalid('enterpasswordInput');
                     setInvalid('loginemailInput');
                     lApp.processing = false
-                    }
+                }
             }
             processor();
         },

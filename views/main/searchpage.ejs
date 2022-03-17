@@ -140,7 +140,7 @@
           </div>
         </form>
       </div>
-     <div class="container bg-white">
+     <div class="container bg-white h-100">
        <input type="hidden" id="job__intermed"value="<%= JSON.stringify(jData) %>">
        <div class="row">
          <div :class="matched_filters.length > 0 && all_jobs.length > 0 ? 'col-sm-12 col-md-12 col-lg-5 position-relative bg-white h-100 results-display' : 'col-sm-12 col-md-12 col-lg-12 position-relative bg-white h-100 results-display'">      
@@ -182,49 +182,49 @@
             </div>
          </div>
          </div>
-        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display" v-if="matched_filters.length > 0 && all_jobs.length > 0">
-            <div class="job-show-banner">
-              <div class="mb-3 return_to_home __mobile" @click="mobile__view">
-                <div class="badge bg-dark">
-                  <i class="text-white fas fa-chevron-left"></i>
-                  <span class="text-white ms-2">Return to search</span>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between flex-wrap mb-2 job-show__header">
-                <h4>{{focus_data.title}}</h4>
-                <div>
-                  <i class="fas fa-share dis-act-btn" id="share__handle" @click="openShare"></i>
-                  <% if(user.id > 0){%>
-                    <i id="favourite__handle" :class="pref.f_jobs.includes(focus_data.id) ? 'fas fa-heart act-btn button-active' : 'fas fa-heart act-btn'" @click="setFavourite"></i>
-                  <% }else{ %>
-                    <a href="/user/login?sendTo=search"><i id="register__handle" class="fas fa-heart dis-act-btn"></i></a>
-                  <% } %>
-                </div>
-              </div>
-              <div class="job-show__header_sec">
-                  <span>{{focus_data.company_name_posted}}</span>
-                  <span>| {{focus_data.loc_sub_division}}, {{focus_data.loc_country}} |</span>
-                  <span>{{ relativeDate(focus_data.created_at) }} |</span>
-                  <span style="font-weight:600;color:#2B32B2">{{ focus_data.application_id.length }} applicants</span>
-                  <% if(user.id > 0){ %>
-                        <button v-if="focus_data.quick_apply" style="margin-left:auto" type="button" class="btn btn-primary" id="applyButtonInit" @click="openApply">Apply</button>
-                        <a v-if="!focus_data.quick_apply" style="margin-left:auto;text-decoration:none;" :href="focus_data.url" class="btn btn-primary" target="_blank">Apply</a>
-                  <% }else{ %>
-                    <a style="margin-left:auto"href="/user/login?sendTo=search" class="btn btn-primary">Apply</a>
-                  <% } %>
-              </div>
-              <div class="job-show__header_ter">
-                  <div style="min-width:95px">
-                    <i class="fas fa-building"></i>
-                    <span>{{focus_data.company_size}}</span>
-                  </div> 
-                  <div>
-                    <i class="fas fa-briefcase"></i>
-                    <span style="text-transform:capitalize;">{{focus_data.type.replaceAll('-',' ')}}</span>
-                  </div>                  
-              </div>
-            </div>
+        <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display" v-if="matched_filters.length > 0 && all_jobs.length > 0">     
             <div class="job-show-body">
+              <div class="job-show-banner">
+                <div class="mb-3 return_to_home __mobile" @click="mobile__view">
+                  <div class="badge bg-dark">
+                    <i class="text-white fas fa-chevron-left"></i>
+                    <span class="text-white ms-2">Return to search</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between flex-wrap mb-2 job-show__header">
+                  <h4>{{focus_data.title}}</h4>
+                  <div>
+                    <i class="fas fa-share dis-act-btn" id="share__handle" @click="openShare"></i>
+                    <% if(user.id > 0){%>
+                      <i id="favourite__handle" :class="pref.f_jobs.includes(focus_data.id) ? 'fas fa-heart act-btn button-active' : 'fas fa-heart act-btn'" @click="setFavourite"></i>
+                    <% }else{ %>
+                      <a href="/user/login?sendTo=search"><i id="register__handle" class="fas fa-heart dis-act-btn"></i></a>
+                    <% } %>
+                  </div>
+                </div>
+                <div class="job-show__header_sec">
+                    <span>{{focus_data.company_name_posted}}</span>
+                    <span>| {{focus_data.loc_sub_division}}, {{focus_data.loc_country}} |</span>
+                    <span>{{ relativeDate(focus_data.created_at) }} |</span>
+                    <span style="font-weight:600;color:#2B32B2">{{ focus_data.application_id.length }} applicants</span>
+                    <% if(user.id > 0){ %>
+                          <button v-if="focus_data.quick_apply" style="margin-left:auto" type="button" class="btn btn-primary" id="applyButtonInit" @click="openApply">Apply</button>
+                          <a v-if="!focus_data.quick_apply" style="margin-left:auto;text-decoration:none;" :href="focus_data.url" class="btn btn-primary" target="_blank">Apply</a>
+                    <% }else{ %>
+                      <a style="margin-left:auto"href="/user/login?sendTo=search" class="btn btn-primary">Apply</a>
+                    <% } %>
+                </div>
+                <div class="job-show__header_ter">
+                    <div style="min-width:95px">
+                      <i class="fas fa-building"></i>
+                      <span>{{focus_data.company_size}}</span>
+                    </div> 
+                    <div>
+                      <i class="fas fa-briefcase"></i>
+                      <span style="text-transform:capitalize;">{{focus_data.type.replaceAll('-',' ')}}</span>
+                    </div>                  
+                </div>
+              </div>
               <div class="job-show-scroll-body">
                 <div class="about__position __section">
                   <p>{{ focus_data.description }}</p>

@@ -18,6 +18,16 @@ html{
     overflow-x: hidden;
     transition:0.2s ease-in-out;
 }
+html::-webkit-scrollbar{
+    width:10px;
+}
+html::-webkit-scrollbar-track{
+    background:#ddd
+}
+html::-webkit-scrollbar-thumb{
+    border-radius:20px;
+    background:rgb(90,90,90)
+}
 .focus___overlay{
     height:100vh;
     width:100%;
@@ -479,20 +489,6 @@ nav svg{
     background:#f44336;
     color:#fff;
 }
-.result-banner{
-    height:90px;
-    width:100%;
-    background:var(--secc-dark);
-    position:sticky;
-    top:0;
-    left:0;
-    right:0;
-    padding:20px 10px;
-    display:flex;
-    justify-content:space-between;
-    color:#fff;
-    align-items: center;
-}
 .jobb-show-display,.empty-body{
     height:100%;
 }
@@ -503,9 +499,9 @@ nav svg{
     border-bottom:1px solid #ddd;
     padding:20px 10px;
     left:0;
-    position:sticky;
     right:0;
-    top:66px
+    position:sticky;
+    top:0px
 }
 .results-body,.job-show-body{
     height:100%;
@@ -518,11 +514,6 @@ nav svg{
     width:100%;
 
 }
-.result-scroll-body{
-    height:638px;
-}
-
-
 .results-body::-webkit-scrollbar,.job-show-body::-webkit-scrollbar{
     width:7px;
     border-radius:10px
@@ -808,7 +799,7 @@ nav svg{
         width:100%
     }
     .search-page-body{
-        padding:20px 0;
+        padding:0;
         transition:0.1s ease-in-out
     }
     .mod-offer-owner{
@@ -843,8 +834,6 @@ nav svg{
         justify-content:center;
         gap:15px;
     }
-
-    
     .job-show-display{
         position:fixed;
         background:#fff;
@@ -852,8 +841,9 @@ nav svg{
         width:100%;
         z-index:3;
         right:-100%;
-        top:50px;
+        top:40px;
         transition:0.4s ease-in-out;
+        padding:0px 0px 60px 0px;
     }
     .show-job-section{
         transform:translateX(-100%);
@@ -863,6 +853,7 @@ nav svg{
         overflow-y: scroll;
         overflow-x: hidden;
     }
+    
     .job-show-scroll-body{
         height:1200px
     }
