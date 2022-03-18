@@ -56,13 +56,10 @@ app.use(express.urlencoded({extended:false}));
 app.use(sessions({
     secret: sessionKey,
     saveUninitialized:false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 30 },
     resave: false,
     store:database.session_store,
 }));
-
-
-
 
 
 app.use('/user', userRouter);

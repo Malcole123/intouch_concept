@@ -134,4 +134,34 @@ router.post('/finduser', async (req,res)=>{
 })
 
 
+
+
+
+router.post('/auth/login', async (req,res)=>{
+    var session = req.session;
+    var data = await fetchers.fetchloginAuth(req.body);
+    if(data.completed){
+        session.userID = data.data.authToken;
+        session.myID = data.data.id;
+        session.userEmail = data.data.email;
+        session.userType = data.data.role;
+        session.userFNAME = data.data.first_name;
+        session.userLNAME = data.data.last_name;
+        session.userPHONE = data.data.phone;
+        session.companyID = data.data.verified_companies_id;
+        session.fav_comp = data.data.following_companies;
+        session.fav_jobs = data.data.favourite_jobs;  
+        session.my_alerts = data.data.job_alerts  
+        res.send({
+            completed:true,
+            redPath:session.last_visit
+        })
+    }else{
+        res.send({
+            completed:false,
+        })
+    }
+})
+
+
 module.exports = router

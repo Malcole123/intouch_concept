@@ -24,14 +24,10 @@
   </head>
   <body>
     <section class="main">
+      <a href="/main/home"><img src="/images/logo.svg" alt="Intouch logo" style="width:7em; position:absolute;top:1%;left:50%;transform:translateX(-50%);"></a>
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-6">
-                    <img src="../images/loginill.png" alt="Log in to the ultimate talent network">
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6">
-                    <div class="sign-up-form">
-                        <h3>Log In</h3>
+            <div class="sign-up-form">
+                        <h3 class="text-center">Log In</h3>
                         <form class="needs-validation" id="login-form" @submit.prevent="processForm" @change="checkFormReady" action="/employer/auth/login/client">
                               <div class="row g-2 mt-2">
                                 <div class="col">
@@ -55,32 +51,22 @@
                                   </div>
                                 </div>
                               </div>
-                                <div class="col-sm-12 col-md-9 col-lg-3 mb-2 mt-2">
-                                    <button class="btn btn-dark" type="submit" v-if="!processing">
+                                <div class="col-12 d-flex align-items-center justify-content-center flex-column mb-2 mt-4">
+                                    <button class="btn btn-dark" type="submit" v-if="!processing" style="margin:0 auto">
                                         Log In...
                                     </button>
-                                    <button class="btn btn-primary" type="button" disabled v-if="processing">
-                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                      Loading...
-                                    </button>
+                                    <div class="spinner-border" role="status" v-if="processing">
+                                      <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
-                              </form>
-
-                                <div class="col-12 d-flex mb-6">
-                                    <p class="user-redirects">Don't have an account?<br><a href="/employer/register">Sign up</a></p>
-                                    <p class="user-redirects ms-2">Forgot your password?<br><a href="/employer/recover">Reset password</a></p>
-                                </div>                                       
-                    </div>
-                </div>
+                        </form>
+                            <div class="col-12 g-3 mt-4 d-flex justify-content-center flex-column align-items-center">
+                            <p class="user-redirects">Don't have an account?&nbsp<a href="/employer/register">Sign up</a></p>
+                            <p class="user-redirects">Forgot your password?&nbsp<a href="/employer/recover">Reset password</a></p>
+                        </div>                                       
             </div>
         </div>
-        <svg id="visual" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-            <path d="M0 467L137 407L274 411L411 434L549 412L686 475L823 417L960 480L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3e3be8"></path>
-            <path d="M0 486L137 453L274 453L411 471L549 479L686 449L823 483L960 452L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3fc4"></path>
-            <path d="M0 493L137 483L274 494L411 466L549 472L686 459L823 497L960 457L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#41409f"></path>
-            <path d="M0 480L137 510L274 474L411 503L549 498L686 474L823 510L960 488L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#413f7a"></path>
-            <path d="M0 520L137 519L274 518L411 507L549 498L686 516L823 507L960 514L960 541L823 541L686 541L549 541L411 541L274 541L137 541L0 541Z" fill="#3f3d56"></path>
-        </svg>
+    
     </section>
   </body>
 

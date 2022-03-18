@@ -430,16 +430,14 @@ const verifyCode = new Vue({
             currPlace = currID.replace('verify','');
             currInt = parseInt(currPlace);
             nextSpot = document.getElementById(`verify${currInt + 1 }`);
-            console.log(keyPress)
             if(keyPress < 58 && keyPress > 48){
                 nextSpot.focus();
             }else{
-                event.currentTarget.value=""
+                e.currentTarget.value=""
             }
         },
         processForm:async ()=>{
             var eCode = `${verifyCode.one}${verifyCode.two}${verifyCode.three}${verifyCode.four}${verifyCode.five}`;
-            console.log(eCode)
             const s =  await fetch('/employer/auth/identity/verify',{
                 method:'POST',
                 headers:{
@@ -448,16 +446,24 @@ const verifyCode = new Vue({
                 body:JSON.stringify({
                     code:eCode
                 })
-            }).then(res=>res.json()).then(data=>console.log(data))
+            }).then(res=>res.json()).then(data=>{
+                if(data.ok){
+                    window.location.href = data.redirect
+                }else{
+                    // Set invalid
+                }
+            }).catch(error=>{
+                // Do something with error
+            })
 
         }
     }
 })
 
 const compReg = new Vue({
-    el:"#registerCompBody",
+    el:"#registerForm",
     data:{
-        current_step:1,
+        current_step:5,
         info:{
             name:'',
             industry:'',
@@ -497,6 +503,7 @@ const compReg = new Vue({
                     });
                     if(error.length === 0){
                         compReg.current_step = 2;
+                        compReg.progressHandler(2)
                         compReg.progress.step_one = true
                     }
                     break
@@ -516,6 +523,7 @@ const compReg = new Vue({
                     });
                     if(error.length === 0){
                         compReg.current_step = 3;
+                        compReg.progressHandler(3)
                         compReg.progress.step_two = true
                     }
                     break
@@ -534,8 +542,14 @@ const compReg = new Vue({
                         setInvalid(`company${reqInput[err]}Input`)
                     });
                     if(error.length === 0){
-                        compReg.submit()
+                        compReg.current_step = 4;
+                        compReg.progressHandler(4)
+                        compReg.progress.step_two = true
                     }
+                    break
+                case 4:
+                    $('#completeRegButton').show()
+                    compReg.submit()
                     break
             }
         },
@@ -558,8 +572,18 @@ const compReg = new Vue({
             if(ret.ok){
                 window.location.href="/dashboard/home"
             }
+        },
+        progressHandler:(step)=>{
+            var total = 5;
+            var percent = `${(step/total)*100}%`
+            var progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percent;
+            progressBar.getAttribute('aria-valuenow',percent.replace('%',''))
         }
     }
+})
+window.addEventListener('load', ()=>{
+    compReg.progressHandler(compReg.current_step)
 })
 
 

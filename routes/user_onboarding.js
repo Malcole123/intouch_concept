@@ -52,6 +52,8 @@ router.post('/auth/identity/verify', async (req,res)=>{
     }else{
         codeMatch = false
     }
+    console.log(session)
+
     if(data.ok && codeMatch){
       if(session.userType === 'client'){
         res.send({
@@ -61,7 +63,7 @@ router.post('/auth/identity/verify', async (req,res)=>{
       }else{
         res.send({
             ok:true,
-            redirect:'/main/seejobs?q=&country=&sub_div',
+            redirect:'/main/seejobs?q=&country=&sub_divison=',
         })
       }
     }else{

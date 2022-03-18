@@ -509,6 +509,9 @@ nav svg{
     overflow-x: hidden;
     padding-bottom:50px;
 }
+.results-body{
+    height:632px;
+}
 .result-scroll-body,.job-show-scroll-body{
     height:520px;
     width:100%;
@@ -779,12 +782,12 @@ nav svg{
         top:-100vh;
         left:0;
         right:0;
-        z-index:99;
+        z-index:3;
         transition:0.2s;
     }
     .open__dropdown{
         display:block;
-        transform:translateY(100%);
+        top:45px;
     }
     .menu-options__display::before{
         display:none;

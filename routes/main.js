@@ -110,7 +110,6 @@ router.get('/seejobs', async (req,res)=>{
     }
 })
 
-
 router.get('/postajob/landing',(req,res)=>{
     var session = req.session;
     session.last_visit = req._parsedOriginalUrl.href

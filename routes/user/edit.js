@@ -39,6 +39,22 @@ router.get('/profile/edit',isAuth,(req,res)=>{
     })
 })
 
+router.get('/profile/security',isAuth,(req,res)=>{
+    var session = req.session;
+    var user = {
+        fname:session.userFNAME,
+        lname:session.userLNAME,
+        email:session.userEmail,
+        phone:session.userPhone
+    }
+    res.render('./account/profile/edit_profile.ejs',{
+        user:user,
+        loggedIn:true,
+        get_start:null,
+        type:'security'
+    })
+})
+
 router.get('/profile/notification',isAuth,(req,res)=>{
     var session = req.session;
     var user = {
