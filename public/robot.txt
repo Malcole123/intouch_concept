@@ -1,0 +1,21 @@
+User-agent: *
+Disallow: /main/seejobs
+Disallow:/user/register
+Disallow:/employer/register
+Disallow:/user/login
+Disallow:/user/register
+Disallow:/main/user/favourites
+Disallow:/main/company/profile
+Disallow:/onboarding/identity/verifyemail
+Disallow:/onboarding/employer/company/register
+Disallow:/resume/create/build
+Disallow:/dashboard/home
+Disallow:/dashboard/analytics
+Disallow:/dashboard/applications
+Disallow:/dashboard/listings
+Disallow:/images/
+Disallow:/css/
+Disallow:/js/
+Disallow:/resources/
+Disallow:/assets/
+Disallow:/html/
