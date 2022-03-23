@@ -17,7 +17,16 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/home', async (req, res)=>{
+const checkUserAccess = (req, res, next)=>{
+    var session = req.session;
+    if(session.userType === 'client'){
+        next()
+    }else{
+        res.redirect('/employer/login')
+    }
+}
+
+router.get('/home',checkUserAccess, async (req, res)=>{
     var session;
     session = req.session;
     var userData = {
@@ -27,17 +36,15 @@ router.get('/home', async (req, res)=>{
     }
     var application = await getters.submittedApplications(req.session.companyID,'');
     var company_data = await getters.getCompInfo(req.session.companyID,"");
-    if(session.userID && session.userType === 'client'){
-        if(company_data.ok && company_data.status === 200){
-            res.render('./dashboard/index',{
-                active_list:company_data.data.listings,
-                userDetails:userData,
-                application:application.data,
-                companyData:company_data.data.company_data
-            })
-        }else{
-            res.redirect('/employer/login')
-        }
+    if(company_data.ok && company_data.data.verified){
+        res.render('./dashboard/index',{
+            active_list:company_data.data.listings,
+            userDetails:userData,
+            application:application.data,
+            companyData:company_data.data.company_data
+        })
+    }else if(company_data.ok && !company_data.data.verified){
+        res.render('./dashboard/unverified_company.ejs')
     }else{
         res.redirect('/employer/login')
     }
@@ -54,19 +61,21 @@ router.get('/listings', async (req, res)=>{
     }
     var act_listings = await getters.getEmpListings(req.session.companyID,'');
     var pen_listings = await getters.getPenListings(req.session.companyID);
-    if(session.userID){
+    if(company_data.ok && company_data.data.verified){
         res.render('./dashboard/listings_main',{
             active_list:act_listings.data,
             pending_list:pen_listings.data,
             userDetails:userData,
             company:company_data.data.company_data
         });
+    }else if(company_data.ok && !company_data.data.verified){
+        res.render('./dashboard/unverified_company.ejs')
     }else{
         res.redirect('/employer/login')
     }
 })
 
-router.get('/applications',async (req,res)=>{
+router.get('/applications',checkUserAccess, async (req,res)=>{
     var session;
     session = req.session;
     var userData = {
@@ -123,7 +132,7 @@ router.get('/applications',async (req,res)=>{
     var application = await getters.submittedApplications(req.session.companyID,'');
     var company_data = await getters.getCompInfo(req.session.companyID);
     var sorted_app = await appStatus(application.data);
-    if(session.userID){
+    if(company_data.ok && company_data.data.verified){
         res.render('./dashboard/application',{
             active_list:act_listings.data,
             userDetails:userData,
@@ -131,6 +140,8 @@ router.get('/applications',async (req,res)=>{
             companyData:company_data.data, 
             app_break:sorted_app,         
         })
+    }else if(company_data.ok && !company_data.data.verified){
+        res.render('./dashboard/unverified_company.ejs')  
     }else{
         res.redirect('/employer/login')
     }

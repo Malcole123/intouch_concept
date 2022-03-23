@@ -64,8 +64,6 @@ nav{
     padding:70px 0;
 }
 
-
-
 @media(max-width:1020px){
     .paj-header{
         min-height:100vh;

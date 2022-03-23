@@ -113,6 +113,22 @@ router.get('/profile/applications',isAuth,async (req,res)=>{
     })
 })
 
+router.get('/savedjobs', isAuth, async (req,res)=>{
+    var session = req.session;
+    var myData = await fetchers.fetchAuthMe(session.userID);
+    var user = {
+        fname:session.userFNAME,
+        lname:session.userLNAME,
+        email:session.userEmail,
+        phone:myData.data.phone,
+    }
+    res.render('./account/profile/savedjobs.ejs',{
+        loggedIn:true,
+        get_start:null,
+        user:user,
+        s_jobs:myData.data.favourite_jobs
+    })
+})
 
 router.post('/edit/preferences', async (req,res)=>{
     var session = req.session;

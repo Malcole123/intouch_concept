@@ -414,6 +414,7 @@ nav svg{
 
 .search-page-body{
     height:fit-content;
+    min-height:100vh;
     background:rgba(247, 247, 247, 0.76) url('/images/Sprinkle(2).svg');
     background-size:cover;
     background-position:center;
@@ -489,7 +490,7 @@ nav svg{
     background:#f44336;
     color:#fff;
 }
-.jobb-show-display,.empty-body{
+.job-show-display,.empty-body,.results-display{
     height:100%;
 }
 .job-show-banner{
@@ -507,14 +508,12 @@ nav svg{
     height:100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding-bottom:50px;
 }
-.results-body{
-    height:632px;
-}
+
 .result-scroll-body,.job-show-scroll-body{
-    height:520px;
+    height:80vh;
     width:100%;
+    padding-bottom:60px;
 
 }
 .results-body::-webkit-scrollbar,.job-show-body::-webkit-scrollbar{
@@ -865,10 +864,12 @@ nav svg{
         height:100%;
         overflow-y: scroll;
         overflow-x: hidden;
+        padding-bottom:70px;
+
     }
     
     .job-show-scroll-body{
-        height:1200px
+        height:1200px;
     }
     .job-show__header_sec{
         display:flex;

@@ -147,9 +147,11 @@ const setSearchState= new Vue({
             });
           if(getPref.ok){
             setSearchState.pref.f_comp = getPref.data.fav_comp;
-            setSearchState.pref.f_jobs = getPref.data.fav_jobs;
             setSearchState.pref.job_alerts = getPref.data.job_alerts;
             setSearchState.pref.ref = getPref.data.me;
+            getPref.data.fav_jobs.forEach((job)=>{
+                setSearchState.pref.f_jobs.push(job.id)
+            })
           }else{
 
           }

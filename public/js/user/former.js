@@ -60,7 +60,8 @@ const rApp = new Vue({
                 }            
             }
             if(rApp.formReady){
-                rApp.processing = true
+                rApp.processing = true;
+                rApp.formReady = false
                 processor()
             }else{
                 rApp.checkForErrors()
@@ -570,7 +571,8 @@ const compReg = new Vue({
                 }
             })
             if(ret.ok){
-                window.location.href="/dashboard/home"
+                compReg.current_step = 5;
+                progressHandler(5)
             }
         },
         progressHandler:(step)=>{
@@ -579,6 +581,9 @@ const compReg = new Vue({
             var progressBar = document.getElementById('progressBar');
             progressBar.style.width = percent;
             progressBar.getAttribute('aria-valuenow',percent.replace('%',''))
+        },
+        skipStep:()=>{
+            compReg.current_step += 1
         }
     }
 })

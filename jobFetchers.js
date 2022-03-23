@@ -4,6 +4,7 @@ if(process.env.NODE_ENV !== "production"){
 
 const fetchallListingsUrl = process.env.QUERY_ALL_JOBS_URL;
 const fetchListingByIDURL = process.env.QUERY_JOB_BY_ID;
+const fetchMySavedURL = process.env.QUERY_MY_SAVED_JOBS;
 
 const fs = require('fs')
 const axios = require('axios').default
@@ -41,11 +42,33 @@ const jobQuerySingle = async (id)=>{
     return response
 }
 
+const jobQueryMine = async (id)=>{
+  var response = await  axios.get(fetchMySavedURL, {
+        params:{
+            user_id:id
+        }
+    })
+    .then(res => {
+      return{
+        completed:true,
+        data:res.data
+      }
+    })
+    .catch(err => {
+      return {
+        completed:false,
+        message:err.message
+      }
+    });
+    return response.data
+}
+
+
 
 
 
 module.exports = {
   jbAllFetch:jobQueryAll,
   jbSingleFetch:jobQuerySingle,
-
+  jbMineSaved:jobQueryMine,
 }

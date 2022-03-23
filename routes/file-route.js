@@ -54,5 +54,10 @@ router.post('/download/resume', checkAllowed, async (req,res)=>{
 })
 
 
+router.post('/company-logo', (req,res)=>{
+    
+})
+
+
 
 module.exports = router

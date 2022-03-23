@@ -86,7 +86,9 @@ router.post('/auth/register', async (req,res)=>{
             completed:true
         })
     }else{
-        res.send(data)   
+        res.send({
+            completed:false
+        })   
     }
 })
 
