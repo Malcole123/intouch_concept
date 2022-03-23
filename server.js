@@ -24,6 +24,7 @@ const userAlertRouter = require('./routes/alerts/user.js');
 const companyRouter = require('./routes/client_user/account/company.js');
 const communicatonRouter = require('./routes/communication/account_emails.js');
 const fileRouter = require('./routes/file-route.js');
+const legalRouter = require('./routes/legal.js')
 
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
@@ -76,7 +77,7 @@ app.use('/alerts',userAlertRouter);
 app.use('/company',companyRouter);
 app.use('/communicate', communicatonRouter)
 app.use('/api/files',fileRouter);
-
+app.use('/legal', legalRouter)
 
 app.get('*', function(req, res){
     res.redirect('/main/home')
