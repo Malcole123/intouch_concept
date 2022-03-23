@@ -263,7 +263,8 @@ nav img{
     margin:0 auto
 }
 .footer{
-    background:#333
+    background:#333;
+    padding:50px 20px;
 }
 .footer-body{
     display:grid;
