@@ -48,7 +48,9 @@ const setSearchState= new Vue({
                 company:'',
                 matchArr:[],
                 sub_division_arr:[]
-            }
+            },
+            lady_load:[],
+            lazy_count:0,
         },
         focus_data:{},
         pref:{
@@ -72,9 +74,16 @@ const setSearchState= new Vue({
             var par_data = JSON.parse(str_data.value);
             if(par_data.items.length > id){
                 setSearchState.all_jobs = par_data.items;
-                par_data.items.forEach((list)=>{
-                    if(!companyAutoComplete.data.src.includes(list.company_name_posted)){companyAutoComplete.data.src.push(`${list.company_name_posted}`)}
-                    setSearchState.matched_filters.push(list.id)
+                par_data.items.forEach((list,index)=>{
+                    if(!companyAutoComplete.data.src.includes(list.company_name_posted)){
+                        companyAutoComplete.data.src.push(`${list.company_name_posted}`)
+                    }
+                    if(index < 25){
+                        setSearchState.matched_filters.push(list.id)
+                    }else{
+                        setSearchState.display.lady_load.push(list.id);
+                        setSearchState.display.lazy_load += 1
+                    }
                 })
                 setSearchState.display.item_count =par_data.itemsTotal;
                 setSearchState.display.page.total = par_data.pageTotal;
@@ -97,7 +106,7 @@ const setSearchState= new Vue({
             },3000);
             setTimeout(()=>{
                 setSearchState.adHandler();
-            },900)
+            },300)
         
          
         },

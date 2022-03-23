@@ -263,17 +263,23 @@ nav img{
     margin:0 auto
 }
 .footer{
-    height:fit-content;
-    left:0;
-    right:0;
-    background:#FAFAFA;
-    border-bottom:1px solid #ddd;
-    padding:50px 20px;
+    background:#333
 }
 .footer-body{
-    display:flex;
-    align-items:flex-start;
-    gap:25px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+}
+
+.footer-body ul{
+    list-style-type:none;
+}
+.footer-body ul li{
+    color:#fff
+}
+
+.footer-body ul li a{
+    color:#fff;
+    text-decoration:none;
 }
 .footer-nav-links{
     display:flex;
@@ -292,6 +298,7 @@ nav img{
     text-decoration:none;
 
 }
+
 
   @media(max-width:1020px) {
     .cookie-declaration{
@@ -356,12 +363,8 @@ nav img{
       .search-field{
           width:100%;
       }
-    .footer-body{
-        display:flex;
-        align-items:flex-start;
-        justify-content:center;
-        flex-direction:column;
-        gap:25px;
+      .footer-body{
+        grid-template-columns:repeat(2,1fr);
     }
     .footer-nav-links{
         display:flex;
@@ -369,6 +372,6 @@ nav img{
         gap:40px;
     }
     
- 
+      
 
   }

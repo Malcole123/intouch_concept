@@ -8,11 +8,12 @@ const lAuUrl = process.env.USER_AUTH_LOGIN;
 const authMeURL = process.env.USER_AUTH_ME;
 const searchbyEmailUrl = process.env.USER_SEARCH_BY_EMAIL;
 const applicationSubmitUrl = process.env.SUBMIT_APPLICATION_URL;
+const applicationGetMINEURL = process.env.GET_MY_APPLICATIONS;
 const editGeneralPreferencesURL = process.env.EDIT_GENERAL_PREFERENCES;
 const getNotificationURL = process.env.GET_NOTIFICATIONS;
 const getCompanyDataURL = process.env.GET_COMPANY_INFO;
-const createCompanyURL = process.env.CREATE_COMPANY
-
+const createCompanyURL = process.env.CREATE_COMPANY;
+const editUserDataURL = process.env.EDIT_USER_ACCOUNT;
 const fs = require('fs')
 const axios = require('axios').default
 
@@ -180,6 +181,25 @@ const submitApplication = async (req)=>{
   return response
 }
 
+const getmyApplications = async (id)=>{
+  const response = await  axios.get(applicationGetMINEURL + id, {
+  })
+  .then(res => {
+    var retData = {
+        completed:true,
+        data:res.data
+    }
+    return retData
+  })
+  .catch(err => {
+    var retData = {
+      completed:false,
+    }
+    return retData
+  });
+  return response
+}
+
 const getNotifications = async (auth_id,my_id)=>{
   var response = await  axios.get(`${getNotificationURL}?user_id=${my_id}`,{
     headers:{
@@ -269,6 +289,28 @@ const createNewCompany = async (c_Data,auth,user)=>{
     return retData
   });
   return response
+}
+
+const editUserData = async(changes)=>{
+  var r_t = await axios.post(editUserDataURL + changes.id,{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:{
+      users_id:changes.id,
+      first_name:changes.fname,
+      last_name:changes.lname,
+      phone_number:changes.phone,
+      new_password:changes.new_password,
+      old_password:changes.old_password,
+    }
+  }).then(res=>{
+    console.log(res)
+    return res
+  }).catch(error=>{
+    console.log(error)
+  })
 }
 
 /*Common User End*/
@@ -365,11 +407,14 @@ module.exports = {
   fetchUserByEmail:userExists,
   fetchAuthMe:authMe,
   postApplication:submitApplication,
+  getmyApplications:getmyApplications,
   editGenPref:editGeneralPref,
+  editUserAccount:editUserData,
   getNotif:getNotifications,
   removeNotif:removeNotification,
   getCompanyData:getCompanyInfo,
   createCompany:createNewCompany,
   v_email_create:verifyEmailCreate,
   v_sms_create:verifySmsCreate,
+
 }

@@ -23,13 +23,14 @@ const isAuth = (req,res,next)=>{
     }
 }
 
-router.get('/profile/edit',isAuth,(req,res)=>{
+router.get('/profile/edit',isAuth,async (req,res)=>{
     var session = req.session;
+    var myData = await fetchers.fetchAuthMe(session.userID);
     var user = {
         fname:session.userFNAME,
         lname:session.userLNAME,
         email:session.userEmail,
-        phone:session.userPhone
+        phone:myData.data.phone_number,
     }
     res.render('./account/profile/edit_profile.ejs',{
         user:user,
@@ -39,13 +40,14 @@ router.get('/profile/edit',isAuth,(req,res)=>{
     })
 })
 
-router.get('/profile/security',isAuth,(req,res)=>{
+router.get('/profile/security',isAuth,async(req,res)=>{
     var session = req.session;
+    var myData = await fetchers.fetchAuthMe(session.userID);
     var user = {
         fname:session.userFNAME,
         lname:session.userLNAME,
         email:session.userEmail,
-        phone:session.userPhone
+        phone:myData.data.phone,
     }
     res.render('./account/profile/edit_profile.ejs',{
         user:user,
@@ -55,13 +57,15 @@ router.get('/profile/security',isAuth,(req,res)=>{
     })
 })
 
-router.get('/profile/notification',isAuth,(req,res)=>{
+router.get('/profile/notification',isAuth,async(req,res)=>{
     var session = req.session;
+    var myData = await fetchers.fetchAuthMe(session.userID);
     var user = {
         fname:session.userFNAME,
         lname:session.userLNAME,
         email:session.userEmail,
-        phone:session.userPhone
+        phone:myData.data.phone,
+        notif:myData.data.notification_settings
     }
     res.render('./account/profile/edit_profile.ejs',{
         user:user,
@@ -87,19 +91,25 @@ router.get('/profile/cookies',isAuth,(req,res)=>{
     })
 })
 
-router.get('/profile/applications',isAuth,(req,res)=>{
+router.get('/profile/applications',isAuth,async (req,res)=>{
     var session = req.session;
-    var user = {
-        fname:session.userFNAME,
-        lname:session.userLNAME,
-        email:session.userEmail,
-        phone:session.userPhone
+    var app_data = await fetchers.getmyApplications(session.myID);
+    if(app_data.completed){
+        var user = {
+            fname:session.userFNAME,
+            lname:session.userLNAME,
+            email:session.userEmail,
+            phone:session.userPhone,
+            applications:app_data.data
+        }
+    }else{
+
     }
     res.render('./account/profile/edit_profile.ejs',{
         user:user,
         loggedIn:true,
         get_start:null,
-        type:'applications'
+        type:'applications',
     })
 })
 
@@ -132,6 +142,21 @@ router.post('/edit/preferences', async (req,res)=>{
             message:'Not a user'
         })
     }
+})
+
+router.post('/edit/account', async(req,res)=>{
+    var session = req.session;
+    var myData = await fetchers.fetchAuthMe(session.userID);
+    var changeData = {
+        id:session.myID,
+        type:req.body.type,
+        fname:req.body.fname.length > 0 ? req.body.fname : myData.data.first_name,
+        lname:req.body.lname.length > 0 ? req.body.lname : myData.data.last_name,
+        phone:req.body.phone.length > 0 ? req.body.phone : myData.data.phone_number,
+        old_password:req.body.old_password,
+        new_password:req.body.new_password,
+    }
+    var getDT = await fetchers.editUserAccount(changeData);
 })
 
 

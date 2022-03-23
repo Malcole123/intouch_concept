@@ -730,14 +730,24 @@ nav svg{
     height:fit-content;
     left:0;
     right:0;
-    background:#FAFAFA;
-    border-bottom:1px solid #ddd;
+    background:#333;
     padding:50px 20px;
 }
 .footer-body{
-    display:flex;
-    align-items:flex-start;
-    gap:25px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+}
+
+.footer-body ul{
+    list-style-type:none;
+}
+.footer-body ul li{
+    color:#fff
+}
+
+.footer-body ul li a{
+    color:#fff;
+    text-decoration:none;
 }
 .footer-nav-links{
     display:flex;
@@ -937,11 +947,7 @@ nav svg{
         margin:10px auto;
     }
     .footer-body{
-        display:flex;
-        align-items:flex-start;
-        justify-content:center;
-        flex-direction:column;
-        gap:25px;
+        grid-template-columns:repeat(2,1fr);
     }
     .footer-nav-links{
         display:flex;

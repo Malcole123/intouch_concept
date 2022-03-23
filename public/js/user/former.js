@@ -463,7 +463,7 @@ const verifyCode = new Vue({
 const compReg = new Vue({
     el:"#registerForm",
     data:{
-        current_step:5,
+        current_step:1,
         info:{
             name:'',
             industry:'',

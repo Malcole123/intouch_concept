@@ -1,0 +1,28 @@
+<div class="notif__display">
+    <div class="notif__body">
+      <div class="d-flex justify-content-between align-items-center pb-2 mb-3 " style="gap:10px">
+        <h3>Notifications</h3>
+        <span style="height:2px;flex:1;background:#ddd;border-radius:10x;"></span>
+        <i style="cursor:pointer;" class="fas fa-times fs-3 text-dark _alert"></i>
+      </div>
+      <h6 class="mt-3" v-if="notif.display.length === 0">No Notifications</h6>  
+      <div class="__notif__holder">
+          <div v-for="notif in notif.display" :key="notif.id" style="height:130px;width:100;display:flex;align-items:center;gap:10px;position:relative" v-bind:class="notif.noticed ? '__notif__card' : '__notif__card __unread_notif'">
+            <div class="new__notif__ind" v-if="!notif.noticed" style="width:10px;height:10px;border-radius:50%;background:#f44336"></div>
+            <div class="___notif_content d-flex " style="flex:1;gap:12px;align-items:flex-start;">
+                <img src="../images/imageplaceholder.png" alt="Placeholder image" style="width:55px">
+                <div>
+                  <p>{{notif.body}}</p>
+                  <a v-if="notif.application_notif" :href="notif.direct_user_to">See next steps</a>
+                  <a v-if="notif.job_alert_notif" :href="notif.direct_user_to">See Jobs</a>
+                  <a v-if="notif.change_in_job_notif" :href="notif.direct_user_to">View</a>
+                </div>
+            </div>
+            <div class="__notif__remove">
+              <i class="fas fa-trash fs-6"></i>
+            </div>
+            <span style="position:relative;bottom:5px;right:3px;color:rgba(94, 93, 93, 0.452);font-size:0.7rem">{{setRelative(notif.created_at)}}</span>
+          </div>
+      </div>  
+    </div>   
+    </div>

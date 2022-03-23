@@ -204,6 +204,34 @@ html{
 .__carousel__outer::-webkit-scrollbar{
     display:none
 }
+.footer-body ul{
+    list-style-type:none;
+}
+.footer-body ul li{
+    color:#333
+}
+
+.footer-body ul li a{
+    color:#333;
+    text-decoration:none;
+}
+.footer-nav-links{
+    display:flex;
+    gap:40px;
+}
+.footer__employers ul, .footer__intouch ul{
+    list-style-type:none;
+}
+.footer__employers ul li, .footer__intouch ul li{
+    margin:6px 0;
+}
+
+.footer__employers ul li a, .footer__intouch ul li a{
+    list-style-type:none;
+    color:#333;
+    text-decoration:none;
+
+}
 
 @media(max-width:1020px){
     .__company__identity{
@@ -231,5 +259,13 @@ html{
     }
     .__hide__mobile{
         display:none;
+    }
+    .footer-body{
+        grid-template-columns:repeat(2,1fr);
+    }
+    .footer-nav-links{
+        display:flex;
+        justify-content:center;
+        gap:40px;
     }
 }

@@ -30,6 +30,7 @@ router.get('/identity/verifyemail',(req,res)=>{
 
 router.get('/employer/company/register', (req,res)=>{
     var session = req.session;
+    console.log(session)
     if(session.userID){
         res.render('./account/onboarding/companyregister.ejs',{
             user:{
@@ -52,13 +53,12 @@ router.post('/auth/identity/verify', async (req,res)=>{
     }else{
         codeMatch = false
     }
-    console.log(session)
 
     if(data.ok && codeMatch){
       if(session.userType === 'client'){
         res.send({
             ok:true,
-            redirect:'/onboarding/company/register',
+            redirect:'/onboarding/employer/company/register',
         })
       }else{
         res.send({
