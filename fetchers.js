@@ -298,16 +298,21 @@ const editUserData = async(changes)=>{
       'Content-Type':'application/json'
     },
     body:{
+      type:changes.type,
       users_id:changes.id,
       first_name:changes.fname,
       last_name:changes.lname,
       phone_number:changes.phone,
       new_password:changes.new_password,
       old_password:changes.old_password,
+      password:""
     }
   }).then(res=>{
     console.log(res)
-    return res
+    return{
+      ok:true,
+      data:res.data
+    }
   }).catch(error=>{
     console.log(error)
   })

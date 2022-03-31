@@ -52,7 +52,7 @@ const rApp = new Vue({
             const processor = async ()=>{
                 var r = await cEnroll(sendData.fn, sendData.ln, sendData.em, sendData.pn,sendData.ps, sendData.tos,sendData.user_type,ePoint);
                 if(r.completed){
-                    window.location.href = "/onboarding/identity/verifyemail"  
+                    window.location.href = r.redPath  
                 }else{
                     rApp.errorMsg.email = "User already exists"
                     rApp.processing = false

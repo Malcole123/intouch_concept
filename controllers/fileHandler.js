@@ -8,7 +8,7 @@ const singleResumeUpload = async(req,res,next)=>{
             filePath:req.file.path,
             fileType:req.file.mimetype,
             fileSize:req.file.size,
-            owner:req.session.userEmail || 'pro.malikcoleman@gmail.com'
+            owner:req.session.userEmail
         });
         await file.save()
         req.session.resumeRef = file._id

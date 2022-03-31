@@ -10,8 +10,7 @@ const cookie = require('cookie');
 const sessions = require('express-session');
 const urlHandler = require('../../../urlHandlers');
 const getters = require('./fetchers_putters.js');
-const res = require('express/lib/response');
-
+const checkJSON = require('../../../json/startup-emp.json')
 const router = express.Router();
 
 router.use(express.json());
@@ -28,6 +27,7 @@ const checkUserAccess = (req, res, next)=>{
 
 router.get('/home',checkUserAccess, async (req, res)=>{
     var session;
+    const checkList = checkJSON
     session = req.session;
     var userData = {
         fname:session.userFNAME,
@@ -36,14 +36,22 @@ router.get('/home',checkUserAccess, async (req, res)=>{
     }
     var application = await getters.submittedApplications(req.session.companyID,'');
     var company_data = await getters.getCompInfo(req.session.companyID,"");
-    if(company_data.ok && company_data.data.verified){
+    if(!company_data.data.company_data.checklistComplete){
+        checkList.forEach((item,index)=>{
+            item.steps.forEach((step)=>{
+                
+            })
+        })
+    }
+
+    if(company_data.ok && company_data.data.company_data.verified){
         res.render('./dashboard/index',{
             active_list:company_data.data.listings,
             userDetails:userData,
             application:application.data,
             companyData:company_data.data.company_data
         })
-    }else if(company_data.ok && !company_data.data.verified){
+    }else if(company_data.ok && !company_data.data.company_data.verified){
         res.render('./dashboard/unverified_company.ejs')
     }else{
         res.redirect('/employer/login')
@@ -61,14 +69,14 @@ router.get('/listings', async (req, res)=>{
     }
     var act_listings = await getters.getEmpListings(req.session.companyID,'');
     var pen_listings = await getters.getPenListings(req.session.companyID);
-    if(company_data.ok && company_data.data.verified){
+    if(company_data.ok && company_data.data.company_data.verified){
         res.render('./dashboard/listings_main',{
             active_list:act_listings.data,
             pending_list:pen_listings.data,
             userDetails:userData,
             company:company_data.data.company_data
         });
-    }else if(company_data.ok && !company_data.data.verified){
+    }else if(company_data.ok && !company_data.data.company_data.verified){
         res.render('./dashboard/unverified_company.ejs')
     }else{
         res.redirect('/employer/login')
@@ -83,8 +91,9 @@ router.get('/applications',checkUserAccess, async (req,res)=>{
         email:session.userEmail,
         comp_id:session.companyID
     }
-    const appStatus = (data)=>{ //Mandatory array
+    const appStatus = (data)=>{ //Gets and obj
         var sorted={
+            total:0,
             pending:0,
             contacted:0,
             interviewed:0,
@@ -92,61 +101,76 @@ router.get('/applications',checkUserAccess, async (req,res)=>{
             reviewed:0,
             rejected:0,
         };
-        data.forEach((app) => {
-            switch(app.status){
-                case 'pending_review':
-                    var curr = sorted.pending;
-                    curr +=1;
-                    sorted.pending = curr;
-                    break
-                case'contacted':
-                    var curr = sorted.contacted;
-                    curr +=1;
-                    sorted.contacted = curr;
-                    break
-                case 'interviewed':
-                    var curr = sorted.interviewed;
-                    curr +=1;
-                    sorted.interviewed = curr;
-                    break
-                case 'short_listed':
-                    var curr = sorted.short_listed;
-                    curr +=1;
-                    sorted.short_listed = curr;
-                    break
-                case 'reviewed':
-                    var curr = sorted.reviewed;
-                    curr +=1;
-                    sorted.reviewed = curr;
-                    break
-                case 'rejected':
-                    var curr = sorted.rejected;
-                    curr +=1;
-                    sorted.rejected = curr;
-                    break
-            }
+        data.forEach((listing,index) => {
+            var appData = listing.app_data;
+            sorted.total+= appData.length
+            appData.forEach((app,index)=>{
+                switch(app.status){
+                    case 'pending_review':
+                        var curr = sorted.pending;
+                        curr +=1;
+                        sorted.pending = curr;
+                        break
+                    case'contacted':
+                        var curr = sorted.contacted;
+                        curr +=1;
+                        sorted.contacted = curr;
+                        break
+                    case 'interviewed':
+                        var curr = sorted.interviewed;
+                        curr +=1;
+                        sorted.interviewed = curr;
+                        break
+                    case 'short_listed':
+                        var curr = sorted.short_listed;
+                        curr +=1;
+                        sorted.short_listed = curr;
+                        break
+                    case 'reviewed':
+                        var curr = sorted.reviewed;
+                        curr +=1;
+                        sorted.reviewed = curr;
+                        break
+                    case 'rejected':
+                        var curr = sorted.rejected;
+                        curr +=1;
+                        sorted.rejected = curr;
+                        break
+                }
+            })
         });
         return sorted  
     }
     var act_listings = await getters.getEmpListings(req.session.companyID,'');
-    var application = await getters.submittedApplications(req.session.companyID,'');
     var company_data = await getters.getCompInfo(req.session.companyID);
-    var sorted_app = await appStatus(application.data);
-    if(company_data.ok && company_data.data.verified){
+    var sorted_app = appStatus(act_listings.data);
+    if(company_data.ok && company_data.data.company_data.verified){
         res.render('./dashboard/application',{
             active_list:act_listings.data,
             userDetails:userData,
-            application:application.data,
+            application:act_listings.data.app_data,
             companyData:company_data.data, 
             app_break:sorted_app,         
         })
-    }else if(company_data.ok && !company_data.data.verified){
+    }else if(company_data.ok && !company_data.data.company_data.verified){
         res.render('./dashboard/unverified_company.ejs')  
     }else{
         res.redirect('/employer/login')
     }
 
 })
+
+router.get('/applications/browse',checkUserAccess,async(req,res)=>{
+    var session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    res.render('./dashboard/application_view.ejs', {userDetails:userData})
+})
+
+
 
 router.get('/analytics',async (req,res)=>{
     var session;
@@ -360,16 +384,29 @@ router.get('/support', async (req, res)=>{
         res.redirect('/employer/login')
     }
 })
-
-
-
-
-
-
-
-
-
-
+router.get('/settings', async (req, res)=>{
+    var session;
+    session = req.session;
+    var userData = {
+        fname:session.userFNAME,
+        email:session.userEmail,
+        comp_id:session.companyID
+    }
+    var company_data = await getters.getCompInfo(req.session.companyID,"");
+    if(session.userID && session.userType === 'client'){
+        if(company_data.ok && company_data.status === 200){
+            res.render('./dashboard/settings.ejs',{
+                active_list:company_data.data.listings,
+                userDetails:userData,
+                companyData:company_data.data.company_data
+            })
+        }else{
+            res.redirect('/employer/login')
+        }
+    }else{
+        res.redirect('/employer/login')
+    }
+})
 
 router.post('/listings/add', async (req,res)=>{
     var session = req.session
@@ -409,5 +446,19 @@ router.post('/listings/delete', async (req,res)=>{
     }
 })
 
+router.post('/application/edit', async(req,res)=>{
+    var session = req.session;
+    var temp = req.body.temp;
+    temp.made_by = session.userFNAME;
+    var arr = req.body.current_comments;
+    arr.push(temp)
+    if(session.userType === 'client'){
+        var p_C = await getters.editApp(req.body.app_id,arr,req.body.type,req.body.status);
+        console.log(p_C)
+        res.send(p_C)
+    }else{
+        res.send('Not Found')
+    }
+})
 
 module.exports = router

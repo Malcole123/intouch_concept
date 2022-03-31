@@ -48,6 +48,16 @@ router.get('/logout', isAuth, (req,res)=>{
     res.redirect('/employer/login')
 })
 
+router.get('/recruiter/register', async (req, res)=>{
+    var session = req.session
+    if(session.userID && session.userType==='client'){
+        res.redirect('/dashboard/home')
+    }else{
+        res.render('./account/authentication/client_auth/register_recruiter', {
+            invitingCompany:"Example",
+        })
+    }
+})
 
 router.post('/auth/register/client', async (req,res)=>{
     var session = req.session;
@@ -96,6 +106,30 @@ router.post('/auth/login/client', async (req,res)=>{
         })
     }
 })
+
+
+router.post('/auth/recruiter/register', async()=>{
+    var session = req.session;
+    var data = await fetchers.fetchsignAuth(req.body);
+    if(data.completed){
+        session.userID = data.auth;
+        session.userEmail = data.user.email;
+        session.userFNAME = data.user.first_name;
+        session.userLNAME = data.user.last_name;
+        session.userType = data.user.role;
+        session.myID = data.user.id;
+        console.log(session)
+        fetchers.v_email_create(data.user.email, data.user.first_name,data.user.v_code)
+        res.send({
+            ok:true,
+            redPath:'/onboarding/identity/verifyemail'
+        })
+    }else{
+        res.send({
+            ok:false,
+            message:'Something went wrong, please try again later.'
+        }) 
+    }})
 
 
 

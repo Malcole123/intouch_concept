@@ -37,19 +37,24 @@ const checkAllowed = (req, res, next)=>{
 
 router.post('/resume',upload.r_upload.single('resume'), singleFileUpload.resumeUpload);
 
-router.post('/download/resume', checkAllowed, async (req,res)=>{
-    resumeFile.find({_id:req.body.ref_id},(error,data)=>{
+router.get('/download/resume', checkAllowed, async (req,res)=>{
+    var search_path = decodeURIComponent(req._parsedOriginalUrl.query.replace('ref_id=',''));
+    console.log(search_path)
+    /*resumeFile.find({filePath:req.body.ref_id},(error,data)=>{
         if(error){
+            console.log(error)
             res.send({
                 error:true,
                 message:'File not found'
             })
         }else{
+            console.log(fpath)
             var send = data[0];
-            var fpath = send.filePath.replace('//','/');
-
-            res.send(fpath)
+            var fpath = send.filePath.replace("/\\/g",'/');
         }
+    })*/
+    res.download(`/${search_path}`, (error)=>{
+        console.log(error)
     })
 })
 

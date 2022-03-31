@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../css/user.css" />
+    <!----Font Awesome CDN-->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!----Boot-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14" defer></script>
+    <script type="module"src="../../js/user/former.js" defer></script>
+    <title>Intouch|Register Recruiter</title>
+  </head>
+  <body>
+    <section class="main">
+      <a href="/main/home"><img src="/images/logo.svg" alt="Intouch logo" style="width:7em; position:absolute;top:1%;left:50%;transform:translateX(-50%);"></a>
+        <div class="container">
+            <div class="sign-up-form">
+                <h3 class="text-center">You were invited to join the team at <%=invitingCompany%></h3>
+                <div class="form-feedback">
+                  <p id="formFeedBack"></p>
+                </div>
+                <form class="needs-validation" id="register-form" method="POST" action="/employer/auth/register/client" @submit.prevent="processForm" novalidate @change ="checkFormReady">
+                    <div class="row g-2 mt-3">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <div class="form-floating">
+                            <input type="text" class="form-control" id="firstNameInput" placeholder="John" v-model.trim="firstName" @blur="checkFirst">
+                            <label for="firstNameInput">First name:</label>
+                            <div class="invalid-feedback" v-if>
+                               Please check your first name
+                                </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-floating">
+                              <input type="text" class="form-control" id="lastNameInput" placeholder="Doe" v-model.trim="lastName" @blur="checkLast">
+                              <label for="lastNameInput">Last name:</label>
+                              <div class="invalid-feedback">
+                                Please check your last name
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row g-2 mt-2">
+                        <div class="col-12">
+                          <div class="form-floating">
+                            <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" v-model.trim="email" @blur="verifyEmail">
+                            <label for="emailInput">Email address:</label>
+                            <div class="invalid-feedback">
+                                {{errorMsg.email}}
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-floating">
+                              <input type="text" class="form-control" id="phoneInput" placeholder="123-555-5678" v-model="phoneNumber" @blur="verifyPhone" @keyup="phoneformatter">
+                              <label for="phoneInput">Phone number:</label>
+                              <div class="invalid-feedback">
+                                {{errorMsg.phoneNumber}}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row g-2 mt-2">
+                        <div class="col-lg-6 col-sm-12 col-md-12 ">
+                          <div class="form-floating">
+                            <input type="password" class="form-control" id="createpasswordInput" placeholder="password" v-model.trim="password" @blur="checkPassReq">
+                            <label for="createpasswordInput">Create password:</label>
+                                <div class="invalid-feedback">
+                                    {{errorMsg.passSet}}
+                                </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12 col-md-12">
+                            <div class="form-floating">
+                              <input type="password" class="form-control" id="confirmpasswordInput" placeholder="password" v-model.trim="passConfirm" @blur="checkPassMatch">
+                              <label for="confirmpasswordInput">Confirm password:</label>
+                              <div class="invalid-feedback">
+                                {{errorMsg.passConfirm}}
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row mt-2 d-none" id="passwordReqDisplay">
+                            <p>Your password must:</p>
+                            <div class="col-12 d-flex justify-content-start flex-wrap">
+                                <p class="pass-req"><i class="fas fa-check-double"></i> Be betweeen 8 -32 characters</p>
+                                <p class="pass-req"><i class="fas fa-check-double"></i> Must have atleast one uppercase letter.</p>
+                                <p class="pass-req"><i class="fas fa-check-double"></i> Must have atleast one number.</p>
+                            </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-12">
+                            <label class="form-check-label" for="termsandServiceagree">
+                              By signing up you agree to our <a href="/legal/terms_of_service" target="_blank" class="text-primary pe-auto">terms and services </a>
+                            </label>
+                            <div class="invalid-feedback">
+                                {{errorMsg.tosAgree}}
+                            </div>
+
+                          </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-12 d-flex flex-column justify-content-center align-items-center g-3">
+                          <p class="user-redirects mb-4 text-center" style="margin:0 auto">Already have an account? <a href="/employer/login"> Log in</a></p>
+                            <button class="btn btn-dark" type="submit" v-if="!processing">
+                                Sign up
+                            </button>
+                            <div class="spinner-border" role="status" v-if="processing">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>  
+                      </div>         
+                    
+                </form>
+            </div>
+        </div>
+    </section>
+  </body>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</html>

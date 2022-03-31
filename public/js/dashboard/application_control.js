@@ -2,7 +2,7 @@ import { dateFormatter } from '../vFiers.js'
 var scroll_auto 
 
 const applicationHandler = new Vue({
-    el:"#app__body",
+    el:"#app_body",
     data:{
         a_d:[],
         focus:{
@@ -100,27 +100,8 @@ const fullScreenHandler = new Vue({
             fullScreenHandler.focus.data.download_link = fullScreenHandler.applications[id].resume_reference.length > 0  ? "/" + fullScreenHandler.applications[id].resume_reference.replace('\','/'') : "/dashboard/applications";
             console.log(fullScreenHandler.focus.data.download_link)
             clearInterval(scroll_auto);
-            console.log(fullScreenHandler.focus.data)            
         },
-        download_cv:async(event)=>{
-            var dwnload = await fetch(`/api/files/download/resume`,{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    ref_id:"622c57deef0471060865c6da",
-                    email:"",
-                })
-            }).then(res=>res.json()).then(data=>{
-                console.log('Hello world');
-                return data
-            }).catch(error=>{
-                console.log(error);
-                return error
-            });
-            console.log(dwnload)
-        },
+
         regularScroll:async (type,interval)=>{
             clearInterval(scroll_auto);
             fullScreenHandler.display.autoPlay = false
@@ -166,95 +147,193 @@ const fullScreenHandler = new Vue({
     }
 })
 
-window.addEventListener('load',()=>{
-    applicationHandler.initialize()
+const browseHandler = new Vue({
+    el:"#browse-page",
+    data:{
+        app_data:{},
+        all_data:{},
+        focus:{
+            id:"",
+            name:"",
+            status:"",
+            created_at:"",
+            created_at_str:"",
+            email:"",
+            phone:"",
+            comments:[],
+            pre_screen:[],
+            resume_ref:""
+        },
+        inputs:{
+            comment:""
+        },
+        send_count:{
+            status:0
+        },
+        search:{
+            input:"",
+            returned:[],
+            active:false,
+        }
+    },
+    methods:{
+        focusApp:async (id)=>{
+            var fn = await dateFormatter(browseHandler.app_data[id].created_at,'unix');
+            browseHandler.focus.id = browseHandler.app_data[id].id;
+            browseHandler.focus.name = browseHandler.app_data[id].name;
+            browseHandler.focus.status = browseHandler.app_data[id].status;
+            browseHandler.focus.created_at = browseHandler.app_data[id].created_at;
+            browseHandler.focus.created_at_str =  fn.m_y_d_str.monthStr + " " + fn.date + " " + fn.year;
+            browseHandler.focus.email = browseHandler.app_data[id].email;
+            browseHandler.focus.phone = browseHandler.app_data[id].phone;
+            browseHandler.focus.comments = browseHandler.app_data[id].recruiter_comment;
+            browseHandler.focus.pre_screen = browseHandler.app_data[id].application_test_data;
+            browseHandler.focus.resume_ref = window.location.origin + "/" + browseHandler.app_data[id].resume_reference.replace(/\134/g,'/');
+            var jsonTest = JSON.parse(browseHandler.focus.pre_screen.replace('/',''));
+            browseHandler.focus.pre_screen = JSON.parse(jsonTest);
+        },
+        readableDate:async(date_unix)=>{
+            var readDate = await dateFormatter(date_unix,'unix')
+            return readDate.m_y_d_str.monthStr + " " + readDate.date + " " + readDate.year;
+        },
+        makeComment:async ()=>{
+            var made_date = new Date()
+            if(browseHandler.inputs.comment.length === 0){return false}
+            var template = {
+                comment:browseHandler.inputs.comment,
+                edited:made_date.getTime,
+                made_by:''
+            }
+            var sendArr = browseHandler.focus.comments;
+            sendArr.push(template)
+            var c_post = await fetch('/dashboard/application/edit',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({
+                    temp:template,
+                    current_comments:sendArr,
+                    app_id:browseHandler.focus.id,
+                    type:'comment'
+                })
+            }).then(res=>res.json()).then(data=>{
+                if(data.ok){
+                    console.log(data);
+                    var storage = sessionStorage.getItem('intouch-app-dt');
+                    var stor_JSON = JSON.parse(storage);
+                    stor_JSON.app_data.forEach((app,index)=>{
+                        if(app.id === browseHandler.focus.id){
+                            stor_JSON.app_data[index].recruiter_comment = data.data.recruiter_comment;      
+                        }
+                    })
+                    sessionStorage.setItem('intouch-app-dt',JSON.stringify(stor_JSON))
+                    console.log(stor_JSON)
+
+                }else{
+                    // handle error
+                }
+            }).catch(error=>{
+                //handle error
+                console.log(error)
+            })
+        },
+        changeStatus:async (status)=>{
+            browseHandler.send_count.status +=1;
+            var template = {
+                comment:browseHandler.inputs.comment,
+                edited:0,
+                made_by:''
+            }
+            var c_post = await fetch('/dashboard/application/edit',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({
+                    temp:template,
+                    current_comments:[],
+                    app_id:browseHandler.focus.id,
+                    status:status,
+                    type:'status'
+                })
+            }).then(res=>res.json()).then(data=>{
+                if(data.ok){
+                    browseHandler.focus.status = data.data.status
+                    var storage = sessionStorage.getItem('intouch-app-dt');
+                    var stor_JSON = JSON.parse(storage);
+                    stor_JSON.app_data.forEach((app,index)=>{
+                        if(app.id === browseHandler.focus.id){
+                            stor_JSON.app_data[index].status = data.data.status;      
+                        }
+                    })
+                    sessionStorage.setItem('intouch-app-dt',JSON.stringify(stor_JSON))
+                    console.log(stor_JSON)
+                    setTimeout(()=>{
+                        browseHandler.send_count.status === 0
+                    },22000)
+                }else{
+                    // handle error
+                }
+            }).catch(error=>{
+                //handle error
+                console.log(error)
+            })
+        },
+        searchAll:async(input)=>{
+            var search_input = input;
+            var retArr = [];
+            var matchArrID = [];
+            if(search_input.length > 4){
+                browseHandler.app_data.forEach((app)=>{
+                    if(app.name.includes(search_input) && !matchArrID.includes(app.id)){
+                        retArr.push(app);
+                        matchArrID.push(app.id)
+                    }
+                })
+            }
+            if(retArr.length > 0){
+                browseHandler.returned = retArr
+                browseHandler.search.active = true;
+            }
+        },
+        download_cv:async(event)=>{
+            var dwnload = await fetch(`/api/files/download/resume?ref_id=${browseHandler.focus.resume_ref}`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+            }).then(res=>res.json()).then(data=>{
+                //window.location.href = window.location.origin 
+                console.log(data)
+                return data
+            }).catch(error=>{
+                return error
+            })
+        },
+
+    }
 })
 
-const autoScroll = (id)=>{
-    var scroll_area = document.querySelector('.__applications__scroll');
-    var cards = scroll_area.querySelectorAll('.__app__card');
-    var scroll_cntrl = document.querySelector('.application__display__content')
-    var card_w = cards[0].offsetWidth
-    cards.forEach((card)=>{
-        card.className ="__app__card"
-    })
-    cards[fullScreenHandler.display.last_preview].classList ="__app__card preview__applicant";
-    if(fullScreenHandler.display.last_preview < cards.length -1){
-        var offset = card_w*0.53
-        fullScreenHandler.display.last_preview += 1; //Problem here--> Causing auto scroll to do double loop on initalize
-        setTimeout(()=>{
-            if(fullScreenHandler.display.autoPlay){
-                scroll_cntrl.scrollLeft += offset
-            }
-        },2900)
-    }else{
-        fullScreenHandler.display.last_preview = 0; // Problem here --> Causing auto loop to set all class if end of list is focused before initalize
-        setTimeout(()=>{
-            if(fullScreenHandler.display.autoPlay){
-                scroll_cntrl.scrollLeft = 0 
-            }        
-        },2900)
-    }
-}
-
-const calc_Scrl = (current=0)=>{
-    var ac = document.querySelectorAll('.__app__card');
-    var c_width = ac[0].offsetWidth;
-    var total = (c_width * ac.length) + (ac.length * 40);
-    var rem = total - current
-    return {
-        rem:rem,
-        total:total,
-        c_width:c_width
-    }
-}
 
 const main = ()=>{
-    $('.filter__init').on('click', ()=>{
-        $('.filter__box').toggle()
+    $('.nav-to-browse').on('click', (e)=>{
+        var dt = $(e.currentTarget).attr('data-list-info');
+        sessionStorage.setItem('intouch-app-dt',dt)
+        window.location.href = `/dashboard/applications/browse`;
     })
 
-    $('.__auto__play__init').on('click',()=>{
-        if(fullScreenHandler.display.autoPlay){
-            fullScreenHandler.display.autoPlay = false;
-            clearInterval(scroll_auto);
-            $('.__app__card').removeClass('preview__applicant')
-        }else{
-            var scroll_area = document.querySelector('.__applications__scroll');
-            var cards = scroll_area.querySelectorAll('.__app__card');
-            $(`.${cards[fullScreenHandler.display.last_preview].className}`).addClass('preview__applicant');
-            fullScreenHandler.display.autoPlay = true; 
-            scroll_auto = setInterval(()=>{
-                autoScroll()
-            },4000)
-        }
-    })
-
-    $('#close__app_modal').on('click',()=>{
-        $('.application__modal').removeClass('open__app__modal');
-        clearInterval(scroll_auto)
-    })
-
-    $('#close_app__view').on('click',()=>{
-        $('.__app__view').removeClass(' __view__open')
-    })
-
-    $('#addCommentBtn').on('click',()=>{
-        if(fullScreenHandler.focus.changes.comment.length === 0){
-            $('.commentDisp').fadeIn()
-            $('#commentInput').focus();
-
-        }else{
-
-        }
-    })
-
-    $('#commentInput').on('blur',()=>{
-        if(fullScreenHandler.focus.changes.comment.length === 0 ){
-            $('.commentDisp').fadeOut()
+    $(window).on('load', ()=>{
+        if(window.location.href.includes('browse')){
+            var dt = JSON.parse(sessionStorage.getItem('intouch-app-dt'));
+            browseHandler.app_data = dt.app_data,
+            browseHandler.all_data = dt
         }
     })
 }
+
+
+
 
 
 

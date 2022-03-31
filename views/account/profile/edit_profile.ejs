@@ -1,269 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="/css/styles.css"/>
-    <link rel="stylesheet" href="/css/main/home.css"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/main/home.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="/resources/autoComplete.js-10.2.6/dist/css/autoComplete.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous" defer></script>
+    <link
+      rel="stylesheet"
+      href="/resources/autoComplete.js-10.2.6/dist/css/autoComplete.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/7be4f826c0.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="/js/min/script.min.js" defer></script>
-    <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
+    <link rel="icon" type="image/x-icon" href="/images/logo-small.png" />
     <title>Edit Profile</title>
     <style>
-      .header{
-        height:100vh;
-        width:100%;
-        background:rgba(247, 247, 247, 0.76) ;
+      .header {
+        height: 100vh;
+        width: 100%;
+        background: rgba(247, 247, 247, 0.76);
       }
-      .nav-links ul li a{
-        color:#333
+      .nav-links ul li a {
+        color: #333;
       }
-      .profile-body{
-        height:100%;
-        background:#fff
+      .profile-body {
+        height: 100%;
+        background: #fff;
       }
-      .settings-menu{
-        width:100%;
-        height:100%;
+      .settings-menu {
+        width: 100%;
+        height: 100%;
       }
-      .setting-option{
-        position:relative;
-        display:flex;
-        gap:10px;
-        padding-left:45px;
-        align-items:center;
-        height:52px;
-        border-bottom:0.2px solid #ddd;
+      .setting-option {
+        position: relative;
+        display: flex;
+        gap: 10px;
+        padding-left: 45px;
+        align-items: center;
+        height: 52px;
+        border-bottom: 0.2px solid #ddd;
       }
-      .setting-option:hover{
-        background:rgba(247, 247, 247, 0.76)
+      .setting-option:hover {
+        background: rgba(247, 247, 247, 0.76);
       }
-      .setting-option:hover::before{
-        content:"";
-        display:block;
-        top:0;
-        left:0;
-        position:absolute;
-        width:5px;
-        height:100%;
-        background:#333;
+      .setting-option:hover::before {
+        content: "";
+        display: block;
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 5px;
+        height: 100%;
+        background: #333;
         border-radius: 0px 5px 5px 0px;
       }
-      .setting-option a{
-        text-decoration:none;
-        color:#333;
+      .setting-option a {
+        text-decoration: none;
+        color: #333;
       }
-      .setting-option-indicator{
-        position:absolute;
-        left:0;
-        top:0;
-        height:100%;
-        width:5px;
-        background:#f44336;
-        border-radius:0px 5px 5px 0px;
+      .setting-option-indicator {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 5px;
+        background: #f44336;
+        border-radius: 0px 5px 5px 0px;
       }
-      .profile-body input[type='text']{
-        border:none;
-        border-bottom:1px solid #333;
-        border-radius:0px;
+      .profile-body input[type="text"] {
+        border: none;
+        border-bottom: 1px solid #333;
+        border-radius: 0px;
       }
-      .checkbox-options{
-        display:flex;
+      .checkbox-options {
+        display: flex;
         align-items: center;
-        gap:12px;
-        padding:20px 0;
+        gap: 12px;
+        padding: 20px 0;
       }
-      .footer{
-        padding:50px 20px;
+      .footer {
+        padding: 50px 20px;
       }
-
     </style>
   </head>
   <body>
     <section class="header">
-    <%-include('../../components/regular_nav.ejs') -%>
+      <%-include('../../components/regular_nav.ejs') -%>
       <div class="head-content">
         <div class="container profile-body">
-         <div class="row bg-white p-0">
-           <div class="col-sm-12 col-md-3 col-lg-4">
-             <%-include('../../components/setting_nav.ejs')-%>        
-           </div>
-           <div class="col-sm-12 col-md-9 col-lg-8 p-3" id="editProfileInfo">
-            <% if(type === 'edit'){ %>
-              <h3 style="font-weight:500;">Profile</h3>
+          <div class="row bg-white p-0">
+            <div class="col-sm-12 col-md-3 col-lg-4">
+              <%-include('../../components/setting_nav.ejs')-%>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-8 p-3" id="editProfileInfo">
+              <% if(type === 'edit'){ %>
+              <h3 style="font-weight: 500">Profile</h3>
               <form @submit.prevent="changeDetails" @change="changeDetect">
                 <div class="row mt-3">
                   <div class="col-6">
                     <label for="firstnameInput">First name</label>
-                    <input type="text"class="form-control" id="firstnameInput" value="<%=user.fname%>">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="firstnameInput"
+                      value="<%=user.fname%>"
+                    />
                   </div>
                   <div class="col-6">
                     <label for="lastnameInput">Last name</label>
-                    <input type="text" class="form-control" id="lastnameInput" value="<%=user.lname%>">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lastnameInput"
+                      value="<%=user.lname%>"
+                    />
                   </div>
                 </div>
                 <div class="row mt-3 mb-5">
                   <div class="col-6">
                     <label for="emailInput">Email</label>
-                    <input type="text"class="form-control" id="emailInput" value="<%=user.email%>">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="emailInput"
+                      value="<%=user.email%>"
+                    />
                   </div>
                   <div class="col-6">
                     <label for="phoneInput">Phone</label>
-                    <input type="text" class="form-control" id="phoneInput" value="<%=user.phone%>">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="phoneInput"
+                      value="<%=user.phone%>"
+                    />
                   </div>
-                  <div class="col-4 mt-5">
-                    <button type="button" class="btn btn-outline-dark" v-if="changed">Save Changes</button>
+                  <div class="col-8 mt-5" v-if="changed">
+                    <div class="col-6 mb-3">
+                      <input type="text" class="form-control" id="passwordInput" v-model.trim="password" placeholder="Enter your password to confirm">
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-outline-dark"
+                      @click="changeDetails"
+                    >
+                      Save Changes
+                    </button>
                   </div>
                 </div>
               </form>
-              </div>
-              <script defer>
-                  const changeDetails = new Vue({
-                    el:"#editProfileInfo",
-                    data:{
-                      fname:"",
-                      lname:"",
-                      email:"",
-                      phone:"",
-                      changed:false
-                    },
-                    methods:{
-                      changeDetails:()=>{
-                        console.log('sent')
+            </div>
+            <script defer>
+              const changeDetails = new Vue({
+                el: "#editProfileInfo",
+                data: {
+                  fname: "",
+                  lname: "",
+                  email: "",
+                  phone: "",
+                  changed: false,
+                  password:""
+                },
+                methods: {
+                  changeDetails: async () => {
+                    var res = await fetch("/me/edit/account", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
                       },
-                      changeDetect:()=>{
-                        changeDetails.changed = true
-                      }
-                    }
-                  })
-              </script>
-            <% }else if(type === 'notification'){ %>
-              <h3 style="font-weight:500;">Notification Settings</h3>
-              <div class="row">
-                <div class="radio-options">
-                  <%if(user.notif.by_email){ %>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="notifByEmail" checked>
-                      <label class="form-check-label" for="notifByEmail">
-                        By Email
-                      </label>
-                    </div>                  
-                    <% }else{ %>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="notifByEmail">
-                        <label class="form-check-label" for="notifByEmail">
-                         By Email
-                        </label>
-                      </div>                  
-                    <% } %>
-                </div>
-                <div class="checkbox-options">
-                  <% if(user.notif.by_sms){ %>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="notifBySms">
-                      <label class="form-check-label" for="notifBySms">
-                        By Sms
-                      </label>
-                    </div>
-                  <% }else{ %>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="notifBySms">
-                      <label class="form-check-label" for="notifBySms">
-                        By Sms
-                      </label>
-                    </div>
-                  <% } %>
-                </div>
-                <div class="checkbox-options">
-                  <%if (user.notif.by_intouch){%>
-                    <input type="checkbox" id="getnotifbyEmail" checked>
-                  <% }else{ %>
-                    <input type="checkbox" id="getnotifbyEmail">
-                  <% } %>
-                  <label for="">Applicaton Notifications</label>
-                </div>
-              </div>
-              <% }else if(type === 'security'){ %>
-                <h3 style="font-weight:500;">Account Security</h3>
-                <div class="row mt-5 g-3" id="passwordChangeArea">
-                  <h6 style="font-weight:600;">Reset password</h6>
-                  <div class="col-8">
-                    <label for="oldPasswordInput">Old password</label>
-                    <input type="password" class="form-control" id="oldPasswordInput">
-                  </div>
-                  <div class="col-8">
-                    <label for="newPasswordInput">New password</label>
-                    <input type="password" class="form-control" id="newPasswordInput">
-                  </div>
-                  <div class="col-8">
-                    <label for="confirmPasswordInput">Confirm password</label>
-                    <input type="password" class="form-control" id="confirmPasswordInput" onblur="similarCheck()">
-                  </div>
-                <div class="col-6 mt-3">
-                  <button type="button" class="btn btn-dark" onclick="sendPassChange()">Save Changes</button>
-                </div>
-                <script>
-                  var input = document.getElementById('oldPasswordInput');
-                  var input1 = document.getElementById('newPasswordInput');
-                  var input2 = document.getElementById('confirmPasswordInput');
-                  const similarCheck = ()=>{
-                    if(input1.value === input2.value){
-                      input2.className = 'form-control';
-                      return true
-                    }else if(input1.value !== input2.value && input2.value.length > 0 ){
-                      input2.className = 'form-control is-invalid';
-                      return false
-                    }
-                  }
-
-                  const sendPassChange = async()=>{
-                    var dt = await fetch('/me/edit/account', {
-                      method:'POST',
-                      headers:{
-                        'Content-Type':'application/json'
-                      },
-                      body:JSON.stringify({
-                        type:'security',
-                        fname:'',
-                        lname:'',
-                        phone:'',
-                        old_password:input.value,
-                        new_password:input1.value,
-                      })
-                    }).then(res=>res.json()).then(data=>{
-                        console.log(data)
-                    }).catch(error=>{
-                      console.log(error)
+                      body: JSON.stringify({
+                        type: "details",
+                        fname: changeDetails.fname,
+                        lname: changeDetails.lname,
+                        email: changeDetails.email,
+                        phone: changeDetails.phone,
+                        old_password:changeDetails.password,
+                        new_password:""
+                      }),
                     })
+                      .then((res) => res.json())
+                      .then(data=>{
+                        console.log(data)
+                      }).catch((error) => {
+                        console.log(error);
+                      });
+                  },
+                  changeDetect: () => {
+                    changeDetails.changed = true;
+                  },
+                },
+              });
+            </script>
+            <% }else if(type === 'notification'){ %>
+            <h3 style="font-weight: 500">Notification Settings</h3>
+            <div class="row">
+              <div class="radio-options">
+                <%if(user.notif.by_email){ %>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="notifByEmail"
+                    checked
+                  />
+                  <label class="form-check-label" for="notifByEmail">
+                    By Email
+                  </label>
+                </div>
+                <% }else{ %>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="notifByEmail"
+                  />
+                  <label class="form-check-label" for="notifByEmail">
+                    By Email
+                  </label>
+                </div>
+                <% } %>
+              </div>
+              <div class="checkbox-options">
+                <% if(user.notif.by_sms){ %>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="notifBySms"
+                  />
+                  <label class="form-check-label" for="notifBySms">
+                    By Sms
+                  </label>
+                </div>
+                <% }else{ %>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="notifBySms"
+                  />
+                  <label class="form-check-label" for="notifBySms">
+                    By Sms
+                  </label>
+                </div>
+                <% } %>
+              </div>
+              <div class="checkbox-options">
+                <%if (user.notif.by_intouch){%>
+                <input type="checkbox" id="getnotifbyEmail" checked />
+                <% }else{ %>
+                <input type="checkbox" id="getnotifbyEmail" />
+                <% } %>
+                <label for="">Applicaton Notifications</label>
+              </div>
+            </div>
+            <% }else if(type === 'security'){ %>
+            <h3 style="font-weight: 500">Account Security</h3>
+            <div class="row mt-5 g-3" id="passwordChangeArea">
+              <h6 style="font-weight: 600">Reset password</h6>
+              <div class="col-8">
+                <label for="oldPasswordInput">Old password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="oldPasswordInput"
+                />
+              </div>
+              <div class="col-8">
+                <label for="newPasswordInput">New password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="newPasswordInput"
+                />
+              </div>
+              <div class="col-8">
+                <label for="confirmPasswordInput">Confirm password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmPasswordInput"
+                  onblur="similarCheck()"
+                />
+              </div>
+              <div class="col-6 mt-3">
+                <button
+                  type="button"
+                  class="btn btn-dark"
+                  onclick="sendPassChange()"
+                >
+                  Save Changes
+                </button>
+              </div>
+              <script>
+                var input = document.getElementById("oldPasswordInput");
+                var input1 = document.getElementById("newPasswordInput");
+                var input2 = document.getElementById("confirmPasswordInput");
+                const similarCheck = () => {
+                  if (input1.value === input2.value) {
+                    input2.className = "form-control";
+                    return true;
+                  } else if (
+                    input1.value !== input2.value &&
+                    input2.value.length > 0
+                  ) {
+                    input2.className = "form-control is-invalid";
+                    return false;
                   }
+                };
 
-                </script>            
-                </div>
-              <% }else if(type === 'applications'){ %>
-                <h3 style="font-weight:500;">Your applications</h3>
-                <div class="row mt-5 g-3">
-                  <%user.applications.forEach((application)=>{ %>
-                    <div class="app_display">
-
-                    </div>
-                  <% })%>
-                </div>
-              <% } %>
-         </div>
+                const sendPassChange = async () => {
+                  var dt = await fetch("/me/edit/account", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      type: "security",
+                      fname: "",
+                      lname: "",
+                      phone: "",
+                      old_password: input.value,
+                      new_password: input1.value,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      console.log(data);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                };
+              </script>
+            </div>
+            <% }else if(type === 'applications'){ %>
+            <h3 style="font-weight: 500">Your applications</h3>
+            <div class="row mt-5 g-3">
+              <%user.applications.forEach((application)=>{ %>
+              <div class="app_display"></div>
+              <% })%>
+            </div>
+            <% } %>
+          </div>
         </div>
-
-      </div>        
+      </div>
     </section>
-  <%-include('../../components/footer.ejs') -%>
-
+    <%-include('../../components/footer.ejs') -%>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+  ></script>
 </html>

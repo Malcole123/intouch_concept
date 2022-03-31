@@ -1,0 +1,20 @@
+[
+    {
+        "title":"Edit your intTouch brand identity ",
+        "desc":"Upload your logos, locations and any other relevent information so that prospect have more information before applying to your listings",
+        "main_route":"",
+        "steps":[
+            "Upload your company/business logo",
+            "Upload a a banner image to be displayed on your company profile",
+            "Add locations so that people know the places you operate"
+        ]
+    },
+    {
+        "title":"Invite recruiters",
+        "desc":"Collaborate with your recruitment team. It's as easy as sending a link",
+        "main_route":"",
+        "steps":[
+            "Send your first email link {{}} / {{}} remaing. Upgrade to include more team members"
+        ]
+    }
+]

@@ -20,7 +20,12 @@
     <link href="/css/dashboard/main.css" rel="stylesheet">
     <link href="/css/dashboard/applications.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
-
+    <style>
+        .listing-status:nth-child(even){
+            border-top:0.8px solid #ddd;
+            border-bottom:0.8px solid #ddd
+        }
+    </style>
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -64,6 +69,7 @@
                         <button class="close"></button>
                     </div>       
                 </div>
+                <%-include('../components/dashboard_components/user_actions.ejs') -%>
             </div>
         </div>              
         <div class="app-main">
@@ -145,7 +151,7 @@
                                             <div class="widget-content-left">
                                                 <div class="widget-heading">Short List</div>
                                                 <div class="widget-subheading">
-                                                    For <%= active_list.length %> listings from <%= application.length %> applications
+                                                    For <%= active_list.length %> listings from <%= app_break.total %> applications
                                                 </div>
                                             </div>
                                             <div class="widget-content-right">
@@ -174,126 +180,47 @@
                         </div>
                         <div class="row parent__max">
                             <% active_list.forEach((listing,index)=>{ %>
-                                <% var spec_data = [] %>
-                                <% application.forEach((appl,index)=> { %>
-                                    <% if( appl.job_id === listing.id ){ %>
-                                        <% spec_data.push(appl) %>
-                                    <% } %>  
-                                <% }) %>
-                                <div class="col-md-12">
-                                    <div class="main-card mb-3 card __table__cards" id="card<%=index %>" data-list-title="<%=listing.title%>" data-app-data="<%=JSON.stringify(spec_data)%>" data-id="<%=index%>">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="main-card mb-3 card __table__cards" id="card<%=index %>" data-id="<%=index%>" style="height:fit-content">
                                         <div class="d-flex justify-content-between border-0 card-header">
-                                            <%= index + 1 %>. <%= listing.title %>
+                                            <%= listing.title %>
                                             <div class="d-flex g-2 card-header__right">
-                                                <button type="button" data-toggle="tooltip" title="Full Screen" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark initFullScreen" @click="full__Focus(<%=index%>)">
-                                                    <i class="pe-7s-display2 fs-5"></i>
-                                                </button>
+                                                <!--Possibly place an arrow to navigate with a link-->
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <div class="scroll-area-lg">
+                                            <div class="scroll-area-s">
                                                 <div class="scrollbar-container ps--active-y">
-                                                    <div class="table-responsive">
-                                                        <% var app_count = 0  %>
-                                                        <table class="align-end mb-0 table table-hover">
-                                                            <thead class="border-0">
-                                                            <tr>
-                                                                <th class="text-left">Name</th>
-                                                                <th class="text-left">Status</th>
-                                                                <th class="text-left">Comments</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <% application.forEach(function(app,index){ %>
-                                                                    <% if( app.job_id === listing.id ){ %>
-                                                                        <% app_count += 1 %>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="widget-content p-0">
-                                                                                    <div class="widget-content-wrapper">
-                                                                                        <div class="widget-content-left mr-3">
-                                                                                            <div class="widget-content-left">
-                                                                                                <img width="40" class="rounded-circle" src="" alt="">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="widget-content-left flex2">
-                                                                                            <div class="widget-heading"> <%= app.name %></div>
-                                                                                            <div class="widget-subheading opacity-7"></div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="text-left">
-                                                                            <% var badge_text = app.status
-                                                                                var formatted_status = badge_text.replaceAll('_',' ')
-                                                                             %>
-                                                                                <% if(badge_text.replaceAll(" ","_") === 'pending_review' ){ %>
-                                                                                    <div class="badge badge-info">
-                                                                                        <%= formatted_status %>
-                                                                                    </div>
-                                                                                <% }else if(badge_text === 'contacted'){ %>
-                                                                                    <div class="badge badge-primary">
-                                                                                        <%= formatted_status %>
-                                                                                    </div>
-                                                                                <% }else if(badge_text === 'interviewed'){%>
-                                                                                    <div class="badge badge-dark">
-                                                                                        <%= formatted_status %>
-                                                                                    </div>
-                                                                                <% }else if(badge_text === 'reviewed'){%>
-                                                                                    <div class="badge badge-secondary">
-                                                                                        <%= formatted_status %>
-                                                                                    </div>
-                                                                                <% }else if(badge_text === 'denied'){%>
-                                                                                    <div class="badge badge-danger">
-                                                                                        <%= formatted_status %>
-                                                                                    </div>
-                                                                                <% }else if(badge_text.replaceAll(" ","_") === 'short_listed'){%>
-                                                                                    <div class="badge badge-success">
-                                                                                        <%= formatted_status %>
-                                                                                    </div>
-                                                                                <% }else{%>
-                                                                                    <div class="badge badge-light">
-                                                                                        <%= formatted_status %>
-                                                                                    </div>
-                                                                                <% } %>
-                                                                            </td>
-                                                                            <td class="text-left">
-                                                                                <%= app.recruiter_comment.comment %>
-                                                                            </td>
-                                                                            <td class="text-right">
-                                                                                <button type="button" id="PopoverCustomT<%=index%>" class="btn btn-primary btn-sm ml-auto" data-app-id ="<%= app.id %>">Details</button>
-                                                                            </td>
-                                                                        </tr> 
-                                                                    <% } %>
-                                                                <% }) %>
-                                                               
-                                                                <% var page_count = app_count/ 25%>
-                                                            </tbody>
-                                                        </table>
-                                                        <% if(app_count===0){ %>
-                                                            <div style="width:100%" class="d-flex flex-column align-items-center justify-content-center">
-                                                                <span class="d-block fs-6 mt-3 mb-3">No applications just yet</span>
-                                                                <img style="width:20%; margin:0 auto" src="../images/dashboard/ill/no_applications_found.svg" alt="No applications just yet">
-                                                            </div>
-                                                        <% } %>
+                                                   <!--Holds status tracking information-->
+                                                   <div class="d-flex justify-content-between align-items-center listing-status mb-2">
+                                                        <span class="fs-6">Total applications</span>
+                                                        <h5><%=listing.app_data.length%></h5>
+                                                   </div>
+                                                   <div class="d-flex justify-content-between align-items-center listing-status mb-2">
+                                                    <span class="fs-6">Pending applications</span>
+                                                    <%pending = 0%>
+                                                    <%listing.app_data.forEach((l)=>{ %>
+                                                        <%if(l.status.includes('pending_review')){ %>
+                                                            <%pending += 1 %>
+                                                        <% }%>
+                                                    <% }) %>
+                                                    <h5><%=pending%></h5>
                                                     </div>
-                                                </div>
+                                                    <div class="d-flex justify-content-between align-items-center listing-status mb-2">
+                                                        <span class="fs-6">Short listed applicants</span>
+                                                        <%short = 0%>
+                                                        <%listing.app_data.forEach((l)=>{ %>
+                                                            <%if(l.status.includes('short')){ %>
+                                                                <%short += 1 %>
+                                                            <% }%>
+                                                        <% }) %>
+                                                        <h5><%=short%></h5>
+                                                    </div>
+                                                    <div class="d-flex align-items-end justify-content-end mt-auto cta-l">
+                                                        <button class="btn btn-outline-dark nav-to-browse" data-list-info="<%=JSON.stringify(listing)%>">See all applications</button>
+                                                    </div>
+                                             </div>
                                             </div>
-                                        </div>
-                                        <div class="d-flex justify-content-center card-footer">
-                                            <nav class="" aria-label="Page navigation example">
-                                                <ul class="pagination">
-                                                    <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-                                                    <% for(let i = 1; i <= page_count; i++){ %>
-                                                        <% if(i === 1){ %>
-                                                            <li class="page-item active"><a href="javascript:void(0);" class="page-link"><%= i + 1 %></a></li>
-                                                        <% }else{ %>
-                                                            <li class="page-item"><a href="javascript:void(0);" class="page-link"><%= i + 1 %></a></li>
-                                                        <% } %>
-                                                    <% } %>
-                                                    <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-                                                </ul>
-                                            </nav>
                                         </div>
                                     </div>
                                 </div>
@@ -330,145 +257,6 @@
                  </div>
         </div>
     </div>
-    <section class = "application__modal" id="app__modal">
-        <div class="application__display__body">
-            <div class="application__display__header">
-                <h4>{{applications.length}} Applications for {{title}} </h4>
-                <i id="close__app_modal" class="pe-7s-close fs-1" style="cursor:pointer"></i>
-            </div>
-            <div class="__app__sort__control">
-             
-            </div>
-            <div class="application__display__content">
-                <div class="__app__view">
-                    <div class="row mb-3 d-flex justify-content-center">
-                        <i id="close_app__view"class="pe-7s-angle-up-circle text-dark text-center fs-1" style="cursor:pointer"></i>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="__app__card">
-                                <header class="article-header">
-                                    <div>
-                                        <div class="text-dark category-title">
-                                            Submitted
-                                            <span class="date">{{focus.data.created_at_str}}</span>
-                                        </div>
-                                    </div>
-                                    <h2 class="article-title">
-                                        {{focus.data.name}}
-                                    </h2>
-                                </header>     
-                                <div class="tags">
-                                    <div style="text-transform:capitalize;">{{focus.data.status}}</div>
-                                </div>
-                                <div class="buttons">
-                                    <a class="btn btn-dark" :href="focus.data.download_link">Download CV</a>
-                                    <button type="button" class="ml-2 btn btn-success">Contact</button>
-                                </div>
-                            </div>
-                            <div class="w-100 mt-2">
-                                <div class="__app__card" style="height:60px">   
-                                    <h2 class="article-title">
-                                        Status
-                                    </h2>
-                                    <div class="buttons">
-                                        <button type="button" class="btn btn-success">Short List</button>
-                                        <button type="button" class="ml-2 btn btn-danger">Reject</button>
-                                        <button type="button" class="ml-2 btn btn-dark">Interviewed</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="__app__card" style="height:408px">
-                                <h2 class="article-title">
-                                    Comments
-                                </h2>
-                                <div class="comments__area">
-                                    <div class="__comment__card" v-for="(comment,index) in focus.data.recruiter_comment" :key="comment.id">
-                                        <div class="__cc__head">
-                                            <h6>{{comment.made_by}}</h6>
-                                        </div>
-                                        <p>{{comment.comment}}</p>
-                                    </div>
-                                    <div class="d-flex flex-column align-items-center justify-content-center" v-if="focus.data.recruiter_comment">
-                                        <h6>No comments made yet</h6>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-2 commentDisp">
-                                    <textarea class="form-control" id="commentInput" rows="3" style="resize:none" v-model.trim="focus.changes.comment"></textarea>
-                                    <small>{{ 300 - focus.changes.comment.length }}/300 characters remaining</small>
-                                </div>
-                                <button type="button" class="btn-dark mt-1" id="addCommentBtn">Leave a comment...</button>
-                              
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="__app__card" style="height:408px">
-                                <header class="article-header">
-                                    <div>
-                                        <h2 class="article-title">
-                                            Pre-Screening Test Results
-                                        </h2>
-                                    </div>
-                                 
-                                </header>     
-                              
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="__applications__scroll">
-                    <div class="__app__card" v-for="(app,index) in applications" :data-id= "index" :data-application-info="app" @mouseenter="preview" @mouseleave="end_preview(index)">
-                        <header class="article-header">
-                            <div>
-                                <div class="text-dark category-title">
-                                    Submitted
-                                    <span class="date">{{app.created_at_str}}</span>
-                                </div>
-                            </div>
-                            <h2 class="article-title">
-                                {{app.name}}
-                            </h2>
-                        </header>
-                        <div class="author">
-                            <div class="profile"></div>
-                            <div class="info">
-                                <div class="caption">Recent comment</div>
-                                <div class="name">{{app.recruiter_comment.length}}&nbsp comments made</div>
-                            </div>
-                        </div>      
-                        <div class="tags">
-                            <div style="text-transform:capitalize;">{{app.status.replaceAll('_',' ')}}</div>
-                        </div>
-                        <div class="__buttons">
-                            <button type="button" class="btn btn-dark" @click="view_app(index)">View</button>
-                        </div>
-                    </div>           
-                </div>
-            </div>
-            <div class="__app__filter__control">
-                <div class="__skip__start __control__button" @click="regularScroll('full_left')">
-                    <span class="__arrow __left_"></span>
-                    <span class="__arrow __left_"></span>
-                </div>
-                <div class="__scroll__left __control__button" @click="regularScroll('p_left')">
-                    <span class="__arrow __left_"></span>
-                </div>
-                <div class="__auto__play__init">
-                <img :src="display.autoPlay ? '/images/dashboard/icons/pause.svg' : '/images/dashboard/icons/play.svg'" alt="Play/pause auto scroll"> 
-                </div>
-                <div class="__scroll__right __control__button" @click="regularScroll('p_right')">
-                    <span class="__arrow __right_"></span>
-                </div>
-                <div class="__skip__end __control__button" @click="regularScroll('full_right')">
-                    <span class="__arrow __right_"></span>
-                    <span class="__arrow __right_"></span>
-                </div>
-            </div>
-
-        </div>
-    </section>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

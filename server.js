@@ -88,6 +88,10 @@ app.get('/', (req,res)=>{
    res.redirect('/main/home')
 })
 
+app.get('/offline', (req,res)=>{
+    res.render('<h1>Works</h1>')
+})
+
 
 if(cluster.isPrimary){
     for(let i = 0; i < numCpu; i++){

@@ -1,0 +1,3 @@
+Home --> Can handle 1 user every 50ms 
+Search page --> Can handle 10 users very 1 second before failing
+        --> Limited by XANO API
