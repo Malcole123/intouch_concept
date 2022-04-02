@@ -20,6 +20,11 @@
     <link href="/css/dashboard/main.css" rel="stylesheet">
     <link href="/css/dashboard/listings.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/logo-small.png">
+    <style>
+        .hide_search{
+            display:none
+        }
+    </style>
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -58,7 +63,7 @@
                 <div class="app-header-left">
                     <div class="search-wrapper">
                         <div class="input-holder">
-                            <input type="text" class="search-input" placeholder="Type to search">
+                            <input type="text" class="search-input" placeholder="Type to search" id="searchInput">
                             <button class="search-icon"><span></span></button>
                         </div>
                         <button class="close"></button>
@@ -145,7 +150,7 @@
                             <div class="row mt-2">
                                 <h5 class="mb-4">Active Listings</h5>
                                 <% active_list.forEach(function(item,index){ %>
-                                    <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="col-sm-12 col-md-6 col-lg-4 card__" data-listing-name="<%=item.title%>">
                                         <div style="min-height:170px" class="mb-3 card card-body text-center"
                                         >
                                         <input type="hidden" value="<%= JSON.stringify(item) %>"> <!--item id-->
@@ -445,4 +450,24 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
+<script defer>
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.card__')
+    searchInput.addEventListener('keyup', (e)=>{
+        if(searchInput.value.length > 3){
+            cards.forEach((card,index)=>{
+                var listing = card.getAttribute('data-listing-name')
+                if(listing.includes(searchInput.value)){
+                    card.classList.remove('hide_search')
+                }else{
+                    card.classList.add('hide_search')
+                }
+            })
+        }else{
+            cards.forEach((card,index)=>{
+                card.classList.remove('hide_search')
+            })
+        }
+    })
+</script>
 </html>

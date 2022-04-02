@@ -10,6 +10,7 @@ const searchbyEmailUrl = process.env.USER_SEARCH_BY_EMAIL;
 const applicationSubmitUrl = process.env.SUBMIT_APPLICATION_URL;
 const applicationGetMINEURL = process.env.GET_MY_APPLICATIONS;
 const editGeneralPreferencesURL = process.env.EDIT_GENERAL_PREFERENCES;
+const deleteApplicationURL = process.env.EDIT_APPLICATION_STATE;
 const getNotificationURL = process.env.GET_NOTIFICATIONS;
 const getCompanyDataURL = process.env.GET_COMPANY_INFO;
 const createCompanyURL = process.env.CREATE_COMPANY;
@@ -181,13 +182,47 @@ const submitApplication = async (req)=>{
   return response
 }
 
-const getmyApplications = async (id)=>{
-  const response = await  axios.get(applicationGetMINEURL + id, {
+const getmyApplications = async (id,auth_id)=>{
+  var response = await  axios.get(`${applicationGetMINEURL}?user_id=${id}`,{
+    params:{
+      user_id:id
+    },
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':`Bearer ${auth_id}`
+    }
   })
+  .then(res => {
+    return {
+      ok:true,
+      data:res.data
+    }
+  })
+  .catch(err => {
+    return{
+      ok:false,
+      res:error.message
+    }
+  });
+  return response
+}
+
+
+const deleteApplication = async (appID,myID,userAUTH)=>{
+  const response = await  axios.delete(deleteApplicationURL + appID, {
+      headers:{
+        'Authorization':`Bearer ${userAUTH}`,
+        'Content-Type':'application/json'
+      },
+     data:{
+      application_id:appID,
+      user_ID:myID
+     }
+  },
+)
   .then(res => {
     var retData = {
         completed:true,
-        data:res.data
     }
     return retData
   })
@@ -413,6 +448,7 @@ module.exports = {
   fetchAuthMe:authMe,
   postApplication:submitApplication,
   getmyApplications:getmyApplications,
+  deleteApplication:deleteApplication, 
   editGenPref:editGeneralPref,
   editUserAccount:editUserData,
   getNotif:getNotifications,

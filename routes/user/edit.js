@@ -113,7 +113,7 @@ router.get('/profile/applications',isAuth,async (req,res)=>{
     })
 })
 
-router.get('/savedjobs', isAuth, async (req,res)=>{
+router.get('/saved/jobs', isAuth, async (req,res)=>{
     var session = req.session;
     var myData = await fetchers.fetchAuthMe(session.userID);
     var user = {
@@ -129,6 +129,25 @@ router.get('/savedjobs', isAuth, async (req,res)=>{
         s_jobs:myData.data.favourite_jobs
     })
 })
+
+router.get('/saved/applications', isAuth, async (req,res)=>{
+    var session = req.session;
+    var myData = await fetchers.getmyApplications(session.myID,session.userID);
+    var user = {
+        fname:session.userFNAME,
+        lname:session.userLNAME,
+        email:session.userEmail,
+        phone:"",
+    }
+    res.render('./account/profile/my-applications.ejs',{
+        loggedIn:true,
+        get_start:null,
+        user:user,
+        s_app:myData.data
+    })
+})
+
+
 
 router.post('/edit/preferences', async (req,res)=>{
     var session = req.session;
@@ -181,6 +200,20 @@ router.post('/edit/account', async(req,res)=>{
         }
     }else{
         res.send('Not a user')
+    }
+})
+
+router.post('/edit/applications', async(req,res)=>{
+    var session = req.session
+    var answer = await fetchers.deleteApplication(req.body.appID,session.myID,session.userID);
+    if(answer.completed){
+        res.send({
+            ok:true
+        })
+    }else{
+        res.send({
+            ok:false
+        })
     }
 })
 

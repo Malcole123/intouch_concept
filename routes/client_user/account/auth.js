@@ -42,6 +42,9 @@ router.get('/login', async (req, res)=>{
     }
 })
 
+router.get('/recover', (req,res)=>{
+    
+})
 router.get('/logout', isAuth, (req,res)=>{
     req.session.destroy();
     res.clearCookie('connect.sid');
@@ -69,7 +72,6 @@ router.post('/auth/register/client', async (req,res)=>{
         session.userLNAME = data.user.last_name;
         session.userType = data.user.role;
         session.myID = data.user.id;
-        console.log(session)
         fetchers.v_email_create(data.user.email, data.user.first_name,data.user.v_code)
         res.send({
             ok:true,
@@ -107,7 +109,6 @@ router.post('/auth/login/client', async (req,res)=>{
     }
 })
 
-
 router.post('/auth/recruiter/register', async()=>{
     var session = req.session;
     var data = await fetchers.fetchsignAuth(req.body);
@@ -129,7 +130,9 @@ router.post('/auth/recruiter/register', async()=>{
             ok:false,
             message:'Something went wrong, please try again later.'
         }) 
-    }})
+}})
+
+
 
 
 

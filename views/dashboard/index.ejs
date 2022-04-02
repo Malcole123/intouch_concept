@@ -17,6 +17,7 @@
     <link href="/css/dashboard/main.css" rel="stylesheet">
     <!----Font Awesome CDN-->
     <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <style>
         .checklist{
             display:grid;
@@ -174,7 +175,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content">
+                                <div class="card mb-3 widget-content" id="placeHold" data-company-data="<%=JSON.stringify(companyData)%>">
                                     <div class="widget-content-outer">
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-left">
@@ -189,7 +190,7 @@
                                 </div>
                             </div>
                         </div>              
-                        <!--<div class="row">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="main-card mb-3 card">
                                     <div class="card-header">Recruitment Team
@@ -236,14 +237,14 @@
                                                 <% }) %>                
                                             </tbody>
                                         </table>
-                                        <div class="recuiter-none p-3" style="margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items: center;">
+                                        <!--<div class="recuiter-none p-3" style="margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items: center;">
                                             <button type="button" class="btn btn-outline-dark mt-3" data-toggle="modal" data-target="#exampleModalCenter">Invite</button>    
-                                        </div>
+                                        </div>-->
                                         
                                     </div>
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
                     </div>
                    
                     <div class="app-wrapper-footer">
@@ -276,8 +277,8 @@
         </div>
     </div>
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-height:500px;">
-          <div class="modal-content h-100">
+        <div class="modal-dialog" role="document" style="max-height:500px;">
+          <div class="modal-content">
             <div class="modal-header border-0 bg-white">
               <h5 class="modal-title" id="exampleModalLongTitle">Invite Recruiter</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -285,13 +286,64 @@
               </button>
             </div>
             <div class="modal-body">
-                <p class="mb-5">Invite recruiters to join your team</p>
-                <div class=""></div>
+                <p class="mb-5">Use the link provided to invite your recruiters to gain access to this dashboard</p>
+                <form method="POST" @change="">
+                <div class="invite-share">
+                    <div class="row">
+                        <div class="col">
+                            <label for="invite-share-fname">Recruiter first name</label>
+                            <input type="text" class="form-control mb-3" id="invite-share-fname" placeholder="Enter recruiter first name" v-model.trim="recruit_fname">
+                        </div>
+                        <div class="col">
+                            <label for="invite-share-lname">Recruiter last name</label>
+                            <input type="text" class="form-control mb-3" id="invite-share-lname" placeholder="Enter recruiter last name" v-model.trim="recruit_lname">
+                        </div>
+                    </div>
+                    <input type="text" class="form-control mt-2 mb-3" id="invite-share-email" placeholder="Enter recruiter email" v-model.trim="recruit_email">
+                    <input type="text" class="form-control  mt-2 mb-3" id="invite-share-link" disabled v-model.trim="share_link">
+                    <button type="button" class="btn btn-outline-dark">Copy</button>
+                </div>
+                </form>
             </div>
           </div>
         </div>
       </div>
-<script type="text/javascript" src="./assets/scripts/main.js"></script></body>
+</body>
+<script defer>
+    const inviteRecruit = new Vue({
+        el:'#exampleModalCenter',
+        data(){
+            recruit_email = "G"
+            recruit_fname = "B"
+            recruit_lname ="J"
+            share_link = ""
+            company_name = ""
+            company_id = 0
+            share_link= ""
+            base_url="https://localhost:3000/employer/recruiter/register"
+
+            setReady=()=>{
+                var idPlace = document.getElementById('placeHold');
+                var data = idPlace.getAttribute('data-company-data');
+                this.company_name = data.name;
+                this.company_id = data.id;
+                create_link()
+            }
+
+            create_link=()=>{
+                this.share_link = this.base_url+'?fName=' +this.recruit_fname + '&lName=' + this.recruit_lname+ '&company=' + this.company_id + '&company_name=' + this.company_name
+            }
+
+            sendLink=()=>{
+
+            }
+        }
+    })
+    window.addEventListener('load', ()=>{
+        setReady()
+    })
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </html>
