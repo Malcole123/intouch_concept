@@ -6,6 +6,7 @@ const sessionKey = process.env.SESSION_SECRET
 const express = require('express');
 const app = express();
 const fetchers = require('../../../fetchers');
+const getters = require('../dashboard/fetchers_putters.js')
 const cookie = require('cookie');
 const session = require('express-session');
 const urlHandler = require('../../../urlHandlers');
@@ -53,13 +54,18 @@ router.get('/logout', isAuth, (req,res)=>{
 
 router.get('/recruiter/register', async (req, res)=>{
     var session = req.session
-    if(session.userID && session.userType==='client'){
+    var reqURLs = req._parsedOriginalUrl.query
+    var urlParts = reqURLs
+    var refID = urlParts.replace('ref_id=','')
+    var recDTFOUND = await getters.searchRecruit(refID)
+    if(session.userID !== undefined && session.userType === 'client'){
         res.redirect('/dashboard/home')
     }else{
-        res.render('./account/authentication/client_auth/register_recruiter', {
-            invitingCompany:"Example",
+        res.render('./account/authentication/client_auth/register_recruiter.ejs',{
+            recDT:recDTFOUND.data.new_user,
         })
     }
+    
 })
 
 router.post('/auth/register/client', async (req,res)=>{
@@ -97,6 +103,7 @@ router.post('/auth/login/client', async (req,res)=>{
         session.userLNAME =  data.data.last_name;
         session.companyID =  data.data.verified_companies_id;
         redPath='/dashboard/home'
+        console.log(data)
         res.send({
             completed:true,
             redPath:redPath,
@@ -131,6 +138,20 @@ router.post('/auth/recruiter/register', async()=>{
             message:'Something went wrong, please try again later.'
         }) 
 }})
+
+router.post('/recruiter/invite', async (req,res)=>{
+    var session = req.session;
+    var dt = await getters.createRecruit(req.body)
+    if(dt.ok){
+        res.send({
+            complete:true
+        })
+    }else{
+        res.send({
+            complete:false
+        })
+    }
+})
 
 
 

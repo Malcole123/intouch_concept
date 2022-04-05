@@ -11,6 +11,9 @@ const getPendingListings =process.env.GET_MY_PENDING_LISTINGS
 const getSubmittedApplicationsURL = process.env.GET_SUBMITTED_APPLICATIONS
 const deleteListingUrl = process.env.DELETE_LISTING
 const editApplicationUrl = process.env.EDIT_APPLICATION_STATE
+const createRecruitInviteURL = process.env.CREATE_INVITE_LINK
+const fulfillLINK = process.env.FULFILL_LINK
+
 //Urls end
 const fs = require('fs')
 const axios = require('axios').default
@@ -285,6 +288,47 @@ const editApplication = async(id,data,type,status)=>{
     return a_Dt
 }
 
+const createRecruiter = async(info)=>{
+    var rtDt = axios.post(createRecruitInviteURL,{
+        ref_id:info.refID,
+        send_from:info.from,
+        company_id:info.companyID,
+        user_name:info.name,
+        full_url:info.share_link,
+        send_to:info.email  
+    }).then(res=>{
+        console.log(res.data)
+        return {
+            ok:true,
+            data:res.data
+        }
+    }).catch(error=>{
+        return {
+            ok:false,
+            message:error.message
+        }
+    })
+    return rtDt
+}
+
+const searchRecruiter = async(info)=>{
+    var rtDt = axios.post(fulfillLINK,{
+        ref_id:info,
+    }).then(res=>{
+        return {
+            ok:true,
+            data:res.data
+        }
+    }).catch(error=>{
+        return {
+            ok:false,
+            message:error.message
+        }
+    })
+    return rtDt
+}
+
+
 
 
 module.exports = {
@@ -295,5 +339,7 @@ module.exports = {
     getCompInfo:getMyCompanyDetail,
     submittedApplications:getSubmittedApplications,
     deleteListing:deleteListing,
-    editApp:editApplication
+    editApp:editApplication,
+    createRecruit:createRecruiter,
+    searchRecruit:searchRecruiter
 }

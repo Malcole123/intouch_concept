@@ -29,7 +29,9 @@
             align-items:center;
             gap:20px;
             padding:10px 0;
-
+        }
+        .hidden{
+            display:none
         }
     </style>
 </head>
@@ -175,7 +177,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content" id="placeHold" data-company-data="<%=JSON.stringify(companyData)%>">
+                                <div class="card mb-3 widget-content" id="placeHold" data-company-data="<%=JSON.stringify(companyData.id)%>">
                                     <div class="widget-content-outer">
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-left">
@@ -237,9 +239,9 @@
                                                 <% }) %>                
                                             </tbody>
                                         </table>
-                                        <!--<div class="recuiter-none p-3" style="margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items: center;">
-                                            <button type="button" class="btn btn-outline-dark mt-3" data-toggle="modal" data-target="#exampleModalCenter">Invite</button>    
-                                        </div>-->
+                                        <div class="recuiter-none p-3" style="margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items: center;">
+                                            <button type="button" class="btn btn-outline-dark mt-3" data-toggle="modal" data-target="#exampleModalToggle">Invite</button>    
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -276,71 +278,148 @@
                 </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!---Confrimation or rejection modal-->
+      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
         <div class="modal-dialog" role="document" style="max-height:500px;">
-          <div class="modal-content">
-            <div class="modal-header border-0 bg-white">
-              <h5 class="modal-title" id="exampleModalLongTitle">Invite Recruiter</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <p class="mb-5">Use the link provided to invite your recruiters to gain access to this dashboard</p>
-                <form method="POST" @change="">
-                <div class="invite-share">
-                    <div class="row">
-                        <div class="col">
-                            <label for="invite-share-fname">Recruiter first name</label>
-                            <input type="text" class="form-control mb-3" id="invite-share-fname" placeholder="Enter recruiter first name" v-model.trim="recruit_fname">
+            <div class="modal-content">
+              <div class="modal-header border-0 bg-white">
+                <h5 class="modal-title" id="exampleModalLongTitle">Invite Recruiter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <p class="mb-5">Use the link provided to invite your recruiters to gain access to this dashboard</p>
+                  <form method="POST" @change="create_link">
+                  <div class="invite-share">
+                      <label for="invite-share-name">Recruiter name</label>
+                      <input type="text" class="form-control mb-3" id="invite-share-name" placeholder="Enter recruiter name" v-model.trim="recruit_name">
+                      <label for="invite-share-name mt-3">Email address:</label>
+                      <input type="text" class="form-control mt-2 mb-3" id="invite-share-email" placeholder="Enter recruiter email" v-model.trim="recruit_email">
+                      <input type="text" class="form-control  mt-2 mb-3" id="invite-share-link" disabled v-model.trim="share_link">
+                      <button type="button" class="btn btn-dark"  @click="sendLink"id="sendEmailBtn">{{email_btn_txt}}</button>
+                      <button type="button" class="btn btn-success hidden" id="sentBtn">Sent &nbsp; <i class="pe-7s-check"></i></button>
+                      <button type="button" class="btn btn-danger hidden" id="errorBtn">Something went wrong</button>
+                      <div class="spinner-border hidden" role="status">
+                          <span class="sr-only">Loading...</span>
                         </div>
-                        <div class="col">
-                            <label for="invite-share-lname">Recruiter last name</label>
-                            <input type="text" class="form-control mb-3" id="invite-share-lname" placeholder="Enter recruiter last name" v-model.trim="recruit_lname">
-                        </div>
-                    </div>
-                    <input type="text" class="form-control mt-2 mb-3" id="invite-share-email" placeholder="Enter recruiter email" v-model.trim="recruit_email">
-                    <input type="text" class="form-control  mt-2 mb-3" id="invite-share-link" disabled v-model.trim="share_link">
-                    <button type="button" class="btn btn-outline-dark">Copy</button>
-                </div>
-                </form>
+                  </div>
+                  </form>
+              </div>
             </div>
+         
           </div>
-        </div>
       </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 <script defer>
     const inviteRecruit = new Vue({
-        el:'#exampleModalCenter',
+        el:'#exampleModalToggle',
         data(){
-            recruit_email = "G"
-            recruit_fname = "B"
-            recruit_lname ="J"
+            recruit_email = ""
+            recruit_name =""
             share_link = ""
             company_name = ""
             company_id = 0
             share_link= ""
             base_url="https://localhost:3000/employer/recruiter/register"
+            ref_id = ""
+            //Controls states .
+            processing = false
+            completed = false
+            reject = false
+            step = 1
+            max_send = 3
+            email_sent = false
+            email_btn_txt = "Send in email"
+            sent = 0
 
             setReady=()=>{
-                var idPlace = document.getElementById('placeHold');
-                var data = idPlace.getAttribute('data-company-data');
-                this.company_name = data.name;
-                this.company_id = data.id;
+                idPlace = document.getElementById('placeHold');
+                data = idPlace.getAttribute('data-company-data');
+                company_id = data;
                 create_link()
             }
 
             create_link=()=>{
-                this.share_link = this.base_url+'?fName=' +this.recruit_fname + '&lName=' + this.recruit_lname+ '&company=' + this.company_id + '&company_name=' + this.company_name
+                var linkSpace = document.getElementById('invite-share-link');
+                function dec2hex (dec) {
+                  return dec.toString(16).padStart(2, "0")
+                }
+                var arr = new Uint8Array((18|| 40) / 2)
+                window.crypto.getRandomValues(arr)
+                ref_id = Array.from(arr, dec2hex).join('')
+                share_link = base_url + "?ref_id=" + ref_id
+                linkSpace.value = share_link
             }
 
-            sendLink=()=>{
+            copy_link = (e)=>{
+                if(share_link.length < 5){return false}
+                button = e.currentTarget
+                console.log(button)
+                button_text = button.textContent //Original class and text
+                buttonClass = button.className
+                button.className = "btn btn-success"
+                button.textContent = "Copied !"
+                setTimeout(()=>{
+                    button.textContent = button_text
+                    button.className = buttonClass 
+                },2300)
+                copy_val = share_link
+                navigator.clipboard.writeText(copy_val);
+            }
 
+            sendLink= async ()=>{
+                $('#sendEmailBtn').hide()
+                $('.spinner-border').removeClass('hidden')
+                serveRes = await fetch('/employer/recruiter/invite', {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        refID:ref_id,
+                        companyID:company_id,
+                        email:recruit_email,
+                        name:recruit_name,
+                        share_link:share_link
+                    })
+                }).then(res=> res.json()).then(data=>{
+                    $('#sendEmailBtn').show()
+                    $('.spinner-border').addClass('hidden')
+                    if(data.complete){
+                        completed = true
+                        sent += 1
+                        email_btn_txt = "Sent !"
+                        $('#sentBtn').removeClass('hidden')
+                        $('#sendEmailBtn').addClass('hidden')
+                        setTimeout(()=>{
+                            email_btn_txt = "Send email"
+                            completed = false
+                            $('#sentBtn').addClass('hidden')
+                            $('#sendEmailBtn').removeClass('hidden')
+                        },3000)
+                    }else{
+                        completed = false
+                    }
+                }).catch(error=>{
+                    $('#sendEmailBtn').show()
+                    $('.spinner-border').addClass('hidden')
+                    $('#errorBtn').removeClass('hidden')
+                    setTimeout(()=>{
+                        email_btn_txt = "Send email"
+                        completed = false
+                        $('#sentBtn').addClass('hidden')
+                        $('#sendEmailBtn').removeClass('hidden')
+                    },3000)
+                })
             }
         }
     })
     window.addEventListener('load', ()=>{
-        setReady()
+        setTimeout(()=>{
+            setReady()
+        },7000)
     })
 
 </script>

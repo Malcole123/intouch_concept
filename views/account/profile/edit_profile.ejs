@@ -25,6 +25,7 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="/js/min/script.min.js" defer></script>
+    <script src="/js/user/profile.js" defer></script>
     <link rel="icon" type="image/x-icon" href="/images/logo-small.png" />
     <title>Edit Profile</title>
     <style>
@@ -32,6 +33,9 @@
         height: 100vh;
         width: 100%;
         background: rgba(247, 247, 247, 0.76);
+      }
+      .nav-links{
+        z-index:99;
       }
       .nav-links ul li a {
         color: #333;
@@ -43,6 +47,7 @@
       .settings-menu {
         width: 100%;
         height: 100%;
+        position:static
       }
       .setting-option {
         position: relative;
@@ -163,47 +168,6 @@
                 </div>
               </form>
             </div>
-            <script defer>
-              const changeDetails = new Vue({
-                el: "#editProfileInfo",
-                data: {
-                  fname: "",
-                  lname: "",
-                  email: "",
-                  phone: "",
-                  changed: false,
-                  password:""
-                },
-                methods: {
-                  changeDetails: async () => {
-                    var res = await fetch("/me/edit/account", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        type: "details",
-                        fname: changeDetails.fname,
-                        lname: changeDetails.lname,
-                        email: changeDetails.email,
-                        phone: changeDetails.phone,
-                        old_password:changeDetails.password,
-                        new_password:""
-                      }),
-                    })
-                      .then((res) => res.json())
-                      .then(data=>{
-                        console.log(data)
-                      }).catch((error) => {
-                        console.log(error);
-                      });
-                  },
-                  changeDetect: () => {
-                    changeDetails.changed = true;
-                  },
-                },
-              });
-            </script>
             <% }else if(type === 'notification'){ %>
             <h3 style="font-weight: 500">Notification Settings</h3>
             <div class="row">

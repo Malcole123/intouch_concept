@@ -587,8 +587,20 @@ const compReg = new Vue({
         }
     }
 })
+
 window.addEventListener('load', ()=>{
-    compReg.progressHandler(compReg.current_step)
+    if(window.location.href.includes('recruiter')){
+        setTimeout(()=>{
+            var signForm = document.querySelector('.sign-up-form');
+            var dt_email = signForm.getAttribute('data-set-email');
+            var dt_pass = signForm.getAttribute('data-set-password');
+            lApp.email = dt_email
+            lApp.password = dt_pass
+            console.log(lApp.email,lApp.password)
+          },1200)    
+    }else{
+        compReg.progressHandler(compReg.current_step)
+    }
 })
 
 
