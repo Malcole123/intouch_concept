@@ -1,0 +1,28 @@
+<section class="loader__overlay">
+    <img src="/images/logo.svg" alt="Logo">
+    <div class="loader"></div>
+    <p class="text-white text-center" id="advice"></p>
+    <div class="ad-space horizontal-large position-btm-center">
+
+    </div>
+</section>
+<script defer>
+    const adviceGenerator = ()=>{
+        var advice = [
+            "Hello",
+            "Bye",
+            "Evening",
+            "Afternoon",
+            "Night"
+        ]
+        return advice[Math.floor(Math.random(0,advice.length))]
+    }
+    $(window).on('load', async()=>{
+        var adviceRec = await adviceGenerator()
+         setTimeout(()=>{
+             $('.loader__overlay').hide()
+
+         }, 5200)
+     })
+    
+ </script>

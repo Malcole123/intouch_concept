@@ -1,4 +1,5 @@
 import { phoneFormatter, validEmailCheck, dateFormatter } from "../vFiers.js";
+import { templateBody } from "../components/template_body.js";
 const builderprepare = new Vue({
     el:'#t-display',
     data:{
@@ -50,8 +51,12 @@ const builder = new Vue({
         userName:{
             input:"",
         },
+        userTitle:{
+            input:""
+        },
         skills:{
             input:'',
+            description:"",
             userSkills:[],
             maxSkills:4,
             maxAdd:false,
@@ -133,6 +138,10 @@ const builder = new Vue({
             unit:'px',
             height:1054,
             width:816,
+        },
+        page:{
+            current:1,
+            total:2,
         }
     },
     methods:{
@@ -175,8 +184,6 @@ const builder = new Vue({
             var remIndex = builder.skills.userSkills.indexOf(remove.textContent);
             var arr = builder.skills.userSkills;
             arr.splice(remIndex, 1);
-            console.log(arr)
-
             for( let i = 0; i < arr.length; i++){       
                 if ( arr[i] === remIndex) {        
                 }      
@@ -422,6 +429,34 @@ const builder = new Vue({
         },
         serviceRemove:()=>{
 
+        },
+        prevPage:()=>{
+            builder.page.current -=1
+        },
+        nextPage:()=>{
+            builder.page.current +=1
+        },
+        pageAdd:async(type)=>{
+            const parent = document.querySelector('.zoom-control')
+            parent.append(await templateBody.data())
+        },
+        saveState:()=>{
+            localStorage.setItem('intch-resume-saved', JSON.stringify({
+                title:"",
+                about:"",
+                contact:{
+                    email:"",
+                    address:"",
+                    phone:""
+                },
+                skills:[],
+                interests:[],
+                education:[],
+                employment:[],
+                references:[],
+                languages:[],
+                charities:[],
+            }))
         },
         print:()=>{
             var print = document.getElementsByClassName('resume-template')[0];

@@ -105,7 +105,7 @@ const setSearchState= new Vue({
                 parent.removeChild(str_data);
             },3000);
             setTimeout(()=>{
-                setSearchState.adHandler();
+                //setSearchState.adHandler();
             },300)
         
          
@@ -220,7 +220,7 @@ const setSearchState= new Vue({
                 for(let i = 0; i < ads.length; i++){
                     parent.removeChild(ads[i])
                 }
-                setSearchState.adHandler()
+                //setSearchState.adHandler()
             },700)
         },
         adHandler:()=>{
@@ -256,7 +256,7 @@ const setSearchState= new Vue({
             setSearchState.display.filter.location.s_div = "";
             setSearchState.display.filter.company = "";
             setSearchState.filterHandler()
-            setSearchState.adHandler();
+            //setSearchState.adHandler();
             setSearchState.display.filter.filtered = false;
             
         },

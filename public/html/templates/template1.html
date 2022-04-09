@@ -1,0 +1,252 @@
+<style>
+    *{
+        padding:0;
+        margin:0;
+        box-sizing:border-box;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+    .resume-template{
+        height:1054px;
+        width:815px;
+        background:rgb(240,248,255);
+    }
+    .template-header{
+        height:22%;
+        width:100%;
+        padding:35px 25px;
+    }
+    .template-inner{
+        width:90%;
+        height:100%;
+        margin:0 auto;
+        border:3px solid black;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:15px;
+        position:relative
+    }
+
+    .marker{
+        background:black;
+        width:0.25em;
+        height:0.25em;
+        border-radius:50%;
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+    }
+    .marker-right{
+        border-left:0.25em solid black;
+        border-right:0.25em solid transparent;
+        border-top:0.15em solid transparent;
+        border-bottom:0.15em solid transparent;
+        position:absolute;
+        top:50%;
+        transform:translateY(-50%);
+        right:3em;
+    }
+    .marker-left{
+        border-right:0.25em solid black;
+        border-left:0.25em solid transparent;
+        border-top:0.15em solid transparent;
+        border-bottom:0.15em solid transparent;
+        position:absolute;
+        top:50%;
+        transform:translateY(-50%);
+        left:3em
+    }
+    .top{
+        top:0.5em
+    }
+
+    .bottom{
+        bottom:0.5em;
+    }
+    .template-body{
+        height:78%;
+        width:100%;
+        background:#fff;
+        padding:15px 20px;
+        position:relative;
+    }
+
+    .profile,.professional{
+        display:flex;
+        flex-direction:column;
+        gap:20px;
+        justify-content:space-between;
+        align-items:center;
+        width:100%;
+        height:fit-content;
+    }
+    .professional{
+        padding:15px 10px;
+        position:relative;
+    }
+    .section-head{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+    }
+    .underline{
+        width:2em;
+        height:0.15em;
+        transform:skew(20deg);
+        background:black
+    }
+    .section-body{
+        flex:1;
+        width:100%;
+        padding:10px 14px;
+    }
+    .section-body p{
+        text-align:center;
+        color:black;
+        line-height:1.3rem;
+        font-size:0.95rem;
+    }
+    .grid{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+    }
+    .divider{
+        height:0.5em;
+        width:70%;
+        background:black;
+        margin:20px auto
+    }
+    .skills_ed{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        width:100%;
+        min-height:15em;
+        padding:20px 15px;
+        border-bottom:2px solid black;
+        border-top:2px solid black;
+    }
+    .column-1,.column-2{
+        width:100%;
+        height:100%;
+        padding:4px 12px;
+    }
+    .column-1{
+        border-right:1px solid black;
+    }
+    .column-2{
+        border-left:1px solid black
+    }
+
+    .justify-left{
+        align-items:flex-start
+    }
+    .justify-right{
+        align-items:flex-end;
+    }
+    .experience{
+        padding:10px 5px;
+    }
+    .experience span{
+        font-size:0.8rem;
+        font-weight:400;
+        margin-top:6px;
+    }
+    .experience p{
+        font-size:0.8rem;
+        font-weight:400;
+        margin-top:30px;
+        text-align:left;
+    }
+    .contact-details{
+        width:100%;
+        position:absolute;
+        left:0;
+        bottom:0;
+        background:rgb(240,248,255);
+        height:3em;
+        color:black;
+        display:flex;
+        align-items:center;
+        justify-content:space-evenly;
+    }
+    .contact-details > *{
+        margin:0 auto;
+        color:black;
+        font-size:0.8rem;
+    }
+
+</style>
+
+
+<section class="resume-template" data-page-id="1">
+    <div class="template-header">
+        <div class="template-inner">
+            <div class="marker-left"></div>
+            <span style="text-transform:uppercase;font-size:1.2em;">Director of Marketing</span>
+            <h1 style="text-transform:uppercase;font-size:2.2em;">Name Here</h1>
+            <div class="marker-right"></div>
+        </div>
+    </div>
+    <div class="template-body">
+        <div class="profile">
+            <div class="section-head">
+                <h2 style="text-transform:uppercase;font-size:1.1rem;">Professional Profile</h2>
+                <span class="underline"></span>
+            </div>
+            <div class="section-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, quaerat commodi unde vel, et nostrum error distinctio recusandae culpa dolore libero illum a, aut ab officia. Corrupti amet consectetur laborum, perferendis accusamus voluptas veniam alias ipsam blanditiis, error, autem molestias consequuntur quaerat inventore temporibus. Excepturi dolore, ipsa possimus accusantium ipsum laborum, similique alias eaque hic, asperiores iusto non nobis earum. Assumenda aliquam modi, qui officia placeat, mollitia quaerat maxime adipisci at repudiandae, blanditiis voluptate. Ea, doloremque sit. Beatae accusamus minima, recusandae a tempore, dicta itaque adipisci molestias labore eos possimus illo. Veritatis, sint adipisci! Quidem molestias voluptatum atque alias aut!<p>
+            </div>
+        </div>
+        <div class="skills_ed">
+            <div class="column-1">
+                <div class="section-head justify-right">
+                    <h2 style="text-transform:uppercase;font-size:1rem;">Education</h2>
+                    <span class="underline"></span>
+                </div>
+            </div>
+            <div class="column-2">
+                <div class="section-head justify-left">
+                    <h2 style="text-transform:uppercase;font-size:1.1rem;">Skills</h2>
+                    <span class="underline"></span>
+                </div>
+            </div>
+        </div>
+        <div class="professional">
+            <div class="section-head">
+                <h2 style="text-transform:uppercase;font-size:1.1rem;">Professional Experience</h2>
+                <span class="underline"></span>
+            </div>
+            <div class="section-body grid">
+                <div class="experience">
+                    <h3 style="font-size:0.8rem;text-transform:uppercase">Title | Company Name | Location</h3>
+                    <span>June 2018 - October 2020</span>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus quisquam delectus repellat deserunt labore ullam explicabo debitis ipsa rerum ab! Molestiae numquam dolorum pariatur animi, labore optio tempore distinctio dicta iste nulla! Animi, blanditiis. Quia accusantium quidem nulla nam blanditiis!</p>
+                </div>
+                <div class="experience">
+                    <h3 style="font-size:0.8rem;text-transform:uppercase">Title | Company Name | Location</h3>
+                    <span>October 2020 - May 2022</span>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus quisquam delectus repellat deserunt labore ullam explicabo debitis ipsa rerum ab! Molestiae numquam dolorum pariatur animi, labore optio tempore distinctio dicta iste nulla! Animi, blanditiis. Quia accusantium quidem nulla nam blanditiis!</p>
+                </div>
+            </div>
+         
+        </div>
+        <div class="contact-details">
+            <div class="email-contact">
+                <span>Email: email@example.com</span>
+            </div>
+            <div class="address-contact">
+                <span>Address:Example Address, Example City</span>
+            </div>
+            <div class="phone-contact">
+                <span>Phone: (876)555-5678</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</section>

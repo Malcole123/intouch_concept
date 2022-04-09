@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Search job openings near you using our easy to use filtering options"/>
     <link rel="stylesheet as="style" href="/css/searchstyles.css"/>
+    <link rel="stylesheet as="style" href="/css/global/components.css"/>
     <!----Font Awesome CDN-->
     <script src="https://kit.fontawesome.com/7be4f826c0.js" crossorigin="anonymous" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,11 +24,7 @@
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js"></script>
-    <div class="loader__overlay">
-        <img src="../images/logo.svg" alt="Logo">
-        <div class="loader"></div>
-        <p class="text-white text-center"></p>
-    </div>
+    <%-include('../components/load_overlays/regular_load.ejs') -%>
     <section class="search-header">
       <%-include( '../components/search_nav' ) -%>
     </section>
@@ -177,13 +174,14 @@
               <div class="w-100 d-flex justify-content-start align-items-center flex-column no-results" style="position:absolute;top:50px" v-if="(matched_filters.length === 0 && display.filter.filtered) || all_jobs.length === 0">
                 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
                 <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3qzrm0wa.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>                
-                <p>No results match your search, try changing your filters or query</p>
+                <p>No results match your search, try changing your filters or search</p>
                 <button type="button" class="btn btn-dark mt-2 mb-4" @click="clearFilter">Clear filters</button>
               </div>
               <div class="space-holder" style="height:90px;width:100%"></div>
               </div>
             </div>
          </div>
+         
         <div class="col-sm-12 col-md-12 col-lg-7 bg-white h-100 job-show-display" v-if="matched_filters.length > 0 && all_jobs.length > 0">     
             <div class="job-show-body">
               <div class="job-show-banner">
