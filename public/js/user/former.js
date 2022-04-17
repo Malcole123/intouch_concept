@@ -250,18 +250,19 @@ const rApp = new Vue({
             }
             return checkCall;
         },
-        checkFormReady:()=>{
+        checkFormReady:async()=>{
             var fn, ln, em, pn, ps, pc,tos;
-            fn = rApp.checkFirst();
-            ln = rApp.checkLast();
-            em = rApp.verifyEmail();
-            pn = rApp.verifyPhone();
-            ps = rApp.checkPassReq();
-            pc = rApp.checkPassMatch();
+            fn = await rApp.checkFirst();
+            ln = await rApp.checkLast();
+            em = await rApp.verifyEmail();
+            pn = await rApp.verifyPhone();
+            ps = await rApp.checkPassReq();
+            pc = await rApp.checkPassMatch();
             tos =rApp.tosAgree;
             
             if((fn && ln) && (em && pn) && (ps && pc) && tos){
                 rApp.formReady = true
+                console.log('ready')
             }else{
                 rApp.formReady = false
             }

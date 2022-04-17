@@ -171,7 +171,7 @@ const builder = new Vue({
             }
         },
         skillAdd:async ()=>{
-            var result = await builder.strCheck(builder.skills.input,22,5);
+            var result = await builder.strCheck(builder.skills.input,52,5);
             if(result.ok && builder.skills.userSkills.length < builder.skills.maxSkills){
                 builder.skills.userSkills.push(builder.skills.input);
                 builder.skills.input = ""

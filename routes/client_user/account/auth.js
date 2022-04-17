@@ -70,6 +70,7 @@ router.get('/recruiter/register', async (req, res)=>{
 
 router.post('/auth/register/client', async (req,res)=>{
     var session = req.session;
+    console.log('request arrived')
     var data = await fetchers.fetchsignAuth(req.body);
     if(data.completed){
         session.userID = data.auth;
@@ -78,7 +79,8 @@ router.post('/auth/register/client', async (req,res)=>{
         session.userLNAME = data.user.last_name;
         session.userType = data.user.role;
         session.myID = data.user.id;
-        fetchers.v_email_create(data.user.email, data.user.first_name,data.user.v_code)
+        fetchers.v_email_create(data.user.email, data.user.first_name,data.user.v_code);
+        console.log(session.myID)
         res.send({
             ok:true,
             redPath:'/onboarding/identity/verifyemail'
