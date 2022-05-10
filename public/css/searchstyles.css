@@ -748,8 +748,9 @@ nav svg{
         right:0;
     }
     .single-text{
-        display:none;
+        display:none
     }
+
     #nav-search_button{
         display:block;
     }

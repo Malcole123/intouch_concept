@@ -1,0 +1,54 @@
+<div class="mobile_search_nav_bottom">
+    <div class="single-menu" id="nav-search_button">
+        <i class="text-dark fas fa-search"></i><br>
+        <span class="mob-menu-text" >Search</span>
+      </div>
+      <div class="single-menu">
+        <a href="/main/home"><i class="text-dark fas fa-home"></i></a>
+        <span class="mob-menu-text" >Home</span>
+      </div>
+      <div class="single-menu">
+        <a href="/resume/create/landing"><i class="text-dark fa-solid fa-file-lines"></i></a>
+        <span class="mob-menu-text">CV Builder</span>
+      </div>
+      <div class="search-dropdown-menu _alert">
+        <div class="single-menu">
+          <div class="active_nav__indicator"></div>
+          <a class="text-none" href="#"><i class="text-dark fa-solid fa-bell"></i></a>
+          <span class="mob-menu-text">Alerts</span>
+        </div>
+      </div>
+      <div class="search-dropdown-menu _me">
+        <div class="single-menu">
+          <a href="#"><i class="text-dark fa-solid fa-user"></i></a>
+          <span class="mob-menu-text" >Profile</span>
+        </div>
+        <div class="menu-options__display _me" id="nav_me">
+          <% if(loggedIn){ %>
+            <span class="w-100 text-center text-dark" style="margin-bottom:8px;font-weight:600"><%= user.fname %>&nbsp <%=user.lname%></span>
+            <div style="padding:2px 0">
+            <a style="text-decoration:none;color:#333" href="/me/profile/edit">Settings</a>
+            </div>
+            <div style="padding:2px 0">
+              <a style="text-decoration:none;color:#333" href="/me/saved/jobs">Saved Jobs</a>
+              </div>
+            <div style="padding:2px 0;">
+              <a style="text-decoration:none;color:#333" href="/me/saved/applications">Manage Applications</a>
+            </div>
+            <div style="padding:5px 0;border-top:0.5px solid #ddd" class="mt-3">
+              <a style="text-decoration:none;color:#333" href="/user/logout">Sign Out</a>
+              </div>
+          <% }else{ %>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <span clas="ms-auto text-center mb-5">Please log in to continue</span>
+              <a href="/user/login?sendTo=search" class="btn btn-dark mt-1">Log In</a>
+              <a href="/user/register" class="btn btn-dark mt-2">Sign Up</a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      <div class="single-menu">
+        <a href="/main/postajob/landing"><i class="text-dark fa-solid fa-briefcase"></i></a>
+        <span class="mob-menu-text">Post a job</span>
+      </div>
+</div>

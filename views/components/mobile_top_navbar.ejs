@@ -1,0 +1,23 @@
+<nav class="search-nav mobile-navbar navbar-light">
+    <a id="search-page-nav-logo" href="/main/home"><img src="/images/logo.svg" alt="Intouch logo. Click to go home"></a>
+    <div class="search-field">
+      <div class="search-input">
+        <input
+        type="text"
+        id="autoComplete"
+        name="careerSearch"
+        placeholder="Search..." autocomplete="off"
+      />
+      </div>
+    </div>
+  
+  </nav>
+
+  <script>
+    var input = document.getElementById('autoComplete');
+    input.addEventListener('keyup',(e)=>{
+      if(e.which === 13){
+        window.location.href = `/main/seejobs?q=${input.value}&country=&sub_divison=`
+      }
+    })
+  </script>
