@@ -64,6 +64,21 @@ nav{
     padding:70px 0;
 }
 
+.upsell{
+    height:80vh;
+    width:100%;
+    background:#fff url('/images/vactor-6.png');
+    background-size:20%;
+    background-position:bottom 0 right 0;
+    background-repeat:no-repeat;
+    padding:50px 20px;
+}
+.upsell img{
+    width:100%;
+    margin:0 auto;
+}
+
+
 @media(max-width:1020px){
     .paj-header{
         min-height:100vh;
