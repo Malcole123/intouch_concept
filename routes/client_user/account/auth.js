@@ -54,6 +54,7 @@ router.get('/logout', isAuth, (req,res)=>{
 
 router.get('/recruiter/register', async (req, res)=>{
     var session = req.session
+    console.log(req)
     var reqURLs = req._parsedOriginalUrl.query
     var urlParts = reqURLs
     var refID = urlParts.replace('ref_id=','')
