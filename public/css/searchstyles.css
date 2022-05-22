@@ -28,29 +28,6 @@ html::-webkit-scrollbar-thumb{
     border-radius:20px;
     background:rgb(90,90,90)
 }
-.focus___overlay{
-    height:100vh;
-    width:100%;
-    background:rgba(0, 0, 0, 0.2);
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    position:fixed;
-    display:none;
-    z-index:3
-}
-.active_nav__indicator{
-    position:absolute;
-    bottom:-10px;
-    right:0px;
-    left:0px;
-    width:100%;
-    height:3px;
-    background:#f44336;
-    border-radius:10px;
-    display:none;
-}
 .result-loader,
   .result-loader:before,
   .result-loader:after {
@@ -479,6 +456,7 @@ nav svg{
     height:100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-right:0;
 }
 
 .result-scroll-body,.job-show-scroll-body{
