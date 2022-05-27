@@ -30,7 +30,6 @@ router.get('/identity/verifyemail',(req,res)=>{
 
 router.get('/employer/company/register', (req,res)=>{
     var session = req.session;
-    console.log(session)
     if(session.userID){
         res.render('./account/onboarding/companyregister.ejs',{
             user:{

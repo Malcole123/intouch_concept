@@ -26,43 +26,45 @@ const jobQueryParams = ()=>{
 
 const setSearchState= new Vue({
     el:"#searchBody",
-    data:{
-        display:{
-            item_count:0,
-            item_visible:1,
-            page:{
-                total:1,
-                current:1,
-                next:null,
-            },
-            filter:{
-                filtered:false,
-                job_Type:['full-time','part-time','seasonal','contract'],
-                location:{
-                    country:'',
-                    s_div:''
+    data(){
+        return{
+            display:{
+                item_count:0,
+                item_visible:1,
+                page:{
+                    total:1,
+                    current:1,
+                    next:null,
                 },
-                sort:{
-                    see_latest:999999999999
+                filter:{
+                    filtered:false,
+                    job_Type:['full-time','part-time','seasonal','contract'],
+                    location:{
+                        country:'',
+                        s_div:''
+                    },
+                    sort:{
+                        see_latest:999999999999
+                    },
+                    company:'',
+                    matchArr:[],
+                    sub_division_arr:[]
                 },
-                company:'',
-                matchArr:[],
-                sub_division_arr:[]
+                lady_load:[],
+                lazy_count:0,
             },
-            lady_load:[],
-            lazy_count:0,
-        },
-        focus_data:{},
-        pref:{
-            f_comp:[],
-            f_jobs:[],
-            job_alerts:[],
-            applied_to:[],
-            ref:0
-        },
-        j_selected:true,
-        all_jobs:[],
-        matched_filters:[]
+            focus_data:{},
+            pref:{
+                f_comp:[],
+                f_jobs:[],
+                job_alerts:[],
+                applied_to:[],
+                ref:0
+            },
+            j_selected:true,
+            all_jobs:[],
+            matched_filters:[]
+        }
     },
     methods:{
         setState:(id=0)=>{

@@ -54,7 +54,6 @@ router.get('/logout', isAuth, (req,res)=>{
 
 router.get('/recruiter/register', async (req, res)=>{
     var session = req.session
-    console.log(req)
     var reqURLs = req._parsedOriginalUrl.query
     var urlParts = reqURLs
     var refID = urlParts.replace('ref_id=','')
@@ -71,7 +70,6 @@ router.get('/recruiter/register', async (req, res)=>{
 
 router.post('/auth/register/client', async (req,res)=>{
     var session = req.session;
-    console.log('request arrived')
     var data = await fetchers.fetchsignAuth(req.body);
     if(data.completed){
         session.userID = data.auth;
@@ -81,7 +79,6 @@ router.post('/auth/register/client', async (req,res)=>{
         session.userType = data.user.role;
         session.myID = data.user.id;
         fetchers.v_email_create(data.user.email, data.user.first_name,data.user.v_code);
-        console.log(session.myID)
         res.send({
             ok:true,
             redPath:'/onboarding/identity/verifyemail'
@@ -106,7 +103,6 @@ router.post('/auth/login/client', async (req,res)=>{
         session.userLNAME =  data.data.last_name;
         session.companyID =  data.data.verified_companies_id;
         redPath='/dashboard/home'
-        console.log(data)
         res.send({
             completed:true,
             redPath:redPath,
@@ -129,7 +125,6 @@ router.post('/auth/recruiter/register', async()=>{
         session.userLNAME = data.user.last_name;
         session.userType = data.user.role;
         session.myID = data.user.id;
-        console.log(session)
         fetchers.v_email_create(data.user.email, data.user.first_name,data.user.v_code)
         res.send({
             ok:true,
