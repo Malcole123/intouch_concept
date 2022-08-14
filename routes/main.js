@@ -22,6 +22,7 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get('/home', (req,res)=>{
     var session = req.session;
+    
     session.last_visit = req._parsedOriginalUrl.href
     if(session.userID){
         var button = "../components/buttons/logged_in_state"
